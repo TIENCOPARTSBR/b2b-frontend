@@ -49,7 +49,7 @@ const Header = () => {
                     </Item>
 
                     <Item>
-                        <Link href="/admin/distributor">
+                        <Link href="/admin/direct-distributor">
                             <Image 
                                 src="/icons/distributor.svg" 
                                 width="20"

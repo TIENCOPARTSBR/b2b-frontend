@@ -47,7 +47,7 @@ const NewUser = ({user}: any) => {
             console.log(data);
             try {
                 const api = getApiClient(``);
-                const response = await api.post('/admin/user/'+ userId, data);
+                const response = await api.put('/admin/user/'+ userId, data);
                 console.log(response);
                 setRedirect(true);
               } catch (error) {

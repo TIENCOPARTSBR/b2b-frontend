@@ -34,7 +34,6 @@ const NewUser = () => {
                 name: name,
                 email: email,
                 password: password,
-                type: 1
             }
 
             try {

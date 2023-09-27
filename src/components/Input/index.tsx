@@ -1,19 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import { INPUT } from "./style";
 
-type InputProps = {
-    type: string;
-    name: string;
+interface InputProps {
+    value: string;
     placeholder: string;
-    value: '';
-    onChange: any;
     required: boolean;
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    className?: string;
 }
 
-const Input = ({type, name, placeholder, value, onChange, required}: InputProps) => {
-    return (
-        <INPUT type={type} name={name} placeholder={placeholder} onChange={onChange} required={required}  value={value} />
-    )
-}
+const Input: FC<InputProps> = ({...props }) => {
+    return <INPUT {...props} />  ;
+};
 
 export default Input;
