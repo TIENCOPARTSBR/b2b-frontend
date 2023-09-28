@@ -14,6 +14,8 @@ import AlertDanger from "@/components/AlertDanger";
 // api 
 import Loader from "@/components/Loader";
 import { getApiClient } from "@/api/axios";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 
 const NewDirectDistributor = () => {
     // router
@@ -131,3 +133,20 @@ const NewDirectDistributor = () => {
 }
 
 export default NewDirectDistributor;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { ['adminAuth.token']: token } = parseCookies(ctx);
+
+    if (!token) {
+       return {
+          redirect: {
+             destination: '/admin/auth/login',
+             permanent: false,
+          }
+       }
+    }
+
+    return {
+        props: {}
+    }
+}
