@@ -23,4 +23,9 @@ export const INPUT = Style.input`
     ::placeholder {
         color: #5B6B79;
     }
+
+    &.error {
+        border: 2px solid #DC2626;
+        color: #DC2626;
+    }
 `;
