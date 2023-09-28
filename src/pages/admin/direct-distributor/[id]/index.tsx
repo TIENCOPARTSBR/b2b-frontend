@@ -22,11 +22,11 @@ const NewUser = ({directDistributor}: any) => {
     const router = useRouter();
     const userId = router?.query?.id;
     // form  
-    const [name, setName] = useState(''); // nome da empresa
-    const [allowQuotation, setAllowQuotation] = useState(''); // permitir cotações
-    const [allowPartner, setAllowPartner] = useState(''); // permitir parceiros
-    const [sisrevBrazilCode, setSisrevBrazilCode] = useState(''); // código do cliente no sisrev brasil
-    const [sisrevEuaCode, setSisrevEuaCode] = useState(''); // código do cliente no sisrev llc
+    const [name, setName] = useState(directDistributor.name); // nome da empresa
+    const [allowQuotation, setAllowQuotation] = useState(directDistributor.allow_quotation); // permitir cotações
+    const [allowPartner, setAllowPartner] = useState(directDistributor.allow_partner); // permitir parceiros
+    const [sisrevBrazilCode, setSisrevBrazilCode] = useState(directDistributor.sisrev_brazil_code); // código do cliente no sisrev brasil
+    const [sisrevEuaCode, setSisrevEuaCode] = useState(directDistributor.sisrev_eua_code); // código do cliente no sisrev llc
     // functions
     const [alert, setAlert] = useState('');
     const [redirect, setRedirect] = useState(false);
@@ -99,16 +99,16 @@ const NewUser = ({directDistributor}: any) => {
                     <GroupForm>
                         <Label>Permitir cotação</Label>
                         <Select onChange={(e: any) => {setAllowQuotation(e.target.value)}}>
-                            <option value="0">Não</option>
-                            <option value="1">Sim</option>
+                            <option value="0" selected={allowQuotation == '0'}>Não</option>
+                            <option value="1" selected={allowQuotation == '1'}>Sim</option>
                         </Select>
                     </GroupForm>
 
                     <GroupForm>
                         <Label>Permitir parceiro</Label>
                         <Select onChange={(e: any) => {setAllowPartner(e.target.value)}}>
-                            <option value="0">Não</option>
-                            <option value="1">Sim</option>
+                            <option value="0" selected={allowPartner == '0'}>Não</option>
+                            <option value="1" selected={allowPartner == '1'}>Sim</option>
                         </Select>
                     </GroupForm>
 

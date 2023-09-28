@@ -2,11 +2,13 @@ import React, { FC } from "react";
 import { INPUT } from "./style";
 
 interface InputProps {
-    value: string;
-    placeholder: string;
-    required: boolean;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    value?: string;
+    placeholder?: string;
+    required?: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
     className?: string;
+    type?: string;
+    name?: string;
 }
 
 const Input: FC<InputProps> = ({...props }) => {

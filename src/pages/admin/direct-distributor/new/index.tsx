@@ -15,7 +15,7 @@ import AlertDanger from "@/components/AlertDanger";
 import Loader from "@/components/Loader";
 import { getApiClient } from "@/api/axios";
 
-const NewUser = () => {
+const NewDirectDistributor = () => {
     // router
     const router = useRouter();
     // form  
@@ -39,13 +39,12 @@ const NewUser = () => {
             allow_quotation: allowQuotation,
             allow_partner: allowPartner,
             sisrev_brazil_code: sisrevBrazilCode,
-            sisrev_eua_code: sisrevEuaCode,
+            sisrev_eua_code: sisrevEuaCode, 
         }
 
-        console.log(data);
-
         try {
-            await getApiClient(``).post('/admin/direct-distributor', data); // envia os dados para API
+            const api = getApiClient(``);
+            const response = await api.post('/admin/direct-distributor', data); // envia os dados para API
             setRedirect(true); // ativa o redirecionamento
         } catch (error) {
             setAlert(
@@ -131,4 +130,4 @@ const NewUser = () => {
     )
 }
 
-export default NewUser;
+export default NewDirectDistributor;

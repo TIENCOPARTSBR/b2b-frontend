@@ -89,19 +89,14 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
         width: '50%',
       },
       {
-         Header: 'Sisrev Brasil',
+         Header: 'Código Sisrev Brasil',
          accessor: 'sisrev_brazil_code',
-         width: '10%',
+         width: '15%',
       },
       {
-         Header: 'Sisrev EUA',
+         Header: 'Código Sisrev EUA',
          accessor: 'sisrev_eua_code',
-         width: '10%',
-      },
-      {
-         Header: 'Criado',
-         accessor: 'created_at',
-         width: '10%',
+         width: '15%',
       },
       {
          Header: 'Ação',
