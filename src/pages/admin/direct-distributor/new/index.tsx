@@ -48,7 +48,7 @@ const NewDirectDistributor = () => {
             const api = getApiClient(``);
             const response = await api.post('/admin/direct-distributor', data); // envia os dados para API
             setRedirect(true); // ativa o redirecionamento
-        } catch (error) {
+        } catch (error: any) {
             setAlert(
                 error?.response?.data?.message || "Não foi possível cadastar um novo distribuidor direto."
             ); // alerta de erro

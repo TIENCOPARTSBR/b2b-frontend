@@ -34,7 +34,7 @@ export default function RecoverPassword() {
       const api = getApiClient(``);
       const response = await api.post('/admin/recover-password', data);
       setRedirect(true);
-    } catch (error) {
+    } catch (error: any) {
       setAlertMessage(error?.response?.data?.message);
     } finally {
       setLoader(false); // Desabilita o loader 

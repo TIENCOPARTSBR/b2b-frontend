@@ -16,25 +16,37 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    // @ts-ignore
     page,
+    // @ts-ignore
     canPreviousPage,
+    // @ts-ignore
     canNextPage,
+    // @ts-ignore
     nextPage,
+    // @ts-ignore
     gotoPage,
+    // @ts-ignore
     previousPage,
+    // @ts-ignore
     state,
+    // @ts-ignore
     setGlobalFilter,
+    // @ts-ignore
     pageOptions,
+    // @ts-ignore
   } = useTable(
     {
       columns,
       data,
+      // @ts-ignore
       initialState: { pageIndex: 0, pageSize },
     },
     useGlobalFilter,
     usePagination
   );
 
+  // @ts-ignore
   const { globalFilter, pageIndex } = state;
 
   // Use useEffect to observe changes in pageSize and force table update
@@ -75,11 +87,11 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row: any) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell: any) => {
                     return (
                       <Td {...cell.getCellProps()} style={{ width: cell.width }}>
                         {cell.render('Cell')}
@@ -102,7 +114,7 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
             <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage} className="fw-bold">
               {'<'}
             </ButtonPagination>
-            {pageOptions.map((page, index) => (
+            {pageOptions.map((page: any, index: any) => (
               <ButtonPagination
                 key={index}
                 onClick={() => gotoPage(index)}

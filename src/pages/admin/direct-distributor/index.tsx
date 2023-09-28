@@ -74,7 +74,7 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
          const api = getApiClient('');
          await api.delete(`/admin/direct-distributor/${directDistributorId}`);
          router.push('/admin/direct-distributor');
-      } catch (error) {
+      } catch (error: any) {
          setAlertWarning(error?.response?.data);
       } finally {
          setLoader(false);
@@ -102,7 +102,7 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
          Header: 'Ação',
          accessor: 'action',
          width: '10%',
-        Cell: ({ row }) => (
+        Cell: ({ row }: any) => (
           <>
             <ButtonAction onClick={() => handleEdit(row.original.id)}>
               <Image src="/icons/edit.svg" width="18" height="18" alt="icon edit" />

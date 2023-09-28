@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
 interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
+    show: boolean;
+    onHide: () => void;
     onConfirm: () => void;
 }
 

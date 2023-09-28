@@ -53,7 +53,7 @@ export const Image = Styled(image)`
     margin: 0 .5rem 0 0;
 `;
 
-export const Logo = Styled.div`
+export const Logo = Styled(link)`
     margin: 0 2rem 0 0;
 `;
 

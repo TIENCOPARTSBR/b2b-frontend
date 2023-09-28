@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Main, Group, Form, GroupForm, Label } from "./style";
 import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
 
 // components
 import Header from "@/components/Header";
@@ -10,15 +12,12 @@ import Title from "@/components/Title";
 import Input from "@/components/Input";
 import ButtonSmall from "@/components/ButtonSmall";
 import AlertDanger from "@/components/AlertDanger";
+import Loader from "@/components/Loader";
 
 // api 
-import Loader from "@/components/Loader";
 import { getApiClient } from "@/api/axios";
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
-import ModalToDelete from "@/components/ModalToDelete";
 
-const NewUser = ({user}: any) => {
+const EditUser = ({user}: any) => {
     const router = useRouter();
     const userId = router?.query?.id;
     const [name, setName] = useState(user?.name);
@@ -35,7 +34,7 @@ const NewUser = ({user}: any) => {
 
         if (password === passwordConfirmation) {
             // Se a senha for vazia
-            const data = {
+            const data: any = {
                 name: name,
                 email: email,
             };
@@ -50,7 +49,7 @@ const NewUser = ({user}: any) => {
                 const response = await api.put('/admin/user/'+ userId, data);
                 console.log(response);
                 setRedirect(true);
-              } catch (error) {
+              } catch (error: any) {
                 setAlert(error?.response?.data?.message || "Não foi possível atualizar o usuário.");
               } finally {
                 setLoader(false);
@@ -112,7 +111,7 @@ const NewUser = ({user}: any) => {
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Senha</Label>
+                        <Label>Confirme a senha</Label>
                         <Input required={false} type="password" name="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 
@@ -123,7 +122,7 @@ const NewUser = ({user}: any) => {
     )
 }
 
-export default NewUser;
+export default EditUser;
 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

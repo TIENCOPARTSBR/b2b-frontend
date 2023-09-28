@@ -26,7 +26,7 @@ const Header = () => {
         <HeaderCustom>
             <Nav>
                 {/* Logo enco */}
-                <Logo>
+                <Logo href="/admin">
                     <Image 
                         src="/images/enco.svg" 
                         alt="Logo da encoparts" 

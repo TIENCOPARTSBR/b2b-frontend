@@ -42,7 +42,7 @@ export default function Code() {
         const api = getApiClient(``);
         const response = await api.post('/admin/recover-password/code/change-password', data);
         setRedirect(true); // redireciona para o login apos alterar a senha
-      } catch (error) {
+      } catch (error: any) {
         setAlertMessage(error?.response?.data?.message || "Ocorreu um erro.");
       } finally {
         setLoader(false);

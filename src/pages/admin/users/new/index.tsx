@@ -42,7 +42,7 @@ const NewUser = () => {
                 const api = getApiClient(``);
                 const response = await api.post('/admin/user', data);
                 setRedirect(true);
-              } catch (error) {
+              } catch (error: any) {
                 setAlert(error?.response?.data?.message || "Não foi possível cadastar um novo usuário.");
               }
 
@@ -103,7 +103,7 @@ const NewUser = () => {
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Senha</Label>
+                        <Label>Confirme a senha</Label>
                         <Input required={true} type="password" name="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 

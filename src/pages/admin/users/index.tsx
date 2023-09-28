@@ -74,7 +74,7 @@ const Users = ({user}: UserProps) => {
          const api = getApiClient('');
          await api.delete(`/admin/user/${userId}`);
          router.push('/admin/users');
-      } catch (error) {
+      } catch (error: any) {
          setAlertWarning(error?.response?.data);
       } finally {
          setLoader(false);
@@ -102,7 +102,7 @@ const Users = ({user}: UserProps) => {
         Header: 'Ação',
         accessor: 'action',
         width: 50,
-        Cell: ({ row }) => (
+        Cell: ({ row }: any) => (
           <>
             <ButtonAction onClick={() => handleEdit(row.original.id)}>
               <Image src="/icons/edit.svg" width="18" height="18" alt="icon edit" />

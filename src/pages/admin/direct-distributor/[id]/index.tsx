@@ -17,7 +17,7 @@ import { getApiClient } from "@/api/axios";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 
-const NewUser = ({directDistributor}: any) => {
+const EditDirectDistributor = ({directDistributor}: any) => {
     // router
     const router = useRouter();
     const userId = router?.query?.id;
@@ -49,7 +49,7 @@ const NewUser = ({directDistributor}: any) => {
             const api = getApiClient(``);
             const response = await api.put('/admin/direct-distributor/'+ userId, data);
             setRedirect(true);
-        } catch (error) {
+        } catch (error: any) {
             setAlert(error?.response?.data?.message || "Não foi possível atualizar o distribuidor direto.");
         } finally {
             setLoader(false);
@@ -131,7 +131,7 @@ const NewUser = ({directDistributor}: any) => {
     )
 }
 
-export default NewUser;
+export default EditDirectDistributor;
 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

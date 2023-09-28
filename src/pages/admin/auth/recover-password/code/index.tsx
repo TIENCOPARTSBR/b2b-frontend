@@ -37,7 +37,7 @@ export default function Code() {
       const response = await api.post('/admin/recover-password/code', data);
       setUserId(response?.data?.id_administrador);
       setRedirect(true);
-    } catch (error) {
+    } catch (error: any) {
       setAlertMessage(error?.response?.data?.message || "Ocorreu um erro.");
     } finally {
       setLoader(false);
