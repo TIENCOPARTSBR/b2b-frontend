@@ -101,6 +101,7 @@ export const ButtonProfile = Styled.button`
     justify-content: center;
     border: none;
     background: none;
+    cursor: pointer;
 `;
 
 export const CardProfile = Styled.div`
@@ -140,4 +141,5 @@ export const ButtonLogout = Styled.button`
     font-style: normal;
     font-weight: 500;
     line-height: 22px;
+    cursor: pointer;
 `;

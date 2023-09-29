@@ -1,90 +1,94 @@
 // assets
-import React, { useEffect, useState } from "react";
-import { Main, Group, Form, GroupForm, Label, Select } from "./style";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react"
+import { Main, Group, Form, GroupForm, Label, Select } from "./style"
+import { useRouter } from "next/router"
 
 // components
-import Header from "@/components/Header";
-import Breadcump from "@/components/Breadcump";
-import Title from "@/components/Title";
-import Input from "@/components/Input";
-import ButtonSmall from "@/components/ButtonSmall";
-import AlertDanger from "@/components/AlertDanger";
+import Header from "@/components/Header"
+import Breadcump from "@/components/Breadcump"
+import Title from "@/components/Title"
+import Input from "@/components/Input"
+import ButtonSmall from "@/components/ButtonSmall"
 
 // api 
-import Loader from "@/components/Loader";
-import { getApiClient } from "@/api/axios";
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
+import Loader from "@/components/Loader"
+import { getApiClient } from "@/api/axios"
+import { GetServerSideProps } from "next"
+import { parseCookies } from "nookies"
+import Error from "@/components/Error"
+
+type TypeData = {
+    name: string | null
+    allow_quotation: string | null
+    allow_partner: string | null
+    sisrev_brazil_code: string | null
+    sisrev_eua_code: string | null
+}
+
+const breadcump = [
+    {
+        name: 'Home',
+        link: '/admin'
+    }, {
+        name: 'Distribuidores direto',
+        link: '/admin/direct-distributor'
+    }, {
+        name: 'Novo',
+        link: '/admin/direct-distributor/new'
+    },
+]
 
 const NewDirectDistributor = () => {
-    // router
-    const router = useRouter();
-    // form  
-    const [name, setName] = useState(''); // nome da empresa
-    const [allowQuotation, setAllowQuotation] = useState(''); // permitir cotações
-    const [allowPartner, setAllowPartner] = useState(''); // permitir parceiros
-    const [sisrevBrazilCode, setSisrevBrazilCode] = useState(''); // código do cliente no sisrev brasil
-    const [sisrevEuaCode, setSisrevEuaCode] = useState(''); // código do cliente no sisrev llc
-    // functions  
-    const [alert, setAlert] = useState(''); // alerta de erro
-    const [redirect, setRedirect] = useState(false); // redirecionamento após conclusão 
-    const [loader, setLoader] = useState(false); // tela de carregamento
+    const router = useRouter() // use app router 
+    const [name, setName] = useState<string | null>(null) // nome da empresa
+    const [allowQuotation, setAllowQuotation] = useState<string | null>(null) // permitir cotações
+    const [allowPartner, setAllowPartner] = useState<string | null>(null) // permitir parceiros
+    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string | null>(null) // código do cliente no sisrev brasil
+    const [sisrevEuaCode, setSisrevEuaCode] = useState<string | null>(null) // código do cliente no sisrev llc
+    const [error, setError] = useState<string | null>(null) // alerta de erro
+    const [redirect, setRedirect] = useState<boolean>(false) // redirecionamento após conclusão 
+    const [loader, setLoader] = useState<boolean>(false) // tela de carregamento
+
+    useEffect(() => {
+        setTimeout(() => {
+            setError(null)
+        }, 5000);
+    }, [error])
+
+    useEffect(() => {
+        (redirect) ? router.push('/admin/direct-distributor') : ''
+    }, [redirect])
 
     // função que envia um novo distribuidor para API
     const handleNewDirectDistributor = async (e: any) => {
-        e.preventDefault();
-        setLoader(true);
-
-        const data = {
+        e.preventDefault()
+        setLoader(true)
+        setError(null)
+        
+        const data: TypeData = {
             name: name,
             allow_quotation: allowQuotation,
             allow_partner: allowPartner,
             sisrev_brazil_code: sisrevBrazilCode,
-            sisrev_eua_code: sisrevEuaCode, 
+            sisrev_eua_code: sisrevEuaCode,
         }
 
         try {
-            const api = getApiClient(``);
-            const response = await api.post('/admin/direct-distributor', data); // envia os dados para API
-            setRedirect(true); // ativa o redirecionamento
+            const api = getApiClient(``)
+            await api.post('/admin/direct-distributor', data) // envia os dados para API
+            setRedirect(true) // ativa o redirecionamento
         } catch (error: any) {
-            setAlert(
-                error?.response?.data?.message || "Não foi possível cadastar um novo distribuidor direto."
-            ); // alerta de erro
+            setError(error?.response?.data?.message || "Não foi possível cadastar um novo distribuidor direto.") // alerta de erro
         } finally {
-            setLoader(false); // fecha a tela de carregamento
+            setLoader(false) // fecha a tela de carregamento
         }
     }
 
-    const breadcump = [
-        {
-            name: 'Home',
-            link: '/admin'
-        }, {
-            name: 'Distribuidores direto',
-            link: '/admin/direct-distributor'
-        }, {
-            name: 'Novo',
-            link: '/admin/direct-distributor/new'
-        },
-    ]
-
-    useEffect(() => {
-        if (redirect) {
-            router.push('/admin/direct-distributor');
-        }
-    })
-
     return (
         <>
+            {loader && (<Loader></Loader>)}
+            {error && (<Error error={error}/>)}
             <Header/>
-            {loader && (
-                <Loader></Loader>
-            )}
-            {alert && (
-                <AlertDanger text={alert}/>
-            )}
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
@@ -135,7 +139,7 @@ const NewDirectDistributor = () => {
 export default NewDirectDistributor;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { ['adminAuth.token']: token } = parseCookies(ctx);
+    const { ['adminAuth.token']: token } = parseCookies(ctx)
 
     if (!token) {
        return {

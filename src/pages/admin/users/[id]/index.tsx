@@ -1,62 +1,75 @@
 // assets
-import React, { useEffect, useState } from "react";
-import { Main, Group, Form, GroupForm, Label } from "./style";
-import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
-import { GetServerSideProps } from "next";
+import React, { useEffect, useState } from "react"
+import { Main, Group, Form, GroupForm, Label } from "./style"
+import { useRouter } from "next/router"
+import { parseCookies } from "nookies"
+import { GetServerSideProps } from "next"
 
 // components
-import Header from "@/components/Header";
-import Breadcump from "@/components/Breadcump";
-import Title from "@/components/Title";
-import Input from "@/components/Input";
-import ButtonSmall from "@/components/ButtonSmall";
-import AlertDanger from "@/components/AlertDanger";
-import Loader from "@/components/Loader";
+import Header from "@/components/Header"
+import Breadcump from "@/components/Breadcump"
+import Title from "@/components/Title"
+import Input from "@/components/Input"
+import ButtonSmall from "@/components/ButtonSmall"
+import Loader from "@/components/Loader"
 
 // api 
-import { getApiClient } from "@/api/axios";
+import { getApiClient } from "@/api/axios"
+import Error from "@/components/Error"
+
+type TypeData = {
+    name: string | null
+    email: string | null
+    password?: string | null
+}
 
 const EditUser = ({user}: any) => {
-    const router = useRouter();
-    const userId = router?.query?.id;
-    const [name, setName] = useState(user?.name);
-    const [email, setEmail] = useState(user?.email);
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [alert, setAlert] = useState('');
-    const [redirect, setRedirect] = useState(false);
-    const [loader, setLoader] = useState(false);
+    const router = useRouter()
+    const userId = router?.query?.id
+    const [name, setName] = useState<string | null>(user?.name)
+    const [email, setEmail] = useState<string | null>(user?.email)
+    const [password, setPassword] = useState<string | null>(null)
+    const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [redirect, setRedirect] = useState(false)
+    const [loader, setLoader] = useState(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setError(null)
+        }, 5000)
+    }, [error])
+    
+    useEffect(() => {
+        (redirect) ? router.push('/admin/users') : ''
+    }, [redirect])
 
     const hadleUpdateUser = async (e: any) => {
-        e.preventDefault();
-        setLoader(true);
+        setError(null)
+        e.preventDefault()
+        setLoader(true)
 
         if (password === passwordConfirmation) {
             // Se a senha for vazia
-            const data: any = {
+            const data: TypeData = {
                 name: name,
                 email: email,
             };
             
-            if (password !== "") {
-                data.password = password;
-            }
+            (password !== "") ? data.password = password : ''
             
-            console.log(data);
             try {
-                const api = getApiClient(``);
-                const response = await api.put('/admin/user/'+ userId, data);
-                console.log(response);
-                setRedirect(true);
+                const api = getApiClient(``)
+                await api.put('/admin/user/'+ userId, data)
+                setRedirect(true)
               } catch (error: any) {
-                setAlert(error?.response?.data?.message || "Não foi possível atualizar o usuário.");
+                setError(error?.response?.data?.message || "Não foi possível atualizar o usuário.")
               } finally {
-                setLoader(false);
+                setLoader(false)
               }
 
         } else {
-            setAlert('As senhas não conferem.')
+            setError('As senhas não conferem.')
         }
     }
 
@@ -73,21 +86,11 @@ const EditUser = ({user}: any) => {
         },
     ]
 
-    useEffect(() => {
-        if (redirect) {
-            router.push('/admin/users');
-        }
-    })
-
     return (
         <>
             <Header/>
-            {loader && (
-                <Loader></Loader>
-            )}
-            {alert && (
-                <AlertDanger text={alert}/>
-            )}
+            {loader && (<Loader></Loader>)}
+            {error && (<Error error={error}/>)}
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
@@ -97,22 +100,22 @@ const EditUser = ({user}: any) => {
                 <Form onSubmit={hadleUpdateUser}>
                     <GroupForm>
                         <Label>Nome</Label>
-                        <Input required={true} type="text" name="name" placeholder="Digite seu nome" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
+                        <Input required={true} type="text" placeholder="Digite seu nome" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
                     </GroupForm>
                     
                     <GroupForm>
                         <Label>E-mail</Label>
-                        <Input required={true} type="email" name="email" placeholder="Digite seu e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
+                        <Input required={true} type="email" placeholder="Digite seu e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
                         <Label>Senha</Label>
-                        <Input required={false} type="password" name="password" placeholder="Digite sua senha" onChange={(e: any) => {setPassword(e.target.value)}}/>
+                        <Input required={false} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPassword(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
                         <Label>Confirme a senha</Label>
-                        <Input required={false} type="password" name="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
+                        <Input required={false} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 
                     <ButtonSmall name="Atualizar"/>

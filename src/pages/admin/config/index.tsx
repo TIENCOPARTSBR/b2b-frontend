@@ -1,16 +1,21 @@
-import Header from "@/components/Header";
-import { Main, Group, Card, Label } from "./style";
-import Breadcump from "@/components/Breadcump";
-import Title from "@/components/Title";
-import Input from "@/components/Input";
-import { useEffect, useState } from "react";
-import ButtonSmall from '@/components/ButtonSmall';
-import { GetServerSideProps } from "next";
-import { getApiClient } from "@/api/axios";
-import { parseCookies } from "nookies";
-import AlertDanger from "@/components/AlertDanger";
-import AlertSuccess from "@/components/AlertSuccess";
-import Loader from "@/components/Loader";
+// assets
+import { Main, Group, Card, Label } from "./style"
+import { useEffect, useState } from "react"
+import { GetServerSideProps } from "next"
+import { parseCookies } from "nookies"
+
+// components
+import Loader from "@/components/Loader"
+import Success from "@/components/Success"
+import Error from "@/components/Error"
+import ButtonSmall from '@/components/ButtonSmall'
+import Breadcump from "@/components/Breadcump"
+import Title from "@/components/Title"
+import Input from "@/components/Input"
+import Header from "@/components/Header"
+
+// api
+import { getApiClient } from "@/api/axios"
 
 const breadcump = [
     {
@@ -23,27 +28,41 @@ const breadcump = [
 ]
 
 const Config = (config: any) => {
-    const [dateCost, setDateCost] = useState(config.config.costDate.key_value);
-    const [emailQuotation, setEmailQuotation] = useState(config.config.emailQuotation.key_value);
-    const [alert, setAlert] = useState('');
-    const [alertSucess, setAlertSucess] = useState('');
-    const [loader, setLoader] = useState(false);
+    const [dateCost, setDateCost] = useState<string | null>(config.config.costDate.key_value)
+    const [emailQuotation, setEmailQuotation] = useState<string | null>(config.config.emailQuotation.key_value)
+    const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState<string | null>(null)
+    const [loader, setLoader] = useState<boolean>(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setSuccess(null)
+        }, (5000));
+    }, [success])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setError(null)
+        }, (5000));
+    }, [error])
 
     const handleDateCost = async (e: any) => {
         e.preventDefault();
-        setLoader(true);
+        setLoader(true)
+        setError(null)
+        setSuccess(null)
 
         const data = {
             key_value: dateCost,
         }
 
         try {
-            const api = getApiClient(``);
-            const response = await api.put('/admin/config/cost-date', data);
+            const api = getApiClient(``)
+            const response = await api.put('/admin/config/cost-date', data)
             console.log(response);
-            setAlertSucess(response?.data?.original?.message)
+            setSuccess(response?.data?.original?.message)
         } catch (error: any) {
-            setAlert(error?.response?.data?.message);
+            setError(error?.response?.data?.message)
         } finally {
             setLoader(false);
         }
@@ -51,7 +70,9 @@ const Config = (config: any) => {
 
     const handleEmailQuotation = async (e: any) => {
         e.preventDefault();
-        setLoader(true);
+        setLoader(true)
+        setError(null)
+        setSuccess(null)
         
         const data = {
             key_value: emailQuotation,
@@ -60,31 +81,19 @@ const Config = (config: any) => {
         try {
             const api = getApiClient(``);
             const response = await api.put('/admin/config/email-quotation', data);
-            setAlertSucess(response?.data?.original?.message)
+            setSuccess(response?.data?.original?.message)
         } catch (error: any) {
-            setAlert(error?.response?.data?.message);
+            setError(error?.response?.data?.message);
         } finally {
             setLoader(false);
         }
     }
 
-    useEffect(() => {
-        setTimeout(() => {
-            setAlertSucess('');
-        }, (3000));
-    }, [alertSucess])
-
     return (
         <>
-            {loader && (
-                <Loader></Loader>
-            )}
-            {alertSucess && (
-                <AlertSuccess text={alertSucess} />
-            )}
-            {alert && (
-                <AlertDanger text={alert}/>
-            )}
+            {loader && (<Loader></Loader>)}
+            {success && (<Success success={success}/>)}
+            {error && (<Error error={error}/>)}
             <Header/>
             <Main>
                 <Group>

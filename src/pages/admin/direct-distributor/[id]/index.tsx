@@ -16,28 +16,57 @@ import Loader from "@/components/Loader";
 import { getApiClient } from "@/api/axios";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import Error from "@/components/Error";
+
+const breadcump = [
+    {
+        name: 'Home',
+        link: '/admin'
+    }, {
+        name: 'Distribuidores direto',
+        link: '/admin/direct-distributor'
+    }, {
+        name: 'Editar',
+        link: '/admin/direct-distributor/edit'
+    },
+]
+
+type TypeData = {
+    name: string | null
+    allow_quotation: string | null
+    allow_partner: string | null
+    sisrev_brazil_code: string | null
+    sisrev_eua_code: string | null
+}
 
 const EditDirectDistributor = ({directDistributor}: any) => {
-    // router
-    const router = useRouter();
-    const userId = router?.query?.id;
-    // form  
-    const [name, setName] = useState(directDistributor.name); // nome da empresa
-    const [allowQuotation, setAllowQuotation] = useState(directDistributor.allow_quotation); // permitir cotações
-    const [allowPartner, setAllowPartner] = useState(directDistributor.allow_partner); // permitir parceiros
-    const [sisrevBrazilCode, setSisrevBrazilCode] = useState(directDistributor.sisrev_brazil_code); // código do cliente no sisrev brasil
-    const [sisrevEuaCode, setSisrevEuaCode] = useState(directDistributor.sisrev_eua_code); // código do cliente no sisrev llc
-    // functions
-    const [alert, setAlert] = useState('');
-    const [redirect, setRedirect] = useState(false);
-    const [loader, setLoader] = useState(false);
+    const router = useRouter()
+    const userId = router?.query?.id
+    const [name, setName] = useState<string | null>(directDistributor.name) // nome da empresa
+    const [allowQuotation, setAllowQuotation] = useState<string | null>(directDistributor.allow_quotation) // permitir cotações
+    const [allowPartner, setAllowPartner] = useState<string | null>(directDistributor.allow_partner) // permitir parceiros
+    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string | null>(directDistributor.sisrev_brazil_code) // código do cliente no sisrev brasil
+    const [sisrevEuaCode, setSisrevEuaCode] = useState<string | null>(directDistributor.sisrev_eua_code) // código do cliente no sisrev llc
+    const [error, setError] = useState<string | null>(null)
+    const [redirect, setRedirect] = useState<boolean>(false)
+    const [loader, setLoader] = useState<boolean>(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setError(null)
+        }, 5000);
+    }, [error])
+
+    useEffect(() => {
+        (redirect) ? router.push('/admin/direct-distributor') : ''
+    }, [redirect])
 
     const hadleUpdateDirectDistributor = async (e: any) => {
-        e.preventDefault();
-        setLoader(true);
+        e.preventDefault()
+        setLoader(true)
+        setError(null)
 
-        // Se a senha for vazia
-        const data = {
+        const data: TypeData = {
             name: name,
             allow_quotation: allowQuotation,
             allow_partner: allowPartner,
@@ -47,43 +76,20 @@ const EditDirectDistributor = ({directDistributor}: any) => {
         
         try {
             const api = getApiClient(``);
-            const response = await api.put('/admin/direct-distributor/'+ userId, data);
+            await api.put('/admin/direct-distributor/'+ userId, data);
             setRedirect(true);
         } catch (error: any) {
-            setAlert(error?.response?.data?.message || "Não foi possível atualizar o distribuidor direto.");
+            setError(error?.response?.data?.message || "Não foi possível atualizar o distribuidor direto.");
         } finally {
             setLoader(false);
         }
     }
 
-    const breadcump = [
-        {
-            name: 'Home',
-            link: '/admin'
-        }, {
-            name: 'Distribuidores direto',
-            link: '/admin/direct-distributor'
-        }, {
-            name: 'Editar',
-            link: '/admin/direct-distributor/edit'
-        },
-    ]
-
-    useEffect(() => {
-        if (redirect) {
-            router.push('/admin/direct-distributor');
-        }
-    })
-
     return (
         <>
+            {loader && (<Loader></Loader>)}
+            {error && (<Error error={error}/>)}
             <Header/>
-            {loader && (
-                <Loader></Loader>
-            )}
-            {alert && (
-                <AlertDanger text={alert}/>
-            )}
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>

@@ -16,6 +16,7 @@ export const Button = Styled.button`
     text-decoration: none;
     transition: ease all 300ms;
     border: none;
+    cursor: pointer;
 
     &:hover {
         background-color: #FBBB21;

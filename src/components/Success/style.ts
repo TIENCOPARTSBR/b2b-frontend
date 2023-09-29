@@ -20,11 +20,12 @@ export const SUCCESS = styled.div`
     gap: 6px;
     flex-shrink: 0;
     border-radius: 8px;
-    border: 1px solid #C0E5D9;
+    border: 1px solid #2CA87F;
     background: #C0E5D9;
     position: fixed;
     top: 2rem;
     right: 2rem;
+    z-index: 1050;
     animation: ${spin} 200ms linear normal;
 `;
 

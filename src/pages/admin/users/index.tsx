@@ -1,152 +1,157 @@
 // assets
-import React, { useState, useEffect } from 'react';
-import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
-import Image from "next/image";
+import React, { useState, useEffect } from "react" // Importing necessary libraries
+import { useRouter } from "next/router"
+import { GetServerSideProps } from "next"
+import { parseCookies } from "nookies"
+import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "./style";
+import { Main, CardHeader, Group, ButtonAction } from "./style" // Importing styles
 
 // components
-import Breadcump from "@/components/Breadcump";
-import Header from "@/components/Header";
-import Title from "@/components/Title";
-import LinkSmall from "@/components/LinkSmall";
-import DataTable from "@/components/Datatable";
+import Breadcump from "@/components/Breadcump" // Importing the "Breadcump" component
+import Header from "@/components/Header" // Importing the "Header" component
+import Title from "@/components/Title" // Importing the "Title" component
+import LinkSmall from "@/components/LinkSmall" // Importing the "LinkSmall" component
+import DataTable from "@/components/Datatable" // Importing the "DataTable" component
+import Loader from "@/components/Loader" // Importing the "Loader" component
+import ModalToDelete from "@/components/ModalToDelete" // Importing the "ModalToDelete" component
+import Error from "@/components/Error" // Importing the "Error" component
 
 // api
-import { getApiClient } from "@/api/axios";
-import Loader from '@/components/Loader';
-import AlertDanger from '@/components/AlertDanger';
-import ModalToDelete from '@/components/ModalToDelete';
+import { getApiClient } from "@/api/axios" // Importing the "getApiClient" function
 
 type User = {
-   id: number;
-   name: string;
-   email: string;
-};
+   id: number
+   name: string
+   email: string
+}
  
 type UserProps = {
-   user: User[];
-};
+   user: User[]
+}
+
+const breadcrumbs = [
+   {
+      name: "Home",
+      link: "/admin",
+   },
+   {
+      name: "Usuários",
+      link: "/admin/users",
+   },
+   {
+      name: "Novo",
+      link: "/admin/users",
+   },
+]
 
 const Users = ({user}: UserProps) => {
-   const router = useRouter();
-   const [alertWarning, setAlertWarning] = useState<string | null>(null);
-   const [loader, setLoader] = useState(false);
-   const [userIdToDelete, setUserIdToDelete] = useState(0);
+   const router = useRouter() // Initializing the router
+   const [userIdToDelete, setUserIdToDelete] = useState<number>(0) // Initializing state for user ID to delete
+   const [error, setError] = useState<string | null>(null) // Initializing state for error messages
+   const [loader, setLoader] = useState<boolean>(false) // Initializing state for loader
 
+   // This function uses the useEffect hook to monitor the 'error' state.
+   // Whenever the 'error' state is updated, it schedules an action to
+   // clear the error after 3 seconds, effectively removing any alert message.
    useEffect(() => {
-      if (alertWarning) {
-         const timer = setTimeout(() => {
-            setAlertWarning(null);
-         }, 4000);
+      setTimeout(() => {
+         setError(null)
+      }, 5000);
+   }, [error])
 
-         return () => clearTimeout(timer);
-      }
-   }, [alertWarning]);
+   const [isModalOpen, setIsModalOpen] = useState(false); // Initializing state for the modal
 
-   const breadcrumbs = [
-   {
-      name: 'Home',
-      link: '/admin',
-   },
-   {
-      name: 'Usuários',
-      link: '/admin/users',
-   },
-   {
-      name: 'Novo',
-      link: '/admin/users',
-   },
-   ];
-
-   const handleEdit = (userId: number) => {
-      router.push(`/admin/users/${userId}`);
+   const HandleOpenModal = () => {
+     setIsModalOpen(true) // Function to open the modal
+   };
+ 
+   const HandleCloseModal = () => {
+     setIsModalOpen(false) // Function to close the modal
    };
 
-   const handleRemove = async (userId: number) => {
-      setLoader(true);
-      setIsModalOpen(true);
+   // If the user clicks on delete in the modal, send the user ID to the deletion function
+   const HandleUserDeletionConfirmation = () => {
+      UserDeletion(userIdToDelete);
+   }
+
+   // Function that navigates to the edit page
+   const handleEdit = (userId: number) => {
+      router.push(`/admin/users/${userId}`)
+   }
+
+   // Function that performs user deletion
+   const UserDeletion = async (userId: number) => {
+      setLoader(true); // Display the loading screen
+      setIsModalOpen(true) // Open the deletion modal 
    
       try {
-         const api = getApiClient('');
-         await api.delete(`/admin/user/${userId}`);
-         router.push('/admin/users');
+         const api = getApiClient("")
+         await api.delete(`/admin/user/${userId}`) // API route for deletion
+         router.push("/admin/users") // Redirect to the same page after deletion
       } catch (error: any) {
-         setAlertWarning(error?.response?.data);
+         setError(error?.response?.data?.message)
       } finally {
-         setLoader(false);
-         handleCloseModal();
+         setLoader(false) // Remove the loading screen
+         HandleCloseModal() // Close the modal
       }
-   };
+   }
    
+   // DataTable columns
    const columns = [
       {
-        Header: 'Id',
-        accessor: 'id',
+        Header: "Id",
+        accessor: "id",
         width: 50,
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: "Name",
+        accessor: "name",
         width: 200,
       },
       {
-        Header: 'E-mail',
-        accessor: 'email',
+        Header: "E-mail",
+        accessor: "email",
         width: 400,
       },
       {
-        Header: 'Ação',
-        accessor: 'action',
+        Header: "Ação",
+        accessor: "action",
         width: 50,
         Cell: ({ row }: any) => (
           <>
+            {/* <!-- Edit button --> */}
             <ButtonAction onClick={() => handleEdit(row.original.id)}>
               <Image src="/icons/edit.svg" width="18" height="18" alt="icon edit" />
             </ButtonAction>
   
-            <ButtonAction onClick={() => {handleOpenModal(), setUserIdToDelete(row.original.id)}}>
+            {/* <!-- Delete button --> */}
+            <ButtonAction onClick={() => {HandleOpenModal(), setUserIdToDelete(row.original.id)}}>
               <Image src="/icons/trash.svg" width="18" height="18" alt="icon edit" />
             </ButtonAction>
           </>
         ),
-      },
-   ];
-
-   const [isModalOpen, setIsModalOpen] = useState(false);
-
-   const handleOpenModal = () => {
-     setIsModalOpen(true);
-   };
- 
-   const handleCloseModal = () => {
-     setIsModalOpen(false);
-   };
-
-   const onConfirme = () => {
-      handleRemove(userIdToDelete);
-   }
+      }
+   ]
 
    return (
       <>
-         <ModalToDelete show={isModalOpen} onHide={handleCloseModal} onConfirm={onConfirme}/>
-         {alertWarning && <AlertDanger text={alertWarning} />}
-         {loader && <Loader />}
+         <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={HandleUserDeletionConfirmation}/> {/* Modal component */}
+         {error && <Error error={error}/>} {/* Error component */}
+         {loader && <Loader />} {/* Loading component */}
          <Header />
          <Main>
             <CardHeader>
                <Group>
-                  <Breadcump breadcump={breadcrumbs}/>
-                  <Title>Usuários</Title>
+                  <Breadcump breadcump={breadcrumbs}/> {/* Breadcrumbs component */}
+                  <Title>Usuários</Title> {/* Title component */}
                </Group>
 
-               <LinkSmall name="Novo usuário" link="/admin/users/new" />
+               <LinkSmall name="Novo usuário" link="/admin/users/new"/> {/* Link to create a new user */}
             </CardHeader>
 
-            <DataTable columns={columns} data={user} />
+            <DataTable columns={columns} data={user}/> {/* DataTable component */}
          </Main>
       </>
    )
@@ -155,12 +160,12 @@ const Users = ({user}: UserProps) => {
 export default Users;
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => {
-   const { ['adminAuth.token']: token } = parseCookies(ctx);
+   const { ["adminAuth.token"]: token } = parseCookies(ctx); // Get the token saved in the authentication cookie
 
-   if (!token) {
+   if (!token) { // If the token does not exist, redirect the client to the login page
       return {
          redirect: {
-            destination: '/admin/auth/login',
+            destination: "/admin/auth/login",
             permanent: false,
          }
       }
@@ -168,7 +173,7 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
    try {
       const api = getApiClient(ctx);
-      const response = await api.get<User[]>('/admin/user');
+      const response = await api.get<User[]>("/admin/user"); // API route to get all administrator users
       const user = response.data;
 
       return {

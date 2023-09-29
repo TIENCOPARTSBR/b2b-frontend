@@ -1,114 +1,133 @@
 // assets
-import React, { useState, useEffect } from 'react';
-import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
-import Image from "next/image";
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import { GetServerSideProps } from "next"
+import { parseCookies } from "nookies"
+import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "./style";
+import { Main, CardHeader, Group, ButtonAction } from "./style"
 
 // components
-import Breadcump from "@/components/Breadcump";
-import Header from "@/components/Header";
-import Title from "@/components/Title";
-import LinkSmall from "@/components/LinkSmall";
-import DataTable from "@/components/Datatable";
+import Breadcump from "@/components/Breadcump"
+import Header from "@/components/Header"
+import Title from "@/components/Title"
+import LinkSmall from "@/components/LinkSmall"
+import DataTable from "@/components/Datatable"
+import Loader from "@/components/Loader"
+import ModalToDelete from "@/components/ModalToDelete"
+import Error from "@/components/Error"
 
 // api
-import { getApiClient } from "@/api/axios";
-import Loader from '@/components/Loader';
-import AlertDanger from '@/components/AlertDanger';
-import ModalToDelete from '@/components/ModalToDelete';
+import { getApiClient } from "@/api/axios"
+
 
 type DirectDistributor = {
-   id: number;
-   name: string;
-   email: string;
-};
+   id: number
+   name: string
+   email: string
+}
  
 type DirectDistributorProps = {
-   directDistributor: DirectDistributor[];
-};
+   directDistributor: DirectDistributor[]
+}
+
+const breadcrumbs = [
+   {
+      name: "Home",
+      link: "/admin",
+   },
+   {
+      name: "Distribuidores diretos",
+      link: "/admin/direct-distributor",
+   },
+   {
+      name: "Novo",
+      link: "/admin/direct-distributor",
+   },
+]
 
 const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
-   const router = useRouter();
-   const [alertWarning, setAlertWarning] = useState<string | null>(null);
-   const [loader, setLoader] = useState(false);
-   const [directDistributorIdToDelete, setDirectDistributorIdToDelete] = useState(0);
+   const router = useRouter() // Initializing the router
+   const [directDistributorIdToDelete, setDirectDistributorIdToDelete] = useState<number>(0) // ID to delete
+   const [error, setError] = useState<string | null>(null) // Initializing state for error messages
+   const [loader, setLoader] = useState<boolean>(false) // Initializing state for loader
 
+   // This function uses the useEffect hook to monitor the "error" state.
+   // Whenever the "error" state is updated, it schedules an action to
+   // clear the error after 3 seconds, effectively removing any alert message.
    useEffect(() => {
-      if (alertWarning) {
-         const timer = setTimeout(() => {
-            setAlertWarning(null);
-         }, 4000);
+      setTimeout(() => {
+         setError(null)
+      }, 5000);
+   }, [error])
 
-         return () => clearTimeout(timer);
-      }
-   }, [alertWarning]);
+   const [isModalOpen, setIsModalOpen] = useState(false) // Initializing state for the modal
 
-   const breadcrumbs = [
-   {
-      name: 'Home',
-      link: '/admin',
-   },
-   {
-      name: 'Distribuidores diretos',
-      link: '/admin/direct-distributor',
-   },
-   {
-      name: 'Novo',
-      link: '/admin/direct-distributor',
-   },
-   ];
+   const HandleOpenModal = () => {
+     setIsModalOpen(true) // Function to open the modal
+   }
+ 
+   const HandleCloseModal = () => {
+     setIsModalOpen(false) // Function to close the modal
+   }
 
+   // If the user clicks on delete in the modal, send the user ID to the deletion function
+   const handleDirectDistributorDeletionConfirmation = () => {
+      directDistributorDeletion(directDistributorIdToDelete)
+   }
+
+   // Function that navigates to the edit page
    const handleEdit = (directDistributorId: number) => {
       router.push(`/admin/direct-distributor/${directDistributorId}`);
    };
 
-   const handleRemove = async (directDistributorId: number) => {
-      setLoader(true);
-      setIsModalOpen(true);
+   // Function that performs user deletion
+   const directDistributorDeletion = async (directDistributorId: number) => {
+      setLoader(true) // Display the loading screen
+      setIsModalOpen(true) // Open the deletion modal 
+      setError(null)
    
       try {
-         const api = getApiClient('');
-         await api.delete(`/admin/direct-distributor/${directDistributorId}`);
-         router.push('/admin/direct-distributor');
+         const api = getApiClient(``);
+         await api.delete(`/admin/direct-distributor/${directDistributorId}`) // API route for deletion
+         router.push("/admin/direct-distributor") // Redirect to the same page after deletion
       } catch (error: any) {
-         setAlertWarning(error?.response?.data);
+         setError(error?.response?.data);
       } finally {
-         setLoader(false);
-         handleCloseModal();
+         setLoader(false) // Remove the loading screen
+         HandleCloseModal() // Close the modal
       }
    };
    
+   // DataTable columns
    const columns = [
       {
-        Header: 'Empresa',
-        accessor: 'name',
-        width: '50%',
+        Header: "Empresa",
+        accessor: "name",
+        width: "50%",
       },
       {
-         Header: 'Código Sisrev Brasil',
-         accessor: 'sisrev_brazil_code',
-         width: '15%',
+         Header: "Código Sisrev Brasil",
+         accessor: "sisrev_brazil_code",
+         width: "15%",
       },
       {
-         Header: 'Código Sisrev EUA',
-         accessor: 'sisrev_eua_code',
-         width: '15%',
+         Header: "Código Sisrev EUA",
+         accessor: "sisrev_eua_code",
+         width: "15%",
       },
       {
-         Header: 'Ação',
-         accessor: 'action',
-         width: '10%',
+         Header: "Ação",
+         accessor: "action",
+         width: "10%",
         Cell: ({ row }: any) => (
           <>
             <ButtonAction onClick={() => handleEdit(row.original.id)}>
               <Image src="/icons/edit.svg" width="18" height="18" alt="icon edit" />
             </ButtonAction>
   
-            <ButtonAction onClick={() => {handleOpenModal(), setDirectDistributorIdToDelete(row.original.id)}}>
+            <ButtonAction onClick={() => {HandleOpenModal(), setDirectDistributorIdToDelete(row.original.id)}}>
               <Image src="/icons/trash.svg" width="18" height="18" alt="icon edit" />
             </ButtonAction>
           </>
@@ -116,37 +135,23 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
       },
    ];
 
-   const [isModalOpen, setIsModalOpen] = useState(false);
-
-   const handleOpenModal = () => {
-     setIsModalOpen(true);
-   };
- 
-   const handleCloseModal = () => {
-     setIsModalOpen(false);
-   };
-
-   const onConfirme = () => {
-      handleRemove(directDistributorIdToDelete);
-   }
-
    return (
       <>
-         <ModalToDelete show={isModalOpen} onHide={handleCloseModal} onConfirm={onConfirme}/>
-         {alertWarning && <AlertDanger text={alertWarning} />}
-         {loader && <Loader />}
+         <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={handleDirectDistributorDeletionConfirmation}/> {/* Modal component */}
+         {error && <Error error={error} />} {/* Error component */}
+         {loader && <Loader />} {/* Loading component */}
          <Header />
          <Main>
             <CardHeader>
                <Group>
-                  <Breadcump breadcump={breadcrumbs}/>
-                  <Title>Distribuidores Diretos</Title>
+                  <Breadcump breadcump={breadcrumbs}/> {/* Breadcrumbs component */}
+                  <Title>Distribuidores Diretos</Title> {/* Title component */}
                </Group>
 
-               <LinkSmall name="Novo distribuidor direto" link="/admin/direct-distributor/new" />
+               <LinkSmall name="Novo distribuidor direto" link="/admin/direct-distributor/new" />  {/* Link to create a new user */}
             </CardHeader>
 
-            <DataTable columns={columns} data={directDistributor} />
+            <DataTable columns={columns} data={directDistributor} /> {/* DataTable component */}
          </Main>
       </>
    )
@@ -155,12 +160,12 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
 export default DirectDistributor;
 
 export const getServerSideProps: GetServerSideProps<DirectDistributorProps> = async (ctx) => {
-   const { ['adminAuth.token']: token } = parseCookies(ctx);
+   const { ["adminAuth.token"]: token } = parseCookies(ctx); // Get the token saved in the authentication cookie
 
-   if (!token) {
+   if (!token) { // If the token does not exist, redirect the client to the login page
       return {
          redirect: {
-            destination: '/admin/auth/login',
+            destination: "/admin/auth/login",
             permanent: false,
          }
       }
@@ -168,7 +173,7 @@ export const getServerSideProps: GetServerSideProps<DirectDistributorProps> = as
 
    try {
       const api = getApiClient(ctx);
-      const response = await api.get<DirectDistributor[]>('/admin/direct-distributor');
+      const response = await api.get<DirectDistributor[]>("/admin/direct-distributor"); // API route to get all administrator users
       const directDistributor = response.data;
 
       return {

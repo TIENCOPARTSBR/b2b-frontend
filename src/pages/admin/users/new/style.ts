@@ -16,7 +16,7 @@ export const Group = Style.div`
 export const Form = Style.form`
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     flex-flow: wrap;
     padding: 30px;

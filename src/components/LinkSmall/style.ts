@@ -16,6 +16,7 @@ export const Button = Styled(link)`
     line-height: 22px;
     text-decoration: none;
     transition: ease all 300ms;
+    cursor: pointer;
 
     &:hover {
         background-color: #FBBB21;

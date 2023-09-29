@@ -25,6 +25,7 @@ export const ERROR = styled.div`
    position: fixed;
    top: 2rem;
    right: 2rem;
+   z-index: 1050;
    
    &.visible {
    animation: ${spin} 200ms linear normal;
@@ -51,6 +52,7 @@ export const P = styled.p`
    line-height: 22px;
    margin: 0;
    text-align: left;
+   white-space: break-spaces;
 `;
 
 export const Image = styled(image)`
