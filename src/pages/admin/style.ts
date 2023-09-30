@@ -5,3 +5,9 @@ export const Main = Styled.main`
     display: flex;
     flex-flow: wrap;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;

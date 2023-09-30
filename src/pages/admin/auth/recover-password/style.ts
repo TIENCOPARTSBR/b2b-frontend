@@ -71,3 +71,9 @@ export const ButtonLoggin = Styled(Link)`
 export const Form = Styled.form`
   width: 100%;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+  return
+}
+export default StyleRecoverPassword;

@@ -28,3 +28,9 @@ export const ButtonAction = Styled.button`
     box-shadow: none;
     border: none;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;
