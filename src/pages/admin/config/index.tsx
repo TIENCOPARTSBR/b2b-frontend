@@ -28,8 +28,8 @@ const breadcump = [
 ]
 
 const Config = (config: any) => {
-    const [dateCost, setDateCost] = useState<string | null>(config.config.costDate.key_value)
-    const [emailQuotation, setEmailQuotation] = useState<string | null>(config.config.emailQuotation.key_value)
+    const [dateCost, setDateCost] = useState<string>(config.config.costDate.key_value)
+    const [emailQuotation, setEmailQuotation] = useState<string>(config.config.emailQuotation.key_value)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
     const [loader, setLoader] = useState<boolean>(false)

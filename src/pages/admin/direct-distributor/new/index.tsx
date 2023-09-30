@@ -40,11 +40,11 @@ const breadcump = [
 
 const NewDirectDistributor = () => {
     const router = useRouter() // use app router 
-    const [name, setName] = useState<string | null>(null) // nome da empresa
-    const [allowQuotation, setAllowQuotation] = useState<string | null>(null) // permitir cotações
-    const [allowPartner, setAllowPartner] = useState<string | null>(null) // permitir parceiros
-    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string | null>(null) // código do cliente no sisrev brasil
-    const [sisrevEuaCode, setSisrevEuaCode] = useState<string | null>(null) // código do cliente no sisrev llc
+    const [name, setName] = useState<string>("") // nome da empresa
+    const [allowQuotation, setAllowQuotation] = useState<string>("") // permitir cotações
+    const [allowPartner, setAllowPartner] = useState<string>("") // permitir parceiros
+    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string>("") // código do cliente no sisrev brasil
+    const [sisrevEuaCode, setSisrevEuaCode] = useState<string>("") // código do cliente no sisrev llc
     const [error, setError] = useState<string | null>(null) // alerta de erro
     const [redirect, setRedirect] = useState<boolean>(false) // redirecionamento após conclusão 
     const [loader, setLoader] = useState<boolean>(false) // tela de carregamento

@@ -19,10 +19,10 @@ import { getApiClient } from "@/api/axios";
 
 const NewUser = () => {
     const router = useRouter();
-    const [name, setName] = useState<string | null>(null);
-    const [email, setEmail] = useState<string | null>(null);
-    const [password, setPassword] = useState<string | null>(null);
-    const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null);
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [redirect, setRedirect] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
