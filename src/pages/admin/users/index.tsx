@@ -6,7 +6,7 @@ import { parseCookies } from "nookies"
 import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "../../../Styles/admin/Users/style" // Importing styles
+import { Main, CardHeader, Group, ButtonAction } from "../../../Styles/admin/users/style" // Importing styles
 
 // components
 import Breadcump from "@/components/Breadcump" // Importing the "Breadcump" component
