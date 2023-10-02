@@ -4,21 +4,30 @@ import Styled from 'styled-components';
 const Button = Styled.button`
     display: flex;
     width: 100%;
-    height: 55px;
-    padding: 15px 20px;
+    min-height: 45px;
+    padding: 10px 20px;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 3px;
     background: #FBBB21;
     color: #FFF;
     text-align: center;
     font-family: "Inter", sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
     border: none;
     cursor: pointer;
+
+    @media(min-width: 768px) {
+        height: 55px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+    }
 `;
 
 type TitleProps = {

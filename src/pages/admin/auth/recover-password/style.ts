@@ -49,7 +49,6 @@ export const ForgetPassword = Styled(Link)`
   text-align: right;
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  font-Styled: normal;
   font-weight: 500;
   line-height: 22px;
   text-decoration: none;
@@ -59,13 +58,19 @@ export const ButtonLoggin = Styled(Link)`
   color: #FBBB21;
   text-align: center;
   font-family: "Inter", sans-serif;
-  font-size: 16px;
-  font-Styled: normal;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 22px;
   text-decoration: none;
   margin-top: 20px;
   display: block;
+
+  @media(min-width: 768px) {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-top: 20px;
+  }
 `;
 
 export const Form = Styled.form`
