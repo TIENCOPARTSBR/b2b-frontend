@@ -6,7 +6,7 @@ import { parseCookies } from "nookies"
 import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "./style"
+import { Main, CardHeader, Group, ButtonAction } from "../../../Styles/admin/direct-distributor/style"
 
 // components
 import Breadcump from "@/components/Breadcump"
@@ -20,6 +20,7 @@ import Error from "@/components/Error"
 
 // api
 import { getApiClient } from "@/api/axios"
+import HeaderMobile from "@/components/HeaderMobile"
 
 
 type DirectDistributor = {
@@ -38,11 +39,11 @@ const breadcrumbs = [
       link: "/admin",
    },
    {
-      name: "Distribuidores diretos",
+      name: "Direct distributors",
       link: "/admin/direct-distributor",
    },
    {
-      name: "Novo",
+      name: "New",
       link: "/admin/direct-distributor",
    },
 ]
@@ -103,22 +104,22 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
    // DataTable columns
    const columns = [
       {
-        Header: "Empresa",
+        Header: "Company",
         accessor: "name",
         width: "50%",
       },
       {
-         Header: "Código Sisrev Brasil",
+         Header: "Code Sisrev Brasil",
          accessor: "sisrev_brazil_code",
          width: "15%",
       },
       {
-         Header: "Código Sisrev EUA",
+         Header: "code Sisrev EUA",
          accessor: "sisrev_eua_code",
          width: "15%",
       },
       {
-         Header: "Ação",
+         Header: "Actions",
          accessor: "action",
          width: "10%",
         Cell: ({ row }: any) => (
@@ -140,15 +141,16 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
          <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={handleDirectDistributorDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error} />} {/* Error component */}
          {loader && <Loader />} {/* Loading component */}
-         <Header />
+         <Header/>
+         <HeaderMobile/>
          <Main>
             <CardHeader>
                <Group>
                   <Breadcump breadcump={breadcrumbs}/> {/* Breadcrumbs component */}
-                  <Title>Distribuidores Diretos</Title> {/* Title component */}
+                  <Title>Direct Distributors</Title> {/* Title component */}
                </Group>
 
-               <LinkSmall name="Novo distribuidor direto" link="/admin/direct-distributor/new" />  {/* Link to create a new user */}
+               <LinkSmall name="New direct distributor" link="/admin/direct-distributor/new" />  {/* Link to create a new user */}
             </CardHeader>
 
             <DataTable columns={columns} data={directDistributor} /> {/* DataTable component */}

@@ -69,7 +69,7 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
                 type="text"
                 value={globalFilter || ''}
                 onChange={(e) => setGlobalFilter(e.target.value)}
-                placeholder="Pesquisar..."
+                placeholder="Search..."
               />
           </div>
         </CardHead>
@@ -106,7 +106,7 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
 
         <CardFooter className="d-flex justify-content-between">
           <PageCount>
-            Página{' '}
+            Page{' '}
             {pageIndex + 1} de {Math.ceil(data.length / pageSize)}{' '}
           </PageCount>
 

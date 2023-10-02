@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form, ButtonLoggin } from "./style";
+import { Main, Card, ImageContainer, Form, ButtonLoggin } from "../../../../Styles/admin/auth/recover-password/style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -17,7 +17,7 @@ import { getApiClient } from "@/api/axios";
 
 export default function RecoverPassword() {
    const router = useRouter();
-   const [email, setMail] = useState<string | null>(null);
+   const [email, setEmail] = useState<string | null>(null);
    const [error, setError] = useState<string | null>(null);
    const [loader, setLoader] = useState<boolean>(false);
    const [redirect, setRedirect] = useState<boolean>(false);
@@ -37,20 +37,20 @@ export default function RecoverPassword() {
       } catch (error: any) {
          setError(error?.response?.data?.message);
       } finally {
-         setLoader(false); // Desabilita o loader 
+         setLoader(false); // Disable the loader 
       }
    }
 
-   // Redireciona para próxima página (step code)
+   // Redirect to the next page (step code)
    useEffect(() => {
       if (redirect) {
          router.push('/admin/auth/recover-password/code');
       }
    }, [redirect]);
 
-   // Esta função utiliza o hook useEffect para monitorar o estado 'error'. 
-   // Sempre que o estado 'error' for atualizado, ela agendará uma ação para 
-   // limpar o erro após 3 segundos, removendo assim qualquer mensagem de alerta.
+   // This function uses the useEffect hook to monitor the 'error' state. 
+   // Whenever the 'error' state is updated, it schedules an action to 
+   // clear the error after 3 seconds, removing any alert message.
    useEffect(() => {
       setTimeout(() => {
          setError(null)
@@ -65,19 +65,19 @@ export default function RecoverPassword() {
             <ImageContainer>
                <Image
                   src="/images/enco.svg"
-                  alt="Logo da encoparts"
+                  alt="Encoparts logo"
                   width="114"
                   height="28"
                />
             </ImageContainer>
 
-            <Title>Esqueci minha senha</Title>
+            <Title>Forgot my password</Title>
 
             <Form onSubmit={handleForm}>
-               <Input type="email" name="mail" required={true} placeholder="E-mail" onChange={(e: any) => setMail(e.target.value)} className={error ? 'error' : ''} />
-               <Paragraph>Não esqueça de verificar a caixa de SPAM.</Paragraph>
-               <ButtonLarge>Enviar e-mail de redefinição de senha</ButtonLarge>
-               <ButtonLoggin href="/admin/auth/login">Fazer login</ButtonLoggin>
+               <Input type="email" name="email" required={true} placeholder="Email" onChange={(e: any) => setEmail(e.target.value)} className={error ? 'error' : ''} />
+               <Paragraph>Don't forget to check your SPAM folder.</Paragraph>
+               <ButtonLarge>Send password reset email</ButtonLarge>
+               <ButtonLoggin href="/admin/auth/login">Log in</ButtonLoggin>
             </Form>
          </Card>
       </Main>

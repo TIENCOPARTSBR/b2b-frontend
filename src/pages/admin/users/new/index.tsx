@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Group, Form, GroupForm, Label } from "./style";
+import { Main, Group, Form, GroupForm, Label } from "../../../../Styles/admin/users/new/style";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
@@ -16,6 +16,7 @@ import Loader from "@/components/Loader";
 
 // api 
 import { getApiClient } from "@/api/axios";
+import HeaderMobile from "@/components/HeaderMobile";
 
 const NewUser = () => {
     const router = useRouter();
@@ -53,13 +54,13 @@ const NewUser = () => {
                 await api.post('/admin/user', data);
                 setRedirect(true);
             } catch (error: any) {
-                setError(error?.response?.data?.message || "Não foi possível cadastar um novo usuário.");
+                setError(error?.response?.data?.message || "Unable to register a new user.");
             } finally {
                 setLoader(false);
             }
 
         } else {
-            setError('Senhas não coincidem.');
+            setError("Passwords don't match.");
             setLoader(false);
         }
     }
@@ -69,10 +70,10 @@ const NewUser = () => {
             name: 'Home',
             link: '/admin'
         }, {
-            name: 'Usuários',
+            name: 'Users',
             link: '/admin/users'
         }, {
-            name: 'Novo',
+            name: 'New',
             link: '/admin/users/new'
         },
     ]
@@ -82,34 +83,35 @@ const NewUser = () => {
             {error && <Error error={error}/>} {/* Error component */}
             {loader && <Loader />} {/* Loading component */}
             <Header/>
+            <HeaderMobile/>
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
-                    <Title>Novo usuário</Title>
+                    <Title>New user</Title>
                 </Group>
 
                 <Form onSubmit={hadleNewUser}>
                     <GroupForm>
                         <Label>Nome</Label>
-                        <Input required={true} type="text" placeholder="Digite seu nome" onChange={(e: any) => {setName(e.target.value)}}/>
+                        <Input required={true} type="text" placeholder="Type your name" onChange={(e: any) => {setName(e.target.value)}}/>
                     </GroupForm>
                     
                     <GroupForm>
-                        <Label>E-mail</Label>
-                        <Input required={true} type="email" placeholder="Digite seu e-mail" onChange={(e: any) => {setEmail(e.target.value)}}/>
+                        <Label>Email</Label>
+                        <Input required={true} type="email" placeholder="Type your e-mail" onChange={(e: any) => {setEmail(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Senha</Label>
-                        <Input required={true} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPassword(e.target.value)}}/>
+                        <Label>Password</Label>
+                        <Input required={true} type="password" placeholder="Type your password" onChange={(e: any) => {setPassword(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Confirme a senha</Label>
-                        <Input required={true} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
+                        <Label>Confirm the Password</Label>
+                        <Input required={true} type="password" placeholder="Type your password" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 
-                    <ButtonSmall name="Criar novo usuário"/>
+                    <ButtonSmall name="Create new user"/>
                 </Form>
             </Main>
         </>

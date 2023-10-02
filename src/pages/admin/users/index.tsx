@@ -6,7 +6,7 @@ import { parseCookies } from "nookies"
 import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "./style" // Importing styles
+import { Main, CardHeader, Group, ButtonAction } from "../../../Styles/admin/Users/style" // Importing styles
 
 // components
 import Breadcump from "@/components/Breadcump" // Importing the "Breadcump" component
@@ -20,6 +20,7 @@ import Error from "@/components/Error" // Importing the "Error" component
 
 // api
 import { getApiClient } from "@/api/axios" // Importing the "getApiClient" function
+import HeaderMobile from "@/components/HeaderMobile"
 
 type User = {
    id: number
@@ -37,11 +38,11 @@ const breadcrumbs = [
       link: "/admin",
    },
    {
-      name: "Usuários",
+      name: "Users",
       link: "/admin/users",
    },
    {
-      name: "Novo",
+      name: "New",
       link: "/admin/users",
    },
 ]
@@ -111,12 +112,12 @@ const Users = ({user}: UserProps) => {
         width: 200,
       },
       {
-        Header: "E-mail",
+        Header: "Email",
         accessor: "email",
         width: 400,
       },
       {
-        Header: "Ação",
+        Header: "Actions",
         accessor: "action",
         width: 50,
         Cell: ({ row }: any) => (
@@ -140,15 +141,16 @@ const Users = ({user}: UserProps) => {
          <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={HandleUserDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error}/>} {/* Error component */}
          {loader && <Loader />} {/* Loading component */}
+         <HeaderMobile /> 
          <Header />
          <Main>
             <CardHeader>
                <Group>
                   <Breadcump breadcump={breadcrumbs}/> {/* Breadcrumbs component */}
-                  <Title>Usuários</Title> {/* Title component */}
+                  <Title>Users</Title> {/* Title component */}
                </Group>
 
-               <LinkSmall name="Novo usuário" link="/admin/users/new"/> {/* Link to create a new user */}
+               <LinkSmall name="New user" link="/admin/users/new"/> {/* Link to create a new user */}
             </CardHeader>
 
             <DataTable columns={columns} data={user}/> {/* DataTable component */}

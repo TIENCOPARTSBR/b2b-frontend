@@ -10,7 +10,7 @@ import {
   ImageContainer, 
   ForgetPassword, 
   Form 
-} from "./style";
+} from "../../../../Styles/admin/auth/login/style";
 
 // component
 import Input from "@/components/Input";
@@ -30,9 +30,8 @@ const Login = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSucess] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
-
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -46,18 +45,18 @@ const Login = () => {
     const response = await signIn(data);
      
     if (response) {
-      setSucess('Login realizado com sucesso.')
+      setSuccess('Login successful.')
       router.push('/admin');
       setLoader(false);
     } else {
       setLoader(false);
-      setError('Acesso negado. Por favor, revise as informações de seu e-mail e senha e tente novamente.');
+      setError('Access denied. Please review your email and password information and try again.');
     }
   }
 
-  // Esta função utiliza o hook useEffect para monitorar o estado 'error'. 
-  // Sempre que o estado 'error' for atualizado, ela agendará uma ação para 
-  // limpar o erro após 3 segundos, removendo assim qualquer mensagem de alerta.
+  // This function uses the useEffect hook to monitor the 'error' state. 
+  // Whenever the 'error' state is updated, it schedules an action to 
+  // clear the error after 3 seconds, thus removing any alert message.
   useEffect(() => {
     setTimeout(() => {
       setError(null);
@@ -73,18 +72,18 @@ const Login = () => {
         <ImageContainer>
           <Image 
             src="/images/enco.svg" 
-            alt="Logo da encoparts" 
+            alt="Encoparts Logo" 
             width="114"
             height="28"
           />
         </ImageContainer>
 
-        <Title>Faça login com seu e-mail</Title>
+        <Title>Login with your email</Title>
         <Form onSubmit={handleLogin}>
-          <Input type="email" required={true} name="mail" placeholder="E-mail"onChange={(e: any) => {setEmail(e.target.value)}}/>
-          <Input type="password" required={true} name="password" placeholder="Senha"onChange={(e: any) => {setPassword(e.target.value)}}/>
+          <Input type="email" required={true} name="email" placeholder="Email" onChange={(e: any) => {setEmail(e.target.value)}}/>
+          <Input type="password" required={true} name="password" placeholder="Password" onChange={(e: any) => {setPassword(e.target.value)}}/>
           <ForgetPassword href="/admin/auth/recover-password">Forgot Password?</ForgetPassword>
-          <ButtonLarge>Entrar</ButtonLarge>
+          <ButtonLarge>Log In</ButtonLarge>
         </Form>
       </Card>
     </Main>

@@ -11,17 +11,53 @@ export const HeaderCustom = Styled.header`
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 0 40px;
+    padding: 0 25px;
 
-    @media (max-width: 768px) {
-        display: none;
+    @media (min-width: 769px) {
+        display: none !important;
     }
 `;
 
 export const Nav = Styled.nav`
-    width: auto;
+    width: 260px;
     display: flex;
-    align-items: center;
+    flex-flow: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 1100;
+    padding: 25px;
+    transition: ease 200ms;
+
+    &.active {
+        left: 0;
+
+        &::before {
+            opacity: 1;
+        }
+    }
+    
+    &::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: calc(100% - 260px);
+        height: 100%;
+        z-index: -50;
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transition: ease-in 2s ease-out 100ms;
+
+        li {
+            transition: ease-in 300ms;
+        }
+    }
 `;
 
 export const List = Styled.ul`
@@ -29,11 +65,31 @@ export const List = Styled.ul`
     margin: 0;
     padding: 0;
     display: flex;
+    flex-flow: column;
+`;
+
+export const ListTwo = Styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
     align-items: center;
+
+    .item {
+        margin: 0 0 0 1rem;
+    }
 `;
 
 export const Item = Styled.li`
-    margin: 0 0 0 1rem;
+    margin: 0 0 1.5rem;
+
+    img {
+        margin-right: 15px;
+    }
+`;
+
+export const ItemTwo = Styled.li`
+    margin: 0 0 0 1.5rem;
 `;
 
 export const Link = Styled(link)`
@@ -46,15 +102,14 @@ export const Link = Styled(link)`
     text-decoration: none;
     display: flex;
     align-items: center;
-    margin: 0 1.5rem 0 0;
 `;
 
 export const Image = Styled(image)`
-    margin: 0 .5rem 0 0;
+    margin: 0;
 `;
 
 export const Logo = Styled(link)`
-    margin: 0 2rem 0 0;
+    margin: 0 0 2rem;
 `;
 
 export const ButtonNotification = Styled(link)`
@@ -142,4 +197,38 @@ export const ButtonLogout = Styled.button`
     font-weight: 500;
     line-height: 22px;
     cursor: pointer;
+`;
+
+
+export const Hamburguer = Styled.div`
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    background-color: #FAFAFA;
+    background-image: url('/icons/hamburguer.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all ease-in 200ms;
+    background-size: 25px;
+    cursor: pointer;
+
+    &.active {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1101;
+        width: 40px;
+        height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        box-sizing: border-box;
+        background-image: url('/icons/close.svg');
+    }
+
+    &>img {
+        margin: 0;
+    }
 `;

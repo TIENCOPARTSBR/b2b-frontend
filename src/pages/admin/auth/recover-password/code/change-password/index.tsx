@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form } from "./style";
+import { Main, Card, ImageContainer, Form } from "../../../../../../Styles/admin/auth/recover-password/code/change-password/style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -17,22 +17,22 @@ import { getApiClient } from "@/api/axios";
 import Error from "@/components/Error";
 
 export default function Code() {
-   const router = useRouter()
-   const [password, setPassword] = useState<string | null>(null)
-   const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null)
-   const [error, setError] = useState<string | null>(null)
-   const [userIdIsEmptyLetsRedirect, setUserIdIsEmptyLetsRedirect] = useState<boolean>(false) // se não houve o id do user redirecionar para tela de verificação do código
-   const [redirect, setRedirect] = useState<boolean>(false) // redireciona para o login
-   const [loader, setLoader] = useState<boolean>(false)
-   const { userId } = useRecoverPassword() // Recupera o id do administrador após a verifição do código
+   const router = useRouter();
+   const [password, setPassword] = useState<string | null>(null);
+   const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null);
+   const [error, setError] = useState<string | null>(null);
+   const [userIdIsEmptyLetsRedirect, setUserIdIsEmptyLetsRedirect] = useState<boolean>(false); // if there is no user id, redirect to the code verification screen
+   const [redirect, setRedirect] = useState<boolean>(false); // redirect to login
+   const [loader, setLoader] = useState<boolean>(false);
+   const { userId } = useRecoverPassword(); // Retrieve the administrator's id after code verification
 
    const handleForm = async (e: any) => {
-      e.preventDefault()
-      setLoader(true)
+      e.preventDefault();
+      setLoader(true);
 
-      if (!userId) setUserIdIsEmptyLetsRedirect(true)
+      if (!userId) setUserIdIsEmptyLetsRedirect(true);
 
-      if (password === passwordConfirmation) { // verifica se as senhas são iguais 
+      if (password === passwordConfirmation) { // Check if passwords match
          const data = {
             id: userId,
             password: password,
@@ -40,42 +40,42 @@ export default function Code() {
          }
 
          try {
-            const api = getApiClient(``)
-            const response = await api.post('/admin/recover-password/code/change-password', data)
-            setRedirect(true) // redireciona para o login apos alterar a senha
+            const api = getApiClient(``);
+            const response = await api.post('/admin/recover-password/code/change-password', data);
+            setRedirect(true); // Redirect to login after changing the password
          } catch (error: any) {
-            setError(error?.response?.data?.message || "Ocorreu um erro.")
+            setError(error?.response?.data?.message || "An error occurred.");
          } finally {
-            setLoader(false)
+            setLoader(false);
          }
       } else {
-         setLoader(false)
-         setError('As senhas não correspondem!')
+         setLoader(false);
+         setError('Passwords do not match!');
       }
    }
 
-   // redireciona para tela de confirmação de código
+   // Redirect to the code verification screen
    useEffect(() => {
       if (userIdIsEmptyLetsRedirect) {
-         router.push('/admin/auth/recover-password/code')
+         router.push('/admin/auth/recover-password/code');
       }
-   }, [userIdIsEmptyLetsRedirect])
+   }, [userIdIsEmptyLetsRedirect]);
 
-   // redireciona para o login
+   // Redirect to login
    useEffect(() => {
       if (redirect) {
-         router.push('/admin/auth/login')
+         router.push('/admin/auth/login');
       }
-   }, [redirect])
+   }, [redirect]);
 
-   // Esta função utiliza o hook useEffect para monitorar o estado 'error'. 
-	// Sempre que o estado 'error' for atualizado, ela agendará uma ação para 
-	// limpar o erro após 3 segundos, removendo assim qualquer mensagem de alerta.
-	useEffect(() => {
-		setTimeout(() => {
-			setError(null)
-		}, 5000)
-	}, [error])
+   // This function uses the useEffect hook to monitor the 'error' state.
+   // Whenever the 'error' state is updated, it schedules an action to
+   // clear the error after 3 seconds, removing any alert message.
+   useEffect(() => {
+      setTimeout(() => {
+         setError(null);
+      }, 5000);
+   }, [error]);
 
    return (
       <Main>
@@ -85,17 +85,17 @@ export default function Code() {
             <ImageContainer>
                <Image
                   src="/images/enco.svg"
-                  alt="Logo da encoparts"
+                  alt="Encoparts logo"
                   width="114"
                   height="28"
                />
             </ImageContainer>
 
-            <Title>Redefinir senha</Title>
+            <Title>Reset Password</Title>
             <Form onSubmit={handleForm}>
-               <Input type="password" name="password" placeholder="Senha" onChange={(e: any) => setPassword(e.target.value)} />
-               <Input type="password" name="password_confirmation" placeholder="Confirme a senha" onChange={(e: any) => setPasswordConfirmation(e.target.value)} />
-               <ButtonLarge>Redefinir senha</ButtonLarge>
+               <Input type="password" name="password" placeholder="Password" onChange={(e: any) => setPassword(e.target.value)} />
+               <Input type="password" name="password_confirmation" placeholder="Confirm Password" onChange={(e: any) => setPasswordConfirmation(e.target.value)} />
+               <ButtonLarge>Reset Password</ButtonLarge>
             </Form>
          </Card>
       </Main>

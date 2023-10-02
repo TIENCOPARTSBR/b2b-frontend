@@ -13,17 +13,17 @@ const ModalToDelete = ({ show, onHide, onConfirm }: ModalProps) => {
     return (
         <Modal show={show} onHide={onHide} centered>
             <Modal.Header closeButton>
-                <Title>Excluir</Title>
+                <Title>Delete</Title>
             </Modal.Header>
             <Modal.Body>
-                <Paragraph>Tem certeza de que deseja excluir?</Paragraph>
+                <Paragraph>Are you sure you want to delete?</Paragraph>
             </Modal.Body>
             <Modal.Footer>
                 <ButtonCancel onClick={onHide}>
-                    Cancelar
+                    Cancel
                 </ButtonCancel>
                 <ButtonConfirm onClick={onConfirm}>
-                    Excluir
+                    Delete
                 </ButtonConfirm>
             </Modal.Footer>
             <style jsx global>{`

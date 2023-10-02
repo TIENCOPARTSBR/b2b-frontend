@@ -1,6 +1,6 @@
-import Style from 'styled-components';
+import styled from 'styled-components';
 
-export const SELECT = Style.input`
+export const SELECT = styled.input`
     border-radius: 8px;
     border: 1px solid #EFEFEF;
     background: #FFF;
@@ -10,9 +10,9 @@ export const SELECT = Style.input`
     padding: 15px 20px;
     align-items: center;
     box-sizing: border-box;
-    color: #000;
+    color: #868686;
     font-family: "Inter", sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
@@ -22,5 +22,10 @@ export const SELECT = Style.input`
 
     ::placeholder {
         color: #5B6B79;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 16px;
+        color: #000000;
     }
 `;

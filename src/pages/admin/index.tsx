@@ -5,18 +5,18 @@ import { Main } from "./style";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 
-const Dashbord = () => {
+const Dashboard = () => {
    return (
       <>
          <Header />
          <Main>
-            <Title>Modulo administrador</Title>
+            <Title>Administrator Module</Title>
          </Main>
       </>
    )
 }
 
-export default Dashbord;
+export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
    const { ['adminAuth.token']: token } = parseCookies(ctx);

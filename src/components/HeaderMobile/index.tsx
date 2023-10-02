@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   HeaderCustom,
   Nav,
@@ -12,20 +12,30 @@ import {
   ButtonProfile,
   CardProfile,
   ButtonLogout,
+  ListTwo,
+  Hamburguer,
+  ItemTwo
 } from "./style";
 import { useAuth } from "@/hooks/auth";
 
-const Header = () => {
+const HeaderMobile = () => {
   const { logout } = useAuth();
-  const [cardProfile, setCardProfile] = useState(false);
+  const [cardProfile, setCardProfile] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleLogout = async (ctx: any) => {
     logout();
-  };
+  }
+
+  const Menu = async () => {
+    setOpenMenu(!openMenu);
+  }
 
   return (
     <HeaderCustom>
-      <Nav>
+      <Hamburguer onClick={(e) => {Menu()}} className={openMenu ? "active" : ""}></Hamburguer>
+
+      <Nav className={openMenu ? "active" : ""}>
         {/* Encoparts Logo */}
         <Logo href="/admin">
           <Image
@@ -75,8 +85,8 @@ const Header = () => {
         </List>
       </Nav>
 
-      <List>
-        <Item>
+      <ListTwo>
+        <ItemTwo>
           <ButtonNotification href="/notification">
             <Image
               src="/icons/bell.svg"
@@ -86,10 +96,10 @@ const Header = () => {
             />
             <CountNotification>1</CountNotification>
           </ButtonNotification>
-        </Item>
+        </ItemTwo>
 
-        <Item>
-          <ButtonProfile onClick={() => setCardProfile(true)}>
+        <ItemTwo>
+          <ButtonProfile onClick={() => {setCardProfile(true)}}>
             <Image
               src="/icons/avatar.svg"
               width="45"
@@ -110,10 +120,10 @@ const Header = () => {
               </ButtonLogout>
             </CardProfile>
           )}
-        </Item>
-      </List>
+        </ItemTwo>
+      </ListTwo>
     </HeaderCustom>
   );
 };
 
-export default Header;
+export default HeaderMobile;

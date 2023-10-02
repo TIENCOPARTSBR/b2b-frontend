@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form} from "./style";
+import { Main, Card, ImageContainer, Form } from "../../../../../Styles/admin/auth/recover-password/code/style";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -18,70 +18,70 @@ import { getApiClient } from "@/api/axios";
 
 // step verify code
 export default function Code() {
-	const router = useRouter() // router
-	const { setUserId } = useRecoverPassword() // Gancho da context api recover password
-	const [code, setCode] = useState<string | null>(null)
-	const [error, setError] = useState<string | null>(null)
-	const [redirect, setRedirect] = useState<boolean | null>(false) // Adicione um estado para controlar o redirecionamento
-	const [loader, setLoader] = useState<boolean | null>(false) // Adicione um estado para mostrar o loader
+   const router = useRouter(); // router
+   const { setUserId } = useRecoverPassword(); // Recover password context hook
+   const [code, setCode] = useState<string | null>(null);
+   const [error, setError] = useState<string | null>(null);
+   const [redirect, setRedirect] = useState<boolean | null>(false); // Add state to control redirection
+   const [loader, setLoader] = useState<boolean | null>(false); // Add state to show loader
 
-	const handleForm =  async (e: any) => {
-		e.preventDefault()
-		setLoader(true)
+   const handleForm = async (e: any) => {
+      e.preventDefault();
+      setLoader(true);
 
-		const data = { 
-			code: code 
-		}
-		
-		try {
-			const api = getApiClient(``)
-			const response = await api.post('/admin/recover-password/code', data)
-			setUserId(response?.data?.id_administrador) // armazena o id do usuário no context
-			setRedirect(true) // redireciona para próxima página
-		} catch (error: any) {
-			setError(error?.response?.data?.message || "Ocorreu um erro.")
-		} finally {
-			setLoader(false)
-		}
-	}
+      const data = {
+         code: code,
+      };
 
-	// Esta função utiliza o hook useEffect para monitorar o estado 'redirect'. 
-	// Quando o estados 'redirect' for modifica, será redirecionado para a próxima etapa.
-	useEffect(() => {
-		if (redirect) {
-			router.push('/admin/auth/recover-password/code/change-password')
-		}
-	}, [redirect])
+      try {
+         const api = getApiClient(``);
+         const response = await api.post('/admin/recover-password/code', data);
+         setUserId(response?.data?.id_administrador); // Store user id in context
+         setRedirect(true); // Redirect to the next page
+      } catch (error: any) {
+         setError(error?.response?.data?.message || "An error occurred.");
+      } finally {
+         setLoader(false);
+      }
+   }
 
-	// Esta função utiliza o hook useEffect para monitorar o estado 'error'. 
-	// Sempre que o estado 'error' for atualizado, ela agendará uma ação para 
-	// limpar o erro após 3 segundos, removendo assim qualquer mensagem de alerta.
-	useEffect(() => {
-		setTimeout(() => {
-			setError(null)
-		}, 5000);
-	}, [error])
+   // This function uses the useEffect hook to monitor the 'redirect' state.
+   // When the 'redirect' state is modified, it will be redirected to the next step.
+   useEffect(() => {
+      if (redirect) {
+         router.push('/admin/auth/recover-password/code/change-password');
+      }
+   }, [redirect]);
 
-	return (
-		<Main>
-			<Card>
-				{loader && (<Loader/>)}
-				{error && (<Error error={error}/>)}
-				<ImageContainer>
-					<Image 
-						src="/images/enco.svg" 
-						alt="Logo da encoparts" 
-						width="114"
-						height="28"
-					/>
-				</ImageContainer>
-				<Title>Código de verificação </Title>
-				<Paragraph>"Por favor, verifique o e-mail de redefinição de senha, onde você encontrará um código de seis dígitos."</Paragraph>
-				<Form onSubmit={handleForm}>
-					<Input type="text" name="code" placeholder="Código"onChange={(e: any) => setCode(e.target.value)}/>
-					<ButtonLarge>Confirmar</ButtonLarge>
-				</Form>
-			</Card>
-		</Main>
-	)
+   // This function uses the useEffect hook to monitor the 'error' state.
+   // Whenever the 'error' state is updated, it schedules an action to
+   // clear the error after 3 seconds, removing any alert message.
+   useEffect(() => {
+      setTimeout(() => {
+         setError(null);
+      }, 5000);
+   }, [error]);
+
+   return (
+      <Main>
+         <Card>
+            {loader && (<Loader />)}
+            {error && (<Error error={error} />)}
+            <ImageContainer>
+               <Image
+                  src="/images/enco.svg"
+                  alt="Encoparts logo"
+                  width="114"
+                  height="28"
+               />
+            </ImageContainer>
+            <Title>Verification Code</Title>
+            <Paragraph>"Please check the password reset email, where you will find a six-digit code."</Paragraph>
+            <Form onSubmit={handleForm}>
+               <Input type="text" name="code" placeholder="Code" onChange={(e: any) => setCode(e.target.value)} />
+               <ButtonLarge>Confirm</ButtonLarge>
+            </Form>
+         </Card>
+      </Main>
+   )
 }

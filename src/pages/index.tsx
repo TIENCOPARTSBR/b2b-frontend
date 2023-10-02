@@ -4,7 +4,7 @@ const Constructions = () => {
     return (
         <Main>
             <H1>System under construction</H1>
-            <Admin href="/admin">Módulo administrador</Admin>
+            <Admin href="/admin">Administrator Module</Admin>
         </Main>
     )
 }

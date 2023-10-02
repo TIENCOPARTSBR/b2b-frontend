@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react"
-import { Main, Group, Form, GroupForm, Label } from "./style"
+import { Main, Group, Form, GroupForm, Label } from "../../../../Styles/admin/users/edit/style"
 import { useRouter } from "next/router"
 import { parseCookies } from "nookies"
 import { GetServerSideProps } from "next"
@@ -16,6 +16,7 @@ import Loader from "@/components/Loader"
 // api 
 import { getApiClient } from "@/api/axios"
 import Error from "@/components/Error"
+import HeaderMobile from "@/components/HeaderMobile"
 
 type TypeData = {
     name: string | null
@@ -63,13 +64,14 @@ const EditUser = ({user}: any) => {
                 await api.put('/admin/user/'+ userId, data)
                 setRedirect(true)
               } catch (error: any) {
-                setError(error?.response?.data?.message || "Não foi possível atualizar o usuário.")
+                setError(error?.response?.data?.message || "Unable to update user.")
               } finally {
                 setLoader(false)
               }
 
         } else {
-            setError('As senhas não conferem.')
+            setLoader(false)
+            setError("Passwords don't match.")
         }
     }
 
@@ -78,10 +80,10 @@ const EditUser = ({user}: any) => {
             name: 'Home',
             link: '/admin'
         }, {
-            name: 'Usuários',
+            name: 'Users',
             link: '/admin/users'
         }, {
-            name: 'Editar',
+            name: 'Edit',
             link: '/admin/users/edit'
         },
     ]
@@ -89,36 +91,37 @@ const EditUser = ({user}: any) => {
     return (
         <>
             <Header/>
+            <HeaderMobile/>
             {loader && (<Loader></Loader>)}
             {error && (<Error error={error}/>)}
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
-                    <Title>Editar usuário</Title>
+                    <Title>Edit User</Title>
                 </Group>
 
                 <Form onSubmit={hadleUpdateUser}>
                     <GroupForm>
                         <Label>Nome</Label>
-                        <Input required={true} type="text" placeholder="Digite seu nome" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
+                        <Input required={true} type="text" placeholder="Type your name" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
                     </GroupForm>
                     
                     <GroupForm>
-                        <Label>E-mail</Label>
-                        <Input required={true} type="email" placeholder="Digite seu e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
+                        <Label>Email</Label>
+                        <Input required={true} type="email" placeholder="Type your e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Senha</Label>
-                        <Input required={false} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPassword(e.target.value)}}/>
+                        <Label>Password</Label>
+                        <Input required={false} type="password" placeholder="Type your password" onChange={(e: any) => {setPassword(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
-                        <Label>Confirme a senha</Label>
-                        <Input required={false} type="password" placeholder="Digite sua senha" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
+                        <Label>Confirm the Password</Label>
+                        <Input required={false} type="password" placeholder="Type your password" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 
-                    <ButtonSmall name="Atualizar"/>
+                    <ButtonSmall name="Update"/>
                 </Form>
             </Main>
         </>

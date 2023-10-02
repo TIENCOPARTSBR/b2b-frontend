@@ -14,7 +14,7 @@ const Success = ({success}: SuccessProps) => {
                 alt="icon success"
             />
             <div>
-                <H2>Sucesso</H2>
+                <H2>Success</H2>
                 <P>{success}</P>
             </div>
         </SUCCESS>

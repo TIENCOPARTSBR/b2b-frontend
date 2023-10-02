@@ -1,7 +1,7 @@
-import Styled from "styled-components";
+import styled from "styled-components";
 import Link from "next/link";
 
-export const Main = Styled.main`
+export const Main = styled.main`
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -18,7 +18,7 @@ export const Main = Styled.main`
   }
 `;
 
-export const Card = Styled.div`
+export const Card = styled.div`
   display: flex;
   width: 542px;
   height: auto;
@@ -41,16 +41,15 @@ export const Card = Styled.div`
   }
 `;
 
-export const ImageContainer = Styled.div`
+export const ImageContainer = styled.div`
   margin: 0 0 1rem;
 `;
 
-export const ButtonLoggin = Styled(Link)`
+export const ButtonLoggin = styled(Link)`
   color: #FBBB21;
   text-align: center;
   font-family: "Inter", sans-serif;
   font-size: 16px;
-  font-Styled: normal;
   font-weight: 500;
   line-height: 22px;
   text-decoration: none;
@@ -58,12 +57,6 @@ export const ButtonLoggin = Styled(Link)`
   display: block;
 `;
 
-export const Form = Styled.form`
+export const Form = styled.form`
   width: 100%;
 `;
-
-// para conseguir rodar o projeto
-const StyleRecoverPassword = () => {
-  return
-}
-export default StyleRecoverPassword;

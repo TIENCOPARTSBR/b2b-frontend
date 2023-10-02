@@ -1,11 +1,15 @@
-import Style from "styled-components";
+import styled from "styled-components";
 
-export const Main = Style.main`
-    padding: 40px;
+export const Main = styled.main`
+    padding: 25px;
+
+    @media(min-width: 768px) {
+        padding: 40px;
+    }
 `;
 
-export const Group = Style.div`
-    width: 100%;
+export const Group = styled.div`
+    width: min-content;
     margin: 0 0 2rem;
 
     h1 {
@@ -13,10 +17,10 @@ export const Group = Style.div`
     }
 `;
 
-export const Form = Style.form`
+export const Form = styled.form`
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     flex-flow: wrap;
     padding: 30px;
@@ -30,7 +34,7 @@ export const Form = Style.form`
     }
 `;
 
-export const GroupForm = Style.div`
+export const GroupForm = styled.div`
     width: 100%;
     margin: 0 0 .5rem;
 
@@ -39,7 +43,7 @@ export const GroupForm = Style.div`
     }
 `;
 
-export const Label = Style.label`
+export const Label = styled.label`
     color: #5B6B79;
     font-family: "Inter", sans-serif;
     font-size: 14px;
@@ -50,9 +54,3 @@ export const Label = Style.label`
     margin: 0 0 .5rem;
     display: block;
 `;
-
-// para conseguir rodar o projeto
-const StyleRecoverPassword = () => {
-    return
-  }
-export default StyleRecoverPassword;

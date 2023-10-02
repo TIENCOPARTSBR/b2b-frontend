@@ -8,6 +8,7 @@ export const Nav = Styled.nav`
 `;
 
 export const Link = Styled(link)`
+    width: 100%;
     color: #5B6B79;
     font-family: "Inter", sans-serif;
     font-size: 14px;
@@ -17,7 +18,8 @@ export const Link = Styled(link)`
     margin: 0 1.5rem 0 0;
     text-decoration: none;
     position: relative;
-
+    white-space: nowrap;
+    
     &::before {
         content: '/';
         position: absolute;

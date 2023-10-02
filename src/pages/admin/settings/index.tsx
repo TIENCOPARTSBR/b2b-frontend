@@ -1,5 +1,5 @@
 // assets
-import { Main, Group, Card, Label } from "./style"
+import { Main, Group, Card, Label } from "../../../Styles/admin/settings/style"
 import { useEffect, useState } from "react"
 import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
@@ -16,13 +16,14 @@ import Header from "@/components/Header"
 
 // api
 import { getApiClient } from "@/api/axios"
+import HeaderMobile from "@/components/HeaderMobile"
 
 const breadcump = [
     {
         name: 'Home',
         link: '/admin'
     }, {
-        name: 'Configurações',
+        name: 'Settings',
         link: '/admin/config'
     }
 ]
@@ -95,20 +96,21 @@ const Config = (config: any) => {
             {success && (<Success success={success}/>)}
             {error && (<Error error={error}/>)}
             <Header/>
+            <HeaderMobile/>
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
-                    <Title>Configurações</Title>
+                    <Title>Settings</Title>
                 </Group>
 
                 <Card onSubmit={handleDateCost}>
-                    <Label>Data de custo</Label>
+                    <Label>Cost date</Label>
                     <Input type="date" value={dateCost} onChange={(e: any) => {setDateCost(e.target.value)}}/>
                     <ButtonSmall name="Salvar" />
                 </Card>
 
                 <Card onSubmit={handleEmailQuotation}>
-                    <Label>E-mail de cotações</Label>
+                    <Label>Quotation email</Label>
                     <Input type="email" value={emailQuotation} placeholder="example@encoparts.com" onChange={(e: any) => {setEmailQuotation(e.target.value)}}/>
                     <ButtonSmall name="Salvar" />
                 </Card>
