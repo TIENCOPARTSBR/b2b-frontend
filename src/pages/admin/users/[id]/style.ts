@@ -50,3 +50,9 @@ export const Label = Style.label`
     margin: 0 0 .5rem;
     display: block;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;

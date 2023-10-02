@@ -1,9 +1,13 @@
 import Styled from "styled-components";
 
 export const Main = Styled.main`
-    padding: 40px;
+    padding: 25px;
     display: flex;
     flex-flow: wrap;
+
+    @media (min-width: 768px) {
+        padding: 40px;
+    }
 `;
 
 export const CardHeader = Styled.div`
@@ -28,3 +32,9 @@ export const ButtonAction = Styled.button`
     box-shadow: none;
     border: none;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;

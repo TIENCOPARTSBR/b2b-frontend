@@ -26,10 +26,10 @@ type TypeData = {
 const EditUser = ({user}: any) => {
     const router = useRouter()
     const userId = router?.query?.id
-    const [name, setName] = useState<string | null>(user?.name)
-    const [email, setEmail] = useState<string | null>(user?.email)
-    const [password, setPassword] = useState<string | null>(null)
-    const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null)
+    const [name, setName] = useState<string>(user?.name)
+    const [email, setEmail] = useState<string>(user?.email)
+    const [password, setPassword] = useState<string>("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
     const [redirect, setRedirect] = useState(false)
     const [loader, setLoader] = useState(false)

@@ -5,11 +5,17 @@ import styled from 'styled-components';
 const TitleApp = styled.h1`
     font-family: 'Inter', sans-serif;
     color: #1D2630;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    line-height: 28px;
+    line-height: 21px;
     margin: 0;
+
+    @media(min-width: 768px) {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 500;
+    }
 `;
 
 type TitleProps = {

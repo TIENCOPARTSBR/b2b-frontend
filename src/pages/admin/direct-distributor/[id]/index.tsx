@@ -42,11 +42,11 @@ type TypeData = {
 const EditDirectDistributor = ({directDistributor}: any) => {
     const router = useRouter()
     const userId = router?.query?.id
-    const [name, setName] = useState<string | null>(directDistributor.name) // nome da empresa
-    const [allowQuotation, setAllowQuotation] = useState<string | null>(directDistributor.allow_quotation) // permitir cotações
-    const [allowPartner, setAllowPartner] = useState<string | null>(directDistributor.allow_partner) // permitir parceiros
-    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string | null>(directDistributor.sisrev_brazil_code) // código do cliente no sisrev brasil
-    const [sisrevEuaCode, setSisrevEuaCode] = useState<string | null>(directDistributor.sisrev_eua_code) // código do cliente no sisrev llc
+    const [name, setName] = useState<string>(directDistributor.name) // nome da empresa
+    const [allowQuotation, setAllowQuotation] = useState<string>(directDistributor.allow_quotation) // permitir cotações
+    const [allowPartner, setAllowPartner] = useState<string>(directDistributor.allow_partner) // permitir parceiros
+    const [sisrevBrazilCode, setSisrevBrazilCode] = useState<string>(directDistributor.sisrev_brazil_code) // código do cliente no sisrev brasil
+    const [sisrevEuaCode, setSisrevEuaCode] = useState<string>(directDistributor.sisrev_eua_code) // código do cliente no sisrev llc
     const [error, setError] = useState<string | null>(null)
     const [redirect, setRedirect] = useState<boolean>(false)
     const [loader, setLoader] = useState<boolean>(false)

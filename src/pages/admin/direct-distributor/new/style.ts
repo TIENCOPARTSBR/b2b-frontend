@@ -75,3 +75,9 @@ export const Select = Style.select`
         color: #5B6B79;
     }
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;

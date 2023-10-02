@@ -6,11 +6,16 @@ const PARAGRAPH = Style.p`
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 22px;
     width: 100%;
     text-align: left;
-    margin: 0 0 2rem;
+    margin: 0 0 1.5rem;
+
+    @media(min-width: 768px) {
+        font-weight: 500;
+        margin: 0 0 2rem;
+    }
 `;
 
 type ParagraphProps = {

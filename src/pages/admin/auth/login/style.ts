@@ -21,8 +21,7 @@ export const Main = Styled.main`
 export const Card = Styled.div`
   display: flex;
   width: 542px;
-  height: 476px;
-  padding: 50px 40px 40px;
+  padding: 40px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -34,6 +33,11 @@ export const Card = Styled.div`
 
   h1 {
     margin: 0 0 1.5rem;
+  }
+
+  @media(min-width: 768px) {
+    height: 476px;
+    padding: 50px 40px 40px;
   }
 `;
 
@@ -63,3 +67,9 @@ export const ForgetPassword = Styled(Link)`
 export const Form = Styled.form`
   width: 100%;
 `;
+
+// para conseguir rodar o projeto
+const StyledLogin = () => {
+  return
+}
+export default StyledLogin;

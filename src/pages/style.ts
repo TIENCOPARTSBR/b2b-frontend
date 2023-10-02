@@ -31,3 +31,9 @@ export const Admin = styled.a`
     line-height: 22px;
     color: #414141;
 `;
+
+// para conseguir rodar o projeto
+const StyleRecoverPassword = () => {
+    return
+  }
+export default StyleRecoverPassword;
