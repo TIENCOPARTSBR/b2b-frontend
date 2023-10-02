@@ -106,13 +106,13 @@ const Config = (config: any) => {
                 <Card onSubmit={handleDateCost}>
                     <Label>Cost date</Label>
                     <Input type="date" value={dateCost} onChange={(e: any) => {setDateCost(e.target.value)}}/>
-                    <ButtonSmall name="Salvar" />
+                    <ButtonSmall name="Save" />
                 </Card>
 
                 <Card onSubmit={handleEmailQuotation}>
                     <Label>Quotation email</Label>
                     <Input type="email" value={emailQuotation} placeholder="example@encoparts.com" onChange={(e: any) => {setEmailQuotation(e.target.value)}}/>
-                    <ButtonSmall name="Salvar" />
+                    <ButtonSmall name="Save" />
                 </Card>
             </Main>
         </>
