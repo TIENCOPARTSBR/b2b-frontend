@@ -77,6 +77,11 @@ export const Td = styled.td`
   &:last-child {
     text-align: right;
   }
+
+  @media(max-width: 768px) {
+    width: auto !important;
+    white-space: nowrap !important;
+  }
 `;
 
 export const FormControl = styled.input`
@@ -215,6 +220,10 @@ export const Tbody = styled.tbody`
     border-right-color: rgba(219, 224, 229, 0.65);
     border-left-color: rgba(219, 224, 229, 0.65);
     padding: 0.8rem 1.5rem!important;
+
+    @media(max-width: 768px) {
+      width: auto !important;
+    }
   }
 `;
 
@@ -279,4 +288,27 @@ export const TitleCard = styled.h2`
   font-family: "Inter", sans-serif;
   display: block;
   color: rgb(29, 38, 48);
+`;
+
+export const ContainerTable = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+
+  /* Estilizando a barra de rolagem horizontal */
+  &::-webkit-scrollbar {
+    height: 12px; /* Altura da barra de rolagem horizontal */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f8f8f8; /* Cor de fundo da área da barra de rolagem */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1; /* Cor da barra de rolagem */
+    border-radius: 6px; /* Borda arredondada da barra de rolagem */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #f1f1f1; /* Cor da barra de rolagem ao passar o mouse */
+  }
 `;

@@ -10,6 +10,10 @@ export const Main = styled.main`
     align-items: center;
     justify-content: center;
     flex-flow: column;
+
+    .modal {
+        padding-left: 0 !important;
+    }
 `;
 
 export const H1 = styled.h1`

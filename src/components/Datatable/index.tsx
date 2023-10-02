@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useGlobalFilter } from "react-table";
-import { Td, FormControl, CardBody, Card, CardHead, Thead, Tbody, PageCount, CardFooter, ButtonPagination, Table, IconSearch } from "./style";
+import { 
+  Td, 
+  FormControl, 
+  CardBody, 
+  Card, 
+  CardHead, 
+  Thead, 
+  Tbody, 
+  PageCount, 
+  CardFooter, 
+  ButtonPagination, 
+  Table, 
+  IconSearch,
+  ContainerTable
+} from "./style";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface DataTableProps {
@@ -74,36 +88,37 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
           </div>
         </CardHead>
 
-        <Table {...getTableProps()} className="table caption-top">
-          <Thead className="thead-dark">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <Td {...column.getHeaderProps()} style={{ width: column.width }}>
-                    {column.render('Header')}
-                  </Td>
-                ))}
-              </tr>
-            ))}
-          </Thead>
-          <Tbody {...getTableBodyProps()}>
-            {page.map((row: any) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell: any) => {
-                    return (
-                      <Td {...cell.getCellProps()} style={{ width: cell.width }}>
-                        {cell.render('Cell')}
-                      </Td>
-                    );
-                  })}
+        <ContainerTable>
+          <Table {...getTableProps()} className="table caption-top">
+            <Thead className="thead-dark">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <Td {...column.getHeaderProps()} style={{ width: column.width }}>
+                      {column.render('Header')}
+                    </Td>
+                  ))}
                 </tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-
+              ))}
+            </Thead>
+            <Tbody {...getTableBodyProps()}>
+              {page.map((row: any) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell: any) => {
+                      return (
+                        <Td {...cell.getCellProps()} style={{ width: cell.width }}>
+                          {cell.render('Cell')}
+                        </Td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </ContainerTable>
         <CardFooter className="d-flex justify-content-between">
           <PageCount>
             Page{' '}

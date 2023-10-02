@@ -28,14 +28,16 @@ export const Nav = Styled.nav`
     left: -100%;
     height: 100%;
     background: #ffffff;
-    z-index: 1100;
     padding: 25px;
     transition: ease 200ms;
+    z-index: -10;
 
     &.active {
         left: 0;
+        z-index: 1100;
 
         &::before {
+            z-index: 1;
             opacity: 1;
         }
     }
@@ -53,6 +55,7 @@ export const Nav = Styled.nav`
         background: rgba(0, 0, 0, 0.15);
         opacity: 0;
         transition: ease-in 2s ease-out 100ms;
+        z-index: -10;
 
         li {
             transition: ease-in 300ms;
