@@ -16,12 +16,16 @@ import {
 import { useAuth } from "@/hooks/auth";
 
 const Header = () => {
-  const { logout } = useAuth();
-  const [cardProfile, setCardProfile] = useState(false);
+  const { logout } = useAuth()
+  const [toggleCardProfile, setToggleCardProfile] = useState(false)
 
   const handleLogout = async (ctx: any) => {
-    logout();
+    logout()
   };
+
+  const toggleButton = async () => {
+    setToggleCardProfile(!toggleCardProfile)
+  }
 
   return (
     <HeaderCustom>
@@ -89,7 +93,7 @@ const Header = () => {
         </Item>
 
         <Item>
-          <ButtonProfile onClick={() => setCardProfile(true)}>
+          <ButtonProfile onClick={toggleButton}>
             <Image
               src="/icons/avatar.svg"
               width="45"
@@ -97,7 +101,7 @@ const Header = () => {
               alt="User icon"
             />
           </ButtonProfile>
-          {cardProfile && (
+          {toggleCardProfile && (
             <CardProfile>
               <ButtonLogout onClick={handleLogout}>
                 <Image
