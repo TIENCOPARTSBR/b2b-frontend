@@ -21,6 +21,7 @@ import Error from "@/components/Error" // Importing the "Error" component
 // api
 import { getApiClient } from "@/api/axios" // Importing the "getApiClient" function
 import HeaderMobile from "@/components/HeaderMobile"
+import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 type User = {
    id: number
@@ -141,8 +142,8 @@ const Users = ({user}: UserProps) => {
          <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={HandleUserDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error}/>} {/* Error component */}
          {loader && <Loader />} {/* Loading component */}
-         <HeaderMobile /> 
-         <Header />
+         <Header list={ListHeaderAdmin}/>
+         <HeaderMobile list={ListHeaderAdmin}/>
          <Main>
             <CardHeader>
                <Group>

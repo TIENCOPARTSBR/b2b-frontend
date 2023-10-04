@@ -13,20 +13,33 @@ import {
   CardProfile,
   ButtonLogout,
 } from "./style";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/direct-distributor/auth";
 
-type HeaderListItem = {
-  name: string;
-  url: string;
-  icon: string;
-};
+const ListHeader = [
+  {
+    name: "Users",
+    icon: "/icons/user.svg",
+    url: "/users",
+  },
+  {
+    name: "Distributor",
+    icon: "/icons/distributor.svg",
+    url: "/distributors",
+  },
+  {
+    name: 'Products',
+    icon: '/icons/product.svg',
+    url: '/products',
+  },
+  {
+    name: 'Quotations',
+    icon: '/icons/quotation.svg',
+    url: '/quotations',
+  }
+];
 
-type HeaderProps = {
-  list: HeaderListItem[];
-};
-
-const Header = ({list}: HeaderProps) => {
-  const { logout } = useAuth()
+const Header = () => {
+  const { user, logout } = useAuth()
   const [toggleCardProfile, setToggleCardProfile] = useState(false)
 
   const handleLogout = async (ctx: any) => {
@@ -51,7 +64,7 @@ const Header = ({list}: HeaderProps) => {
         </Logo>
 
         <List>
-          {list.map((item, key) => (
+          {ListHeader.map((item, key) => (
             <Item>
               <Link key={key} href={item.url}>
                 <Image

@@ -17,6 +17,7 @@ import Loader from "@/components/Loader"
 import { getApiClient } from "@/api/axios"
 import Error from "@/components/Error"
 import HeaderMobile from "@/components/HeaderMobile"
+import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 type TypeData = {
     name: string | null
@@ -90,8 +91,8 @@ const EditUser = ({user}: any) => {
 
     return (
         <>
-            <Header/>
-            <HeaderMobile/>
+            <Header list={ListHeaderAdmin}/>
+            <HeaderMobile list={ListHeaderAdmin}/>
             {loader && (<Loader></Loader>)}
             {error && (<Error error={error}/>)}
             <Main>

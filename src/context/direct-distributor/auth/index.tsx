@@ -1,11 +1,14 @@
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import React, { createContext, useState, ReactNode, useEffect } from "react";
-import { getApiClient } from "@/api/axios";
 import Router from "next/router";
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios";
 
 type User = {
+    id: string;
+    direct_distributor_id: string;
     name: string;
     email: string;
+    type: string;
 }
 
 type AuthContextType = {
@@ -28,17 +31,6 @@ interface RecoverPasswordProviderProps {
 export const AuthProviderDirectDistributor: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
 
-    useEffect(() => {
-        const { ['directDistributorAuth.token']: token } = parseCookies()
-    
-        if (token) {
-            user: {
-                name: 'Daniel';
-                email: 'Daniel@encoparts.com';
-            }
-        }
-    }, [])
-    
     async function signIn({ email, password }: SignInData) {
         const data = {
             email: email,
@@ -46,14 +38,25 @@ export const AuthProviderDirectDistributor: React.FC<RecoverPasswordProviderProp
         }
 
         try {
-            const api = getApiClient(``);
+            const api = getApiDirectDistributor(``);
             const response = await api.post('/login', data);
+            console.log(response);
             
             const token = response?.data?.token;
+
+            const UserData = {
+                id: response?.data?.data?.id,
+                direct_distributor_id: response?.data?.data?.direct_distributor_id,
+                name: response?.data?.data?.name,
+                email: response?.data?.data?.email,
+                type: response?.data?.data?.type,
+            }
         
+            if (UserData) setUser(UserData);
+
             // Set
             setCookie(undefined, 'directDistributorAuth.token', token, {
-                maxAge: 30 * 24 * 60 * 60,
+                maxAge: 3600,
                 path: '/',
             });
         

@@ -21,6 +21,7 @@ import Error from "@/components/Error"
 // api
 import { getApiClient } from "@/api/axios"
 import HeaderMobile from "@/components/HeaderMobile"
+import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 
 type DirectDistributor = {
@@ -141,8 +142,8 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
          <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={handleDirectDistributorDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error} />} {/* Error component */}
          {loader && <Loader />} {/* Loading component */}
-         <Header/>
-         <HeaderMobile/>
+         <Header list={ListHeaderAdmin}/>
+         <HeaderMobile list={ListHeaderAdmin}/>
          <Main>
             <CardHeader>
                <Group>

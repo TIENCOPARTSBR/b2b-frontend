@@ -14,7 +14,7 @@ import Error from "@/components/Error";
 
 // context
 import { useRecoverPassword } from "@/hooks/direct-distributor/recoverPassword";
-import { getApiClient } from "@/api/axios";
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios";
 
 // step verify code
 export default function Code() {
@@ -35,7 +35,7 @@ export default function Code() {
       };
 
       try {
-         const api = getApiClient(``);
+         const api = getApiDirectDistributor(``);
          const response = await api.post('/recover-password/code', data);
          setUserId(response?.data?.id_administrador); // Store user id in context
          setRedirect(true); // Redirect to the next page

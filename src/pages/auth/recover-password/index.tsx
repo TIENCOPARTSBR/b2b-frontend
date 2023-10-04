@@ -13,7 +13,7 @@ import Loader from "@/components/Loader";
 import Error from "@/components/Error";
 
 // api
-import { getApiClient } from "@/api/axios";
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios";
 
 export default function RecoverPassword() {
    const router = useRouter();
@@ -31,7 +31,7 @@ export default function RecoverPassword() {
       }
 
       try {
-         const api = getApiClient(``);
+         const api = getApiDirectDistributor(``);
          await api.post('/recover-password', data);
          setRedirect(true);
       } catch (error: any) {  

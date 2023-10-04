@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   HeaderCustom,
   Nav,
@@ -12,34 +12,53 @@ import {
   ButtonProfile,
   CardProfile,
   ButtonLogout,
+  ListTwo,
+  Hamburguer,
+  ItemTwo
 } from "./style";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/direct-distributor/auth";
 
-type HeaderListItem = {
-  name: string;
-  url: string;
-  icon: string;
-};
+const ListHeader = [
+  {
+    name: "Users",
+    icon: "/icons/user.svg",
+    url: "/users",
+  },
+  {
+    name: "Distributor",
+    icon: "/icons/distributor.svg",
+    url: "/distributors",
+  },
+  {
+    name: 'Products',
+    icon: '/icons/product.svg',
+    url: '/products',
+  },
+  {
+    name: 'Quotations',
+    icon: '/icons/quotation.svg',
+    url: '/quotations',
+  }
+];
 
-type HeaderProps = {
-  list: HeaderListItem[];
-};
-
-const Header = ({list}: HeaderProps) => {
-  const { logout } = useAuth()
-  const [toggleCardProfile, setToggleCardProfile] = useState(false)
+const HeaderMobile = () => {
+  const { logout } = useAuth();
+  const [cardProfile, setCardProfile] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleLogout = async (ctx: any) => {
-    logout()
-  };
+    logout();
+  }
 
-  const toggleButton = async () => {
-    setToggleCardProfile(!toggleCardProfile)
+  const Menu = async () => {
+    setOpenMenu(!openMenu);
   }
 
   return (
     <HeaderCustom>
-      <Nav>
+      <Hamburguer onClick={(e) => {Menu()}} className={openMenu ? "active" : ""}></Hamburguer>
+
+      <Nav className={openMenu ? "active" : ""}>
         {/* Encoparts Logo */}
         <Logo href="/admin">
           <Image
@@ -51,7 +70,7 @@ const Header = ({list}: HeaderProps) => {
         </Logo>
 
         <List>
-          {list.map((item, key) => (
+          {ListHeader.map((item, key) => (
             <Item>
               <Link key={key} href={item.url}>
                 <Image
@@ -67,8 +86,8 @@ const Header = ({list}: HeaderProps) => {
         </List>
       </Nav>
 
-      <List>
-        <Item>
+      <ListTwo>
+        <ItemTwo>
           <ButtonNotification href="/notification">
             <Image
               src="/icons/bell.svg"
@@ -78,10 +97,10 @@ const Header = ({list}: HeaderProps) => {
             />
             <CountNotification>1</CountNotification>
           </ButtonNotification>
-        </Item>
+        </ItemTwo>
 
-        <Item>
-          <ButtonProfile onClick={toggleButton}>
+        <ItemTwo>
+          <ButtonProfile onClick={() => {setCardProfile(true)}}>
             <Image
               src="/icons/avatar.svg"
               width="45"
@@ -89,7 +108,7 @@ const Header = ({list}: HeaderProps) => {
               alt="User icon"
             />
           </ButtonProfile>
-          {toggleCardProfile && (
+          {cardProfile && (
             <CardProfile>
               <ButtonLogout onClick={handleLogout}>
                 <Image
@@ -102,10 +121,10 @@ const Header = ({list}: HeaderProps) => {
               </ButtonLogout>
             </CardProfile>
           )}
-        </Item>
-      </List>
+        </ItemTwo>
+      </ListTwo>
     </HeaderCustom>
   );
 };
 
-export default Header;
+export default HeaderMobile;

@@ -5,12 +5,13 @@ import { Main } from "./style";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import HeaderMobile from "@/components/HeaderMobile";
+import { ListHeaderAdmin } from "@/service/HeaderAdmin";
 
 const Dashboard = () => {
    return (
       <>
-         <Header />
-         <HeaderMobile />
+         <Header list={ListHeaderAdmin}/>
+         <HeaderMobile list={ListHeaderAdmin}/>
          <Main>
             <Title>Administrator Module</Title>
          </Main>

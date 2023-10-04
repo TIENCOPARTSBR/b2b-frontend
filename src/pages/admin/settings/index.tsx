@@ -17,6 +17,7 @@ import Header from "@/components/Header"
 // api
 import { getApiClient } from "@/api/axios"
 import HeaderMobile from "@/components/HeaderMobile"
+import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 const breadcump = [
     {
@@ -95,8 +96,8 @@ const Config = (config: any) => {
             {loader && (<Loader></Loader>)}
             {success && (<Success success={success}/>)}
             {error && (<Error error={error}/>)}
-            <Header/>
-            <HeaderMobile/>
+            <Header list={ListHeaderAdmin}/>
+            <HeaderMobile list={ListHeaderAdmin}/>
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>

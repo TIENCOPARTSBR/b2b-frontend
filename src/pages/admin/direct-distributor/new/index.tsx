@@ -17,6 +17,7 @@ import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
 import Error from "@/components/Error"
 import HeaderMobile from "@/components/HeaderMobile"
+import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 type TypeData = {
     name: string | null
@@ -89,8 +90,8 @@ const NewDirectDistributor = () => {
         <>
             {loader && (<Loader></Loader>)}
             {error && (<Error error={error}/>)}
-            <Header/>
-            <HeaderMobile/>
+            <Header list={ListHeaderAdmin}/>
+            <HeaderMobile list={ListHeaderAdmin}/>
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>

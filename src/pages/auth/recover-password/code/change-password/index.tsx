@@ -8,12 +8,12 @@ import { useRouter } from "next/router"
 import Input from "@/components/Input"
 import Title from "@/components/Title"
 import ButtonLarge from "@/components/ButtonLarge"
+import Loader from "@/components/Loader"
+import Error from "@/components/Error"
 
 // api
 import { useRecoverPassword } from "@/hooks/direct-distributor/recoverPassword"
-import Loader from "@/components/Loader"
-import { getApiClient } from "@/api/axios"
-import Error from "@/components/Error"
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios"
 
 export default function Code() {
    const router = useRouter()
@@ -40,7 +40,7 @@ export default function Code() {
          }
 
          try {
-            const api = getApiClient(``);
+            const api = getApiDirectDistributor(``);
             await api.post('/recover-password/code/change-password', data)
             setRedirect(true) // Redirect to login after changing the password
          } catch (error: any) {

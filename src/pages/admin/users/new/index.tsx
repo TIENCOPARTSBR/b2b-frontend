@@ -17,6 +17,7 @@ import Loader from "@/components/Loader";
 // api 
 import { getApiClient } from "@/api/axios";
 import HeaderMobile from "@/components/HeaderMobile";
+import { ListHeaderAdmin } from "@/service/HeaderAdmin";
 
 const NewUser = () => {
     const router = useRouter();
@@ -82,8 +83,8 @@ const NewUser = () => {
         <>
             {error && <Error error={error}/>} {/* Error component */}
             {loader && <Loader />} {/* Loading component */}
-            <Header/>
-            <HeaderMobile/>
+            <Header list={ListHeaderAdmin}/>
+            <HeaderMobile list={ListHeaderAdmin}/>
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>

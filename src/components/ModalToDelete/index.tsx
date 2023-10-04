@@ -1,5 +1,5 @@
 import React from "react";
-import { Title, ButtonConfirm, ButtonCancel, Paragraph } from "./style";
+import { Title, ButtonConfirm, ButtonCancel, Paragraph, ModalCustom } from "./style";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -11,7 +11,7 @@ interface ModalProps {
 
 const ModalToDelete = ({ show, onHide, onConfirm }: ModalProps) => {
     return (
-        <Modal show={show} onHide={onHide} centered>
+        <ModalCustom show={show} onHide={onHide} centered className="aqui">
             <Modal.Header closeButton>
                 <Title>Delete</Title>
             </Modal.Header>
@@ -31,7 +31,7 @@ const ModalToDelete = ({ show, onHide, onConfirm }: ModalProps) => {
                     font-size: 12px; /* Tamanho personalizado */
                 }
             `}</style>
-        </Modal>
+        </ModalCustom>
     )
 }
 

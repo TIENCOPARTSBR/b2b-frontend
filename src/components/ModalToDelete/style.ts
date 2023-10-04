@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Modal } from 'react-bootstrap';
 
 export const Title = styled.h2`
   margin-bottom: 20px;
@@ -54,4 +55,17 @@ export const Paragraph = styled.p`
   font-weight: 400;
   line-height: 22px;
   margin: 0;
+`;
+
+export const ModalCustom = styled(Modal)`
+  transform: translateZ(50%) translateX(-50%) rotateY(180deg);
+  transform-style: preserve-3d;
+  transform-origin: 0 100%;
+  opacity: 0;
+  transition: all 0.3s;
+
+  &.show {
+    transform: translateZ(0px) translateX(0%) rotateY(0deg);
+    opacity: 1;
+  }
 `;
