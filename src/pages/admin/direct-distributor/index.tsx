@@ -14,13 +14,11 @@ import Header from "@/components/Header"
 import Title from "@/components/Title"
 import LinkSmall from "@/components/LinkSmall"
 import DataTable from "@/components/Datatable"
-import Loader from "@/components/Loader"
-import ModalToDelete from "@/components/ModalToDelete"
 import Error from "@/components/Error"
+import HeaderMobile from "@/components/HeaderMobile"
 
 // api
 import { getApiClient } from "@/api/axios"
-import HeaderMobile from "@/components/HeaderMobile"
 import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 
@@ -42,18 +40,12 @@ const breadcrumbs = [
    {
       name: "Direct distributors",
       link: "/admin/direct-distributor",
-   },
-   {
-      name: "New",
-      link: "/admin/direct-distributor",
-   },
+   }
 ]
 
 const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
    const router = useRouter() // Initializing the router
-   const [directDistributorIdToDelete, setDirectDistributorIdToDelete] = useState<number>(0) // ID to delete
    const [error, setError] = useState<string | null>(null) // Initializing state for error messages
-   const [loader, setLoader] = useState<boolean>(false) // Initializing state for loader
 
    // This function uses the useEffect hook to monitor the "error" state.
    // Whenever the "error" state is updated, it schedules an action to
@@ -74,32 +66,9 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
      setIsModalOpen(false) // Function to close the modal
    }
 
-   // If the user clicks on delete in the modal, send the user ID to the deletion function
-   const handleDirectDistributorDeletionConfirmation = () => {
-      directDistributorDeletion(directDistributorIdToDelete)
-   }
-
    // Function that navigates to the edit page
    const handleEdit = (directDistributorId: number) => {
       router.push(`/admin/direct-distributor/${directDistributorId}`);
-   };
-
-   // Function that performs user deletion
-   const directDistributorDeletion = async (directDistributorId: number) => {
-      setLoader(true) // Display the loading screen
-      setIsModalOpen(true) // Open the deletion modal 
-      setError(null)
-   
-      try {
-         const api = getApiClient(``);
-         await api.delete(`/admin/direct-distributor/${directDistributorId}`) // API route for deletion
-         router.push("/admin/direct-distributor") // Redirect to the same page after deletion
-      } catch (error: any) {
-         setError(error?.response?.data);
-      } finally {
-         setLoader(false) // Remove the loading screen
-         HandleCloseModal() // Close the modal
-      }
    };
    
    // DataTable columns
@@ -128,10 +97,6 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
             <ButtonAction onClick={() => handleEdit(row.original.id)}>
               <Image src="/icons/edit.svg" width="18" height="18" alt="icon edit" />
             </ButtonAction>
-  
-            <ButtonAction onClick={() => {HandleOpenModal(), setDirectDistributorIdToDelete(row.original.id)}}>
-              <Image src="/icons/trash.svg" width="18" height="18" alt="icon edit" />
-            </ButtonAction>
           </>
         ),
       },
@@ -139,9 +104,7 @@ const DirectDistributor = ({directDistributor}: DirectDistributorProps) => {
 
    return (
       <>
-         <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={handleDirectDistributorDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error} />} {/* Error component */}
-         {loader && <Loader />} {/* Loading component */}
          <Header list={ListHeaderAdmin}/>
          <HeaderMobile list={ListHeaderAdmin}/>
          <Main>

@@ -12,6 +12,13 @@ import {
   ButtonProfile,
   CardProfile,
   ButtonLogout,
+  ListTwo,
+  Hamburguer,
+  ItemTwo,
+  TitleProfile,
+  InformationsProfile,
+  NameProfile,
+  EmailProfile,
 } from "./style";
 import { useAuth } from "@/hooks/direct-distributor/auth";
 
@@ -38,23 +45,26 @@ const ListHeader = [
   }
 ];
 
-const Header = () => {
-  const { user, logout } = useAuth()
-  const [toggleCardProfile, setToggleCardProfile] = useState(false)
+const HeaderMobile = () => {
+  const { user, logout } = useAuth();
+  const [cardProfile, setCardProfile] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleLogout = async (ctx: any) => {
-    logout()
-  };
+    logout();
+  }
 
-  const toggleButton = async () => {
-    setToggleCardProfile(!toggleCardProfile)
+  const Menu = async () => {
+    setOpenMenu(!openMenu);
   }
 
   return (
     <HeaderCustom>
-      <Nav>
+      <Hamburguer onClick={(e) => {Menu()}} className={openMenu ? "active" : ""}></Hamburguer>
+
+      <Nav className={openMenu ? "active" : ""}>
         {/* Encoparts Logo */}
-        <Logo href="/admin">
+        <Logo href="/">
           <Image
             src="/images/enco.svg"
             alt="Encoparts Logo"
@@ -64,9 +74,9 @@ const Header = () => {
         </Logo>
 
         <List>
-          {ListHeader.map((item, key) => (
-            <Item>
-              <Link key={key} href={item.url}>
+          {ListHeader.map((item) => (
+            <Item key={item.url}> {/* Use uma propriedade única, como 'item.url', como chave */}
+              <Link href={item.url}>
                 <Image
                   src={item.icon}
                   width="20"
@@ -80,8 +90,8 @@ const Header = () => {
         </List>
       </Nav>
 
-      <List>
-        <Item>
+      <ListTwo>
+        <ItemTwo>
           <ButtonNotification href="/notification">
             <Image
               src="/icons/bell.svg"
@@ -91,10 +101,10 @@ const Header = () => {
             />
             <CountNotification>1</CountNotification>
           </ButtonNotification>
-        </Item>
+        </ItemTwo>
 
-        <Item>
-          <ButtonProfile onClick={toggleButton}>
+        <ItemTwo>
+          <ButtonProfile onClick={() => {setCardProfile(true)}}>
             <Image
               src="/icons/avatar.svg"
               width="45"
@@ -102,8 +112,22 @@ const Header = () => {
               alt="User icon"
             />
           </ButtonProfile>
-          {toggleCardProfile && (
+          {cardProfile && (
             <CardProfile>
+              <TitleProfile>Profile</TitleProfile>
+              <InformationsProfile>
+              <Image
+                  src="/icons/avatar.svg"
+                  width="45"
+                  height="46"
+                  alt="User icon"
+                />
+                <div>
+                  <NameProfile>{user?.name}</NameProfile>
+                  <EmailProfile>{user?.email}</EmailProfile>
+                </div>
+              </InformationsProfile>
+
               <ButtonLogout onClick={handleLogout}>
                 <Image
                   src="/icons/logout.svg"
@@ -115,10 +139,10 @@ const Header = () => {
               </ButtonLogout>
             </CardProfile>
           )}
-        </Item>
-      </List>
+        </ItemTwo>
+      </ListTwo>
     </HeaderCustom>
   );
 };
 
-export default Header;
+export default HeaderMobile;

@@ -6,7 +6,7 @@ export const ListHeaderAdmin = [
   },
   {
     name: 'Distributors',
-    url: '/admin/distributors',
+    url: '/admin/direct-distributor',
     icon: '/icons/distributor.svg'
   },
   {

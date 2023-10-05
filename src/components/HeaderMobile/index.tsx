@@ -18,7 +18,17 @@ import {
 } from "./style";
 import { useAuth } from "@/hooks/auth";
 
-const HeaderMobile = () => {
+type HeaderListItem = {
+  name: string;
+  url: string;
+  icon: string;
+};
+
+type HeaderProps = {
+  list: HeaderListItem[]
+}
+
+const HeaderMobile = ({list}: HeaderProps) => {
   const { logout } = useAuth();
   const [cardProfile, setCardProfile] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -47,41 +57,19 @@ const HeaderMobile = () => {
         </Logo>
 
         <List>
-          <Item>
-            <Link href="/admin/users">
-              <Image
-                src="/icons/user.svg"
-                width="20"
-                height="20"
-                alt="User icon"
-              />
-              Users
-            </Link>
-          </Item>
-
-          <Item>
-            <Link href="/admin/direct-distributor">
-              <Image
-                src="/icons/distributor.svg"
-                width="20"
-                height="20"
-                alt="Distributor icon"
-              />
-              Distributors
-            </Link>
-          </Item>
-
-          <Item>
-            <Link href="/admin/settings">
-              <Image
-                src="/icons/config.svg"
-                width="20"
-                height="20"
-                alt="Config icon"
-              />
-              Settings
-            </Link>
-          </Item>
+          {list.map((item) => (
+            <Item key={item.url}> {/* Use uma propriedade única, como 'item.url', como chave */}
+              <Link href={item.url}>
+                <Image
+                  src={item.icon}
+                  width="20"
+                  height="20"
+                  alt="User icon"
+                />
+                {item.name}
+              </Link>
+            </Item>
+          ))}
         </List>
       </Nav>
 

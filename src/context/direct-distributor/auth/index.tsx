@@ -31,6 +31,26 @@ interface RecoverPasswordProviderProps {
 export const AuthProviderDirectDistributor: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
 
+    useEffect(()  => {
+        const { ['directDistributorAuth.token']: token } = parseCookies();
+        if (token) {
+            recoverInformationUser(token);
+        }
+    })
+
+    async function recoverInformationUser( token: any ) {
+        const api = getApiDirectDistributor(``);
+        const response = await api.get('/profile', token);
+
+        setUser({
+            id: response?.data?.id,
+            direct_distributor_id: response?.data?.direct_distributor_id,
+            name: response?.data?.name,
+            email: response?.data?.email,
+            type: response?.data?.type,
+        })
+    }
+
     async function signIn({ email, password }: SignInData) {
         const data = {
             email: email,
@@ -40,22 +60,9 @@ export const AuthProviderDirectDistributor: React.FC<RecoverPasswordProviderProp
         try {
             const api = getApiDirectDistributor(``);
             const response = await api.post('/login', data);
-            console.log(response);
             
-            const token = response?.data?.token;
-
-            const UserData = {
-                id: response?.data?.data?.id,
-                direct_distributor_id: response?.data?.data?.direct_distributor_id,
-                name: response?.data?.data?.name,
-                email: response?.data?.data?.email,
-                type: response?.data?.data?.type,
-            }
-        
-            if (UserData) setUser(UserData);
-
             // Set
-            setCookie(undefined, 'directDistributorAuth.token', token, {
+            setCookie(undefined, 'directDistributorAuth.token', response?.data?.token, {
                 maxAge: 3600,
                 path: '/',
             });

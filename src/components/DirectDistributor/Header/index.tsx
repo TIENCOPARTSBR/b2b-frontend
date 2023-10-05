@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   HeaderCustom,
   Nav,
@@ -12,10 +12,12 @@ import {
   ButtonProfile,
   CardProfile,
   ButtonLogout,
-  ListTwo,
-  Hamburguer,
-  ItemTwo
+  TitleProfile,
+  InformationsProfile,
+  NameProfile,
+  EmailProfile,
 } from "./style";
+
 import { useAuth } from "@/hooks/direct-distributor/auth";
 
 const ListHeader = [
@@ -27,40 +29,37 @@ const ListHeader = [
   {
     name: "Distributor",
     icon: "/icons/distributor.svg",
-    url: "/distributors",
+    url: "/distributor",
   },
   {
     name: 'Products',
     icon: '/icons/product.svg',
-    url: '/products',
+    url: '/product',
   },
   {
     name: 'Quotations',
     icon: '/icons/quotation.svg',
-    url: '/quotations',
+    url: '/quotation',
   }
 ];
 
-const HeaderMobile = () => {
-  const { logout } = useAuth();
-  const [cardProfile, setCardProfile] = useState<boolean>(false);
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
+const Header = () => {
+  const { user, logout } = useAuth()
+  const [toggleCardProfile, setToggleCardProfile] = useState(false)
 
   const handleLogout = async (ctx: any) => {
-    logout();
-  }
+    logout()
+  };
 
-  const Menu = async () => {
-    setOpenMenu(!openMenu);
+  const toggleButton = async () => {
+    setToggleCardProfile(!toggleCardProfile)
   }
 
   return (
     <HeaderCustom>
-      <Hamburguer onClick={(e) => {Menu()}} className={openMenu ? "active" : ""}></Hamburguer>
-
-      <Nav className={openMenu ? "active" : ""}>
+      <Nav>
         {/* Encoparts Logo */}
-        <Logo href="/admin">
+        <Logo href="/">
           <Image
             src="/images/enco.svg"
             alt="Encoparts Logo"
@@ -70,9 +69,9 @@ const HeaderMobile = () => {
         </Logo>
 
         <List>
-          {ListHeader.map((item, key) => (
-            <Item>
-              <Link key={key} href={item.url}>
+          {ListHeader.map((item) => (
+            <Item key={item.url}> {/* Use uma propriedade única, como 'item.url', como chave */}
+              <Link href={item.url}>
                 <Image
                   src={item.icon}
                   width="20"
@@ -86,8 +85,8 @@ const HeaderMobile = () => {
         </List>
       </Nav>
 
-      <ListTwo>
-        <ItemTwo>
+      <List>
+        <Item>
           <ButtonNotification href="/notification">
             <Image
               src="/icons/bell.svg"
@@ -97,10 +96,10 @@ const HeaderMobile = () => {
             />
             <CountNotification>1</CountNotification>
           </ButtonNotification>
-        </ItemTwo>
+        </Item>
 
-        <ItemTwo>
-          <ButtonProfile onClick={() => {setCardProfile(true)}}>
+        <Item>
+          <ButtonProfile onClick={toggleButton}>
             <Image
               src="/icons/avatar.svg"
               width="45"
@@ -108,8 +107,23 @@ const HeaderMobile = () => {
               alt="User icon"
             />
           </ButtonProfile>
-          {cardProfile && (
+          {toggleCardProfile && (
             <CardProfile>
+              <TitleProfile>Profile</TitleProfile>
+
+              <InformationsProfile>
+               <Image
+                  src="/icons/avatar.svg"
+                  width="45"
+                  height="46"
+                  alt="User icon"
+                />
+                <div>
+                  <NameProfile>{user?.name}</NameProfile>
+                  <EmailProfile>{user?.email}</EmailProfile>
+                </div>
+              </InformationsProfile>
+
               <ButtonLogout onClick={handleLogout}>
                 <Image
                   src="/icons/logout.svg"
@@ -121,10 +135,10 @@ const HeaderMobile = () => {
               </ButtonLogout>
             </CardProfile>
           )}
-        </ItemTwo>
-      </ListTwo>
+        </Item>
+      </List>
     </HeaderCustom>
   );
 };
 
-export default HeaderMobile;
+export default Header;

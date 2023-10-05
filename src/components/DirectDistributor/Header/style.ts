@@ -1,4 +1,4 @@
-import Styled from "styled-components";
+import Styled, { styled } from "styled-components";
 import link from "next/link";
 import image from "next/image";
 
@@ -11,56 +11,19 @@ export const HeaderCustom = Styled.header`
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 0 25px;
+    padding: 0 40px;
+    z-index: 1020;
+    position: relative;
 
-    @media (min-width: 769px) {
-        display: none !important;
+    @media (max-width: 768px) {
+        display: none;
     }
 `;
 
 export const Nav = Styled.nav`
-    width: 260px;
+    width: auto;
     display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    height: 100%;
-    background: #ffffff;
-    padding: 25px;
-    transition: ease 200ms;
-    z-index: -10;
-
-    &.active {
-        left: 0;
-        z-index: 1100;
-
-        &::before {
-            z-index: 1;
-            opacity: 1;
-        }
-    }
-    
-    &::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: calc(100% - 260px);
-        height: 100%;
-        z-index: -50;
-        -webkit-backdrop-filter: blur(3px);
-        backdrop-filter: blur(3px);
-        background: rgba(0, 0, 0, 0.15);
-        opacity: 0;
-        transition: ease-in 2s ease-out 100ms;
-        z-index: -10;
-
-        li {
-            transition: ease-in 300ms;
-        }
-    }
+    align-items: center;
 `;
 
 export const List = Styled.ul`
@@ -68,31 +31,11 @@ export const List = Styled.ul`
     margin: 0;
     padding: 0;
     display: flex;
-    flex-flow: column;
-`;
-
-export const ListTwo = Styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
     align-items: center;
-
-    .item {
-        margin: 0 0 0 1rem;
-    }
 `;
 
 export const Item = Styled.li`
-    margin: 0 0 1.5rem;
-
-    img {
-        margin-right: 15px;
-    }
-`;
-
-export const ItemTwo = Styled.li`
-    margin: 0 0 0 1.5rem;
+    margin: 0 0 0 1rem;
 `;
 
 export const Link = Styled(link)`
@@ -105,14 +48,15 @@ export const Link = Styled(link)`
     text-decoration: none;
     display: flex;
     align-items: center;
+    margin: 0 1.5rem 0 0;
 `;
 
 export const Image = Styled(image)`
-    margin: 0;
+    margin: 0 .5rem 0 0;
 `;
 
 export const Logo = Styled(link)`
-    margin: 0 0 2rem;
+    margin: 0 2rem 0 0;
 `;
 
 export const ButtonNotification = Styled(link)`
@@ -202,36 +146,42 @@ export const ButtonLogout = Styled.button`
     cursor: pointer;
 `;
 
+export const TitleProfile = styled.h2`
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: rgb(29, 38, 48);
+`;
 
-export const Hamburguer = Styled.div`
+export const InformationsProfile = styled.div`
+    width: 100%;
     display: flex;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 8px;
-    background-color: #FAFAFA;
-    background-image: url('/icons/hamburguer.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    transition: all ease-in 200ms;
-    background-size: 25px;
-    cursor: pointer;
+    flex-flow: row;
+    align-items: flex-start;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f6f6f6;
+    margin-bottom: 1rem;
+`;
 
-    &.active {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 1101;
-        width: 40px;
-        height: 40px;
-        max-width: 40px;
-        max-height: 40px;
-        box-sizing: border-box;
-        background-image: url('/icons/close.svg');
-    }
+export const NameProfile = styled.h3`
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: rgb(29, 38, 48);
+    margin: 0 0 .1rem;
+`;
 
-    &>img {
-        margin: 0;
-    }
+
+export const EmailProfile = styled.div`
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: rgb(29, 38, 48);
 `;

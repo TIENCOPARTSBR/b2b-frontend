@@ -4,8 +4,8 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from "nookies";
 
 // components
-import Header from "@/components/direct-distributor/Header";
-import HeaderMobile from "@/components/direct-distributor/HeaderMobile";
+import Header from "@/components/DirectDistributor/Header";
+import HeaderMobile from "@/components/DirectDistributor/HeaderMobile";
 import Title from "@/components/Title";
 
 const Constructions = () => {

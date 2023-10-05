@@ -28,17 +28,6 @@ interface RecoverPasswordProviderProps {
 export const AuthProvider: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
 
-    useEffect(() => {
-        const { ['adminAuth.token']: token } = parseCookies()
-    
-        if (token) {
-            user: {
-                name: 'Daniel';
-                email: 'Daniel@encoparts.com';
-            }
-        }
-    }, [])
-    
     async function signIn({ email, password }: SignInData) {
         const data = {
             email: email,

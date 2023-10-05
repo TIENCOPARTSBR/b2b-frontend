@@ -51,19 +51,19 @@ const Header = ({list}: HeaderProps) => {
         </Logo>
 
         <List>
-          {list.map((item, key) => (
-            <Item>
-              <Link key={key} href={item.url}>
-                <Image
-                  src={item.icon}
-                  width="20"
-                  height="20"
-                  alt="User icon"
-                />
-                {item.name}
-              </Link>
-            </Item>
-          ))}
+        {list.map((item) => (
+          <Item key={item.url}> {/* Use uma propriedade única, como 'item.url', como chave */}
+            <Link href={item.url}>
+              <Image
+                src={item.icon}
+                width="20"
+                height="20"
+                alt="User icon"
+              />
+              {item.name}
+            </Link>
+          </Item>
+        ))}
         </List>
       </Nav>
 
