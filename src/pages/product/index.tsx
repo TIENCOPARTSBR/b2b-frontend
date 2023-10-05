@@ -10,6 +10,9 @@ import {
     Warning,
     Icon
 } from '../../Styles/DirectDistributor/Product/style'
+import { useEffect, useState } from 'react';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from "nookies"
 
 // components
 import Header from "@/components/DirectDistributor/Header";
@@ -18,9 +21,7 @@ import Title from "@/components/Title";
 import HeaderMobile from "@/components/DirectDistributor/HeaderMobile";
 import Input from "@/components/Input";
 import ButtonSmall from '@/components/ButtonSmall';
-import { useEffect, useState } from 'react';
-import { GetServerSideProps } from 'next';
-import { parseCookies } from "nookies"
+
 
 const Product = () => {
     const [card, setCard] = useState<boolean>(false)

@@ -9,6 +9,7 @@ interface InputProps {
     className?: string;
     type?: string;
     name?: string;
+    autoComplete?: string;
 }
 
 const Input: FC<InputProps> = ({...props }) => {

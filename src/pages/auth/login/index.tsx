@@ -81,8 +81,8 @@ const Login = () => {
 
         <Title>Login with your email</Title>
         <Form onSubmit={handleLogin}>
-          <Input type="email" required={true} name="email" placeholder="Email" onChange={(e: any) => {setEmail(e.target.value)}}/>
-          <Input type="password" required={true} name="password" placeholder="Password" onChange={(e: any) => {setPassword(e.target.value)}}/>
+          <Input type="email" required={true} name="email" placeholder="Email" autoComplete="email" onChange={(e: any) => {setEmail(e.target.value)}}/>
+          <Input type="password" required={true} name="password" placeholder="Password" autoComplete="password" onChange={(e: any) => {setPassword(e.target.value)}}/>
           <ForgetPassword href="/auth/recover-password">Forgot Password?</ForgetPassword>
           <ButtonLarge>Log In</ButtonLarge>
         </Form>
