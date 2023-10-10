@@ -123,7 +123,7 @@ const EditUser = ({user}: any) => {
                         <Input required={false} type="password" placeholder="Type your password" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
 
-                    <ButtonSmall name="Update"/>
+                    <ButtonSmall name="Update" />
                 </Form>
             </Main>
         </>
@@ -139,7 +139,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/auth/login',
+             destination: '/login',
              permanent: false,
           }
        }

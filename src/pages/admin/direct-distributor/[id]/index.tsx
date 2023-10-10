@@ -12,7 +12,7 @@ import ButtonSmall from "@/components/ButtonSmall";
 
 // api 
 import Loader from "@/components/Loader";
-import { getApiClient } from "@/api/axios";
+import { getApiAdmin } from "@/api/axios";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import Error from "@/components/Error";
@@ -76,7 +76,7 @@ const EditDirectDistributor = ({directDistributor}: any) => {
         };
         
         try {
-            const api = getApiClient(``);
+            const api = getApiAdmin(``);
             await api.put('/admin/direct-distributor/'+ userId, data);
             setRedirect(true);
         } catch (error: any) {
@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/admin/auth/login',
+             destination: '/admin/login',
              permanent: false,
           }
        }
@@ -159,7 +159,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         const userId = ctx?.params?.id;
    
         // Api
-        const api = getApiClient(ctx);
+        const api = getApiAdmin(ctx);
         const response = await api.get('/admin/direct-distributor/'+ userId);
         const directDistributor = response.data;
      

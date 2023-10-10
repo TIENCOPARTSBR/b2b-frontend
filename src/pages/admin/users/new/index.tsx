@@ -15,7 +15,7 @@ import Error from "@/components/Error";
 import Loader from "@/components/Loader";
 
 // api 
-import { getApiClient } from "@/api/axios";
+import { getApiAdmin } from "@/api/axios";
 import HeaderMobile from "@/components/HeaderMobile";
 import { ListHeaderAdmin } from "@/service/HeaderAdmin";
 
@@ -51,7 +51,7 @@ const NewUser = () => {
             }
 
             try {
-                const api = getApiClient(``);
+                const api = getApiAdmin(``);
                 await api.post('/admin/user', data);
                 setRedirect(true);
             } catch (error: any) {
@@ -93,7 +93,7 @@ const NewUser = () => {
 
                 <Form onSubmit={hadleNewUser}>
                     <GroupForm>
-                        <Label>Nome</Label>
+                        <Label>Name</Label>
                         <Input required={true} type="text" placeholder="Type your name" onChange={(e: any) => {setName(e.target.value)}}/>
                     </GroupForm>
                     
@@ -111,8 +111,8 @@ const NewUser = () => {
                         <Label>Confirm the Password</Label>
                         <Input required={true} type="password" placeholder="Type your password" onChange={(e: any) => {setPasswordConfirmation(e.target.value)}}/>
                     </GroupForm>
-
-                    <ButtonSmall name="Create new user"/>
+ 
+                    <ButtonSmall name="Insert"/>
                 </Form>
             </Main>
         </>
@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/admin/auth/login',
+             destination: '/admin/login',
              permanent: false,
           }
        }

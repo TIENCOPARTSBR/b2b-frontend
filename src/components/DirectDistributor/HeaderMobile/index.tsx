@@ -118,8 +118,8 @@ const HeaderMobile = () => {
               <InformationsProfile>
               <Image
                   src="/icons/avatar.svg"
-                  width="45"
-                  height="46"
+                  width="25"
+                  height="25"
                   alt="User icon"
                 />
                 <div>

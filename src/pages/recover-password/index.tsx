@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form, ButtonLoggin } from "../../../../Styles/admin/auth/recover-password/style";
+import { Main, Card, ImageContainer, Form, ButtonLoggin } from "../../Styles/admin/recover-password/style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -13,7 +13,7 @@ import Loader from "@/components/Loader";
 import Error from "@/components/Error";
 
 // api
-import { getApiClient } from "@/api/axios";
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios";
 
 export default function RecoverPassword() {
    const router = useRouter();
@@ -31,10 +31,10 @@ export default function RecoverPassword() {
       }
 
       try {
-         const api = getApiClient(``);
-         const response = await api.post('/admin/recover-password', data);
+         const api = getApiDirectDistributor(``);
+         await api.post('/recover-password', data);
          setRedirect(true);
-      } catch (error: any) {
+      } catch (error: any) {  
          setError(error?.response?.data?.message);
       } finally {
          setLoader(false); // Disable the loader 
@@ -44,7 +44,7 @@ export default function RecoverPassword() {
    // Redirect to the next page (step code)
    useEffect(() => {
       if (redirect) {
-         router.push('/admin/auth/recover-password/code');
+         router.push('/recover-password/code');
       }
    }, [redirect]);
 
@@ -77,7 +77,7 @@ export default function RecoverPassword() {
                <Input type="email" name="email" required={true} placeholder="Email" onChange={(e: any) => setEmail(e.target.value)} className={error ? 'error' : ''} />
                <Paragraph>Don't forget to check your SPAM folder.</Paragraph>
                <ButtonLarge>Send password reset email</ButtonLarge>
-               <ButtonLoggin href="/admin/auth/login">Log in</ButtonLoggin>
+               <ButtonLoggin href="/login">Log in</ButtonLoggin>
             </Form>
          </Card>
       </Main>

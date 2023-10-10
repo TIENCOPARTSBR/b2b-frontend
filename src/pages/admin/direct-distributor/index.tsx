@@ -18,7 +18,7 @@ import Error from "@/components/Error"
 import HeaderMobile from "@/components/HeaderMobile"
 
 // api
-import { getApiClient } from "@/api/axios"
+import { getApiAdmin } from "@/api/axios"
 import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
 
@@ -131,14 +131,14 @@ export const getServerSideProps: GetServerSideProps<DirectDistributorProps> = as
    if (!token) { // If the token does not exist, redirect the client to the login page
       return {
          redirect: {
-            destination: "/admin/auth/login",
+            destination: "/admin/login",
             permanent: false,
          }
       }
    }
 
    try {
-      const api = getApiClient(ctx);
+      const api = getApiAdmin(ctx);
       const response = await api.get<DirectDistributor[]>("/admin/direct-distributor"); // API route to get all administrator users
       const directDistributor = response.data;
 

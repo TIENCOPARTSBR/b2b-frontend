@@ -15,7 +15,7 @@ import Input from "@/components/Input"
 import Header from "@/components/Header"
 
 // api
-import { getApiClient } from "@/api/axios"
+import { getApiAdmin } from "@/api/axios"
 import HeaderMobile from "@/components/HeaderMobile"
 import { ListHeaderAdmin } from "@/service/HeaderAdmin"
 
@@ -59,7 +59,7 @@ const Config = (config: any) => {
         }
 
         try {
-            const api = getApiClient(``)
+            const api = getApiAdmin(``)
             const response = await api.put('/admin/config/cost-date', data)
             console.log(response);
             setSuccess(response?.data?.original?.message)
@@ -81,7 +81,7 @@ const Config = (config: any) => {
         }
 
         try {
-            const api = getApiClient(``);
+            const api = getApiAdmin(``);
             const response = await api.put('/admin/config/email-quotation', data);
             setSuccess(response?.data?.original?.message)
         } catch (error: any) {
@@ -129,14 +129,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/admin/auth/login',
+             destination: '/admin/login',
              permanent: false,
           }
        }
     }
 
     try {
-        const api = getApiClient(ctx);
+        const api = getApiAdmin(ctx);
         const costDate = await api.get('/admin/config/cost-date');
         const emailQuotation = await api.get('/admin/config/email-quotation');
 

@@ -10,18 +10,18 @@ import {
   ImageContainer, 
   ForgetPassword, 
   Form 
-} from "../../../Styles/admin/auth/login/style";
+} from "../../../Styles/admin/login/style";
 
 // component
 import Input from "@/components/Input";
 import Title from "@/components/Title";
 import ButtonLarge from "@/components/ButtonLarge";
 import Error from "@/components/Error";
-
-// context
-import { useAuth } from "@/hooks/direct-distributor/auth";
 import Loader from "@/components/Loader";
 import Success from "@/components/Success";
+
+// context
+import { useAuth } from "@/hooks/auth";
 
 // login
 const Login = () => {
@@ -36,7 +36,6 @@ const Login = () => {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     setLoader(true);
-    setError(null);
 
     const data: any = {
       email: email,
@@ -47,7 +46,7 @@ const Login = () => {
      
     if (response) {
       setSuccess('Login successful.')
-      router.push('/');
+      router.push('/admin');
       setLoader(false);
     } else {
       setLoader(false);
@@ -61,7 +60,7 @@ const Login = () => {
   useEffect(() => {
     setTimeout(() => {
       setError(null);
-    }, 5000);
+    }, 3000);
   }, [error]);
 
   return (
@@ -69,6 +68,7 @@ const Login = () => {
       {success && (<Success success={success}/>)}
       {error && (<Error error={error}/>)}
       {loader && (<Loader></Loader>)}
+      
       <Card>
         <ImageContainer>
           <Image 
@@ -81,9 +81,9 @@ const Login = () => {
 
         <Title>Login with your email</Title>
         <Form onSubmit={handleLogin}>
-          <Input type="email" required={true} name="email" placeholder="Email" autoComplete="email" onChange={(e: any) => {setEmail(e.target.value)}}/>
-          <Input type="password" required={true} name="password" placeholder="Password" autoComplete="password" onChange={(e: any) => {setPassword(e.target.value)}}/>
-          <ForgetPassword href="/auth/recover-password">Forgot Password?</ForgetPassword>
+          <Input type="email" required={true} name="email" placeholder="Email" onChange={(e: any) => {setEmail(e.target.value)}}/>
+          <Input type="password" required={true} name="password" placeholder="Password" onChange={(e: any) => {setPassword(e.target.value)}}/>
+          <ForgetPassword href="/admin/recover-password">Forgot Password?</ForgetPassword>
           <ButtonLarge>Log In</ButtonLarge>
         </Form>
       </Card>
@@ -99,7 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (token) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/admin',
         permanent: false
       }
     }

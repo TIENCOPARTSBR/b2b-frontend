@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form } from "../../../../../../Styles/admin/auth/recover-password/code/change-password/style";
+import { Main, Card, ImageContainer, Form } from "../../../../../Styles/admin/recover-password/code/change-password/style";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -8,13 +8,12 @@ import { useRouter } from "next/router";
 import Input from "@/components/Input";
 import Title from "@/components/Title";
 import ButtonLarge from "@/components/ButtonLarge";
-import AlertDanger from "@/components/AlertDanger";
+import Error from "@/components/Error";
+import Loader from "@/components/Loader";
 
 // api
 import { useRecoverPassword } from "@/hooks/recoverPassword";
-import Loader from "@/components/Loader";
-import { getApiClient } from "@/api/axios";
-import Error from "@/components/Error";
+import { getApiAdmin } from "@/api/axios";
 
 export default function Code() {
    const router = useRouter();
@@ -40,7 +39,7 @@ export default function Code() {
          }
 
          try {
-            const api = getApiClient(``);
+            const api = getApiAdmin(``);
             const response = await api.post('/admin/recover-password/code/change-password', data);
             setRedirect(true); // Redirect to login after changing the password
          } catch (error: any) {
@@ -57,14 +56,14 @@ export default function Code() {
    // Redirect to the code verification screen
    useEffect(() => {
       if (userIdIsEmptyLetsRedirect) {
-         router.push('/admin/auth/recover-password/code');
+         router.push('/admin/recover-password/code');
       }
    }, [userIdIsEmptyLetsRedirect]);
 
    // Redirect to login
    useEffect(() => {
       if (redirect) {
-         router.push('/admin/auth/login');
+         router.push('/admin/login');
       }
    }, [redirect]);
 

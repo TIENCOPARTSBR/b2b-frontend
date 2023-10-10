@@ -120,6 +120,7 @@ export const CardProfile = Styled.div`
     top: 5rem;
     right: 3rem;
     transition: all ease-in 300ms;
+    z-index: 1000;
 `;
 
 export const ButtonLogout = Styled.button`

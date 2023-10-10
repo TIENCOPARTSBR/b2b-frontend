@@ -10,7 +10,8 @@ const TitleApp = styled.h1`
     font-weight: 500;
     line-height: 21px;
     margin: 0;
-
+    white-space: nowrap;
+    
     @media(min-width: 768px) {
         font-size: 20px;
         line-height: 28px;

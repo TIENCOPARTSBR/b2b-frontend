@@ -1,27 +1,26 @@
 // assets
 import React, { useState, useEffect } from "react" // Importing necessary libraries
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
-import Image from "next/image"
 
 // style
-import { Main, CardHeader, Group, ButtonAction } from "../../../Styles/admin/users/style" // Importing styles
+import { Main, CardHeader, Group, ButtonAction } from "../../../../Styles/admin/users/style" // Importing styles
 
 // components
 import Breadcump from "@/components/Breadcump" // Importing the "Breadcump" component
-import Header from "@/components/Header" // Importing the "Header" component
+import Header from "@/components/DirectDistributor/Header" // Importing the "Header" component
 import Title from "@/components/Title" // Importing the "Title" component
 import LinkSmall from "@/components/LinkSmall" // Importing the "LinkSmall" component
 import DataTable from "@/components/Datatable" // Importing the "DataTable" component
 import Loader from "@/components/Loader" // Importing the "Loader" component
 import ModalToDelete from "@/components/ModalToDelete" // Importing the "ModalToDelete" component
 import Error from "@/components/Error" // Importing the "Error" component
+import HeaderMobile from "@/components/DirectDistributor/HeaderMobile"
 
 // api
-import { getApiAdmin } from "@/api/axios" // Importing the "getApiAdmin" function
-import HeaderMobile from "@/components/HeaderMobile"
-import { ListHeaderAdmin } from "@/service/HeaderAdmin"
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios"
 
 type User = {
    id: number
@@ -41,7 +40,7 @@ const breadcrumbs = [
    {
       name: "Users",
       link: "/admin/users",
-   },
+   }
 ]
 
 const Users = ({user}: UserProps) => {
@@ -76,7 +75,7 @@ const Users = ({user}: UserProps) => {
 
    // Function that navigates to the edit page
    const handleEdit = (userId: number) => {
-      router.push(`/admin/users/${userId}`)
+      router.push(`/users/${userId}`)
    }
 
    // Function that performs user deletion
@@ -85,9 +84,9 @@ const Users = ({user}: UserProps) => {
       setIsModalOpen(true) // Open the deletion modal 
    
       try {
-         const api = getApiAdmin("")
-         await api.delete(`/admin/user/${userId}`) // API route for deletion
-         router.push("/admin/users") // Redirect to the same page after deletion
+         const api = getApiDirectDistributor(``)
+         await api.delete(`/user/${userId}`) // API route for deletion
+         router.push("/users") // Redirect to the same page after deletion
       } catch (error: any) {
          setError(error?.response?.data?.message)
       } finally {
@@ -138,8 +137,10 @@ const Users = ({user}: UserProps) => {
          <ModalToDelete show={isModalOpen} onHide={HandleCloseModal} onConfirm={HandleUserDeletionConfirmation}/> {/* Modal component */}
          {error && <Error error={error}/>} {/* Error component */}
          {loader && <Loader />} {/* Loading component */}
-         <Header list={ListHeaderAdmin}/>
-         <HeaderMobile list={ListHeaderAdmin}/>
+
+         <Header/>
+         <HeaderMobile/>
+
          <Main>
             <CardHeader>
                <Group>
@@ -147,7 +148,7 @@ const Users = ({user}: UserProps) => {
                   <Title>Users</Title> {/* Title component */}
                </Group>
 
-               <LinkSmall name="Insert" link="/admin/users/new"/> {/* Link to create a new user */}
+               <LinkSmall name="New user" link="/users/new"/> {/* Link to create a new user */}
             </CardHeader>
 
             <DataTable columns={columns} data={user}/> {/* DataTable component */}
@@ -164,22 +165,22 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
    if (!token) { // If the token does not exist, redirect the client to the login page
       return {
          redirect: {
-            destination: "/admin/login",
+            destination: "/auth/login",
             permanent: false,
          }
       }
    }
 
    try {
-      const api = getApiAdmin(ctx);
-      const response = await api.get<User[]>("/admin/user"); // API route to get all administrator users
+      const api = getApiDirectDistributor(ctx);
+      const response = await api.get<User[]>("/user"); // API route to get all administrator users
       const user = response.data;
 
       return {
          props: {
             user,
          },
-      };
+      }
    } catch (error) {
       return { 
          props: {

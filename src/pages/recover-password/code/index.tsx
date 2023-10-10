@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react";
-import { Main, Card, ImageContainer, Form } from "../../../../../Styles/admin/auth/recover-password/code/style";
+import { Main, Card, ImageContainer, Form } from "../../../Styles/admin/recover-password/code/style";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -13,8 +13,8 @@ import Loader from "@/components/Loader";
 import Error from "@/components/Error";
 
 // context
-import { useRecoverPassword } from "@/hooks/recoverPassword";
-import { getApiClient } from "@/api/axios";
+import { useRecoverPassword } from "@/hooks/direct-distributor/recoverPassword";
+import { getApiDirectDistributor } from "@/api/direct-distributor/axios";
 
 // step verify code
 export default function Code() {
@@ -28,14 +28,15 @@ export default function Code() {
    const handleForm = async (e: any) => {
       e.preventDefault();
       setLoader(true);
+      setError(null);
 
       const data = {
          code: code,
       };
 
       try {
-         const api = getApiClient(``);
-         const response = await api.post('/admin/recover-password/code', data);
+         const api = getApiDirectDistributor(``);
+         const response = await api.post('/recover-password/code', data);
          setUserId(response?.data?.id_administrador); // Store user id in context
          setRedirect(true); // Redirect to the next page
       } catch (error: any) {
@@ -49,7 +50,7 @@ export default function Code() {
    // When the 'redirect' state is modified, it will be redirected to the next step.
    useEffect(() => {
       if (redirect) {
-         router.push('/admin/auth/recover-password/code/change-password');
+         router.push('/recover-password/code/change-password');
       }
    }, [redirect]);
 

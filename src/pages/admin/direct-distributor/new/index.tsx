@@ -12,7 +12,7 @@ import ButtonSmall from "@/components/ButtonSmall"
 
 // api 
 import Loader from "@/components/Loader"
-import { getApiClient } from "@/api/axios"
+import { getApiAdmin } from "@/api/axios"
 import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
 import Error from "@/components/Error"
@@ -76,7 +76,7 @@ const NewDirectDistributor = () => {
         }
 
         try {
-            const api = getApiClient(``)
+            const api = getApiAdmin(``)
             await api.post('/admin/direct-distributor', data) // envia os dados para API
             setRedirect(true) // ativa o redirecionamento
         } catch (error: any) {
@@ -147,7 +147,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/admin/auth/login',
+             destination: '/admin/login',
              permanent: false,
           }
        }

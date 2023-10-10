@@ -1,6 +1,6 @@
 // assets
 import React, { useEffect, useState } from "react"
-import { Main, Card, ImageContainer, Form } from "../../../../../Styles/admin/auth/recover-password/code/change-password/style"
+import { Main, Card, ImageContainer, Form } from "../../../../Styles/admin/recover-password/code/change-password/style"
 import Image from "next/image"
 import { useRouter } from "next/router"
 
@@ -57,14 +57,14 @@ export default function Code() {
    // Redirect to the code verification screen
    useEffect(() => {
       if (userIdIsEmptyLetsRedirect) {
-         router.push('/auth/recover-password/code')
+         router.push('/recover-password/code')
       }
    }, [userIdIsEmptyLetsRedirect])
 
    // Redirect to login
    useEffect(() => {
       if (redirect) {
-         router.push('/auth/login')
+         router.push('/login')
       }
    }, [redirect])
 

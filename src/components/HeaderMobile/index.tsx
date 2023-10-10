@@ -90,8 +90,8 @@ const HeaderMobile = ({list}: HeaderProps) => {
           <ButtonProfile onClick={() => {setCardProfile(true)}}>
             <Image
               src="/icons/avatar.svg"
-              width="45"
-              height="46"
+              width="25"
+              height="25"
               alt="User icon"
             />
           </ButtonProfile>

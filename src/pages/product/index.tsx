@@ -122,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) { // If the token does not exist, redirect the client to the login page
         return {
            redirect: {
-              destination: "/auth/login",
+              destination: "/login",
               permanent: false,
            }
         }

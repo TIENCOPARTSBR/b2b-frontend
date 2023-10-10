@@ -14,7 +14,7 @@ import ButtonSmall from "@/components/ButtonSmall"
 import Loader from "@/components/Loader"
 
 // api 
-import { getApiClient } from "@/api/axios"
+import { getApiAdmin } from "@/api/axios"
 import Error from "@/components/Error"
 import HeaderMobile from "@/components/HeaderMobile"
 import { ListHeaderAdmin } from "@/service/HeaderAdmin"
@@ -61,7 +61,7 @@ const EditUser = ({user}: any) => {
             (password !== "") ? data.password = password : ''
             
             try {
-                const api = getApiClient(``)
+                const api = getApiAdmin(``)
                 await api.put('/admin/user/'+ userId, data)
                 setRedirect(true)
               } catch (error: any) {
@@ -98,18 +98,18 @@ const EditUser = ({user}: any) => {
             <Main>
                 <Group>
                     <Breadcump breadcump={breadcump}/>
-                    <Title>Edit User</Title>
+                    <Title>User: {name}</Title>
                 </Group>
 
-                <Form onSubmit={hadleUpdateUser}>
+                <Form onSubmit={hadleUpdateUser}> 
                     <GroupForm>
-                        <Label>Nome</Label>
-                        <Input required={true} type="text" placeholder="Type your name" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
-                    </GroupForm>
+                        <Label>Name</Label>
+                        <Input required={true} type="text" placeholder="User name" value={name} onChange={(e: any) => {setName(e.target.value)}}/>
+                    </GroupForm> 
                     
                     <GroupForm>
                         <Label>Email</Label>
-                        <Input required={true} type="email" placeholder="Type your e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
+                        <Input required={true} type="email" placeholder="User e-mail" value={email} onChange={(e: any) => {setEmail(e.target.value)}}/>
                     </GroupForm>
 
                     <GroupForm>
@@ -138,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!token) {
        return {
           redirect: {
-             destination: '/admin/auth/login',
+             destination: '/admin/login',
              permanent: false,
           }
        }
@@ -149,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         const userId = ctx?.params?.id;
    
         // Api
-        const api = getApiClient(ctx);
+        const api = getApiAdmin(ctx);
         const response = await api.get('/admin/user/'+ userId);
         const user = response.data;
      

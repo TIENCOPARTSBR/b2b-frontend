@@ -19,6 +19,19 @@ const Button = Styled.button`
     line-height: 24px;
     border: none;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+
+    &:hover {
+        &::before {
+            width: 50%;
+        }
+
+        &::after {
+            width: 50%;
+        }
+    }
 
     @media(min-width: 768px) {
         height: 55px;
@@ -27,6 +40,32 @@ const Button = Styled.button`
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 50%;
+        width: 0;
+        height: 100%;
+        background-color: #F99D33;
+        transition: all ease-in 200ms;
+        z-index: -1;
+        filter: blur(30px);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 0;
+        height: 100%;
+        background-color: #F99D33;
+        transition: all ease-in 200ms;
+        z-index: -1;
+        filter: blur(30px);
     }
 `;
 

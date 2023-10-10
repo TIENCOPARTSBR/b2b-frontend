@@ -1,9 +1,10 @@
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import React, { createContext, useState, ReactNode, useEffect } from "react";
-import { getApiClient } from "@/api/axios";
+import { getApiAdmin } from "@/api/axios";
 import Router from "next/router";
 
 type User = {
+    id: number;
     name: string;
     email: string;
 }
@@ -28,6 +29,26 @@ interface RecoverPasswordProviderProps {
 export const AuthProvider: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
 
+    useEffect(()  => {
+        const { ['adminAuth.token']: token } = parseCookies();
+
+        if (token) {
+            recoverInformationUser(token);
+        }
+    })
+
+    async function recoverInformationUser( token: any ) {
+        const api = getApiAdmin(``);
+        const response = await api.get('/admin/profile', token);
+
+        setUser({
+            id: response?.data?.id,
+            name: response?.data?.name,
+            email: response?.data?.email,
+        })
+    }
+
+
     async function signIn({ email, password }: SignInData) {
         const data = {
             email: email,
@@ -35,7 +56,7 @@ export const AuthProvider: React.FC<RecoverPasswordProviderProps> = ({ children 
         }
 
         try {
-            const api = getApiClient(``);
+            const api = getApiAdmin(``);
             const response = await api.post('/admin/login', data);
             
             const token = response?.data?.token;
@@ -55,7 +76,7 @@ export const AuthProvider: React.FC<RecoverPasswordProviderProps> = ({ children 
     const logout = () => {
         const expireDate = new Date(0); // Define a data de expiração para o Unix epoch (01/01/1970)
         destroyCookie(null, 'adminAuth.token', { expires: expireDate, path: '/' });
-        Router.push('/admin/auth/login');
+        Router.push('/admin/login');
       };
 
     return (

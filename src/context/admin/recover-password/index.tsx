@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode } from "react";
 
 // Defina o tipo de contexto
 interface ContextProps {

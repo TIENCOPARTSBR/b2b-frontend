@@ -12,8 +12,9 @@ import {
   ButtonProfile,
   CardProfile,
   ButtonLogout,
-} from "./style";
+} from "../../Styles/Components/Header/style";
 import { useAuth } from "@/hooks/auth";
+import { EmailProfile, InformationsProfile, NameProfile, TitleProfile } from "../DirectDistributor/Header/style";
 
 type HeaderListItem = {
   name: string;
@@ -26,7 +27,7 @@ type HeaderProps = {
 };
 
 const Header = ({list}: HeaderProps) => {
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
   const [toggleCardProfile, setToggleCardProfile] = useState(false)
 
   const handleLogout = async (ctx: any) => {
@@ -84,13 +85,20 @@ const Header = ({list}: HeaderProps) => {
           <ButtonProfile onClick={toggleButton}>
             <Image
               src="/icons/avatar.svg"
-              width="45"
-              height="46"
+              width="22"
+              height="22"
               alt="User icon"
             />
           </ButtonProfile>
           {toggleCardProfile && (
             <CardProfile>
+              <InformationsProfile>
+                <div>
+                  <NameProfile>{user?.name}</NameProfile>
+                  <EmailProfile>{user?.email}</EmailProfile>
+                </div>
+              </InformationsProfile>
+
               <ButtonLogout onClick={handleLogout}>
                 <Image
                   src="/icons/logout.svg"

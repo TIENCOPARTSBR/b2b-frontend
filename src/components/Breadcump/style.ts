@@ -9,7 +9,7 @@ export const Nav = Styled.nav`
 
 export const Link = Styled(link)`
     width: 100%;
-    color: #5B6B79;
+    color: #B4B4B4;
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-style: normal;
@@ -28,7 +28,7 @@ export const Link = Styled(link)`
     }
 
     &:last-child {
-        color: #F99D33;
+        color: #444444;
         pointer-events: none;
 
         &::before {
