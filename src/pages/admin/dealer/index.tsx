@@ -16,8 +16,13 @@ import { getApiAdmin } from "@/src/api/adm/axios";
 type DealerType = {
     id: number
     name: string
-    is_active: string
+    is_active: number
     created_at: string
+    type_of_access: number
+    allow_to_quotation: number
+    allow_to_partner: number
+    sisrev_br_code: string
+    sisrev_usa_code: string
 }
 
 interface DealerProps {
@@ -77,7 +82,12 @@ export const getServerSideProps: GetServerSideProps<DealerProps> = async (ctx) =
                 'id': index?.id,
                 'name': index?.name,
                 'created_at': index?.created_at,
-                'is_active': (index?.is_active == false ? 'Inativo' : 'Ativo'),
+                'is_active': (index?.is_active === 1 ? 'Active' : 'Inactive'),
+                'type_of_access': (index?.type_of_access === 0 ? 'Portal B2B' : 'API'),
+                'allow_to_quotation': (index?.allow_to_quotation === 1 ? 'Yes' : 'No'),
+                'allow_to_partner': (index?.allow_to_partner === 1 ? 'Yes' : 'No'),
+                'sisrev_br_code': index?.sisrev_br_code,
+                'sisrev_usa_code': index?.sisrev_usa_code,
             });
         });
 

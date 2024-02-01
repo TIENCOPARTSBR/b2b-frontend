@@ -70,7 +70,7 @@ const NewUser = () => {
                 setProcessing(false)
                 setTimeout(() => {
                     setAlertError(null)
-                }, 2500)
+                }, 10000)
             })
     }
 

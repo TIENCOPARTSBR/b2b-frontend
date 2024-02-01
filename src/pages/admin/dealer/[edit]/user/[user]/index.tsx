@@ -1,5 +1,5 @@
 import React, { useState }  from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { GetServerSideProps } from "next";
 
@@ -20,12 +20,11 @@ import AlertError from "@/src/components/AlertError";
 import Processing from "@/src/components/Processing";
 
 type UserType = {
-    id: number,
-    type: string,
-    name: string,
-    email: string,
-    password: string,
-    id_dealer: number,
+    id: number
+    type: string
+    name: string
+    email: string
+    password: string
     is_active: number
 }
 
@@ -49,6 +48,7 @@ const UpdateUser = (data: UserProps) => {
         password: undefined,
         password_confirmation: undefined,
         is_active: data?.data?.is_active,
+        id_dealer: router?.query?.user,
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,26 +72,27 @@ const UpdateUser = (data: UserProps) => {
         }
 
         const api = getApiAdmin("")
-        api.put("/user/update", formData)
-        .then((response) => {
-            showMessageSuccess(response?.data?.message)
-            router.push('/admin/user')
-        }).catch((e) => {
-            let errorString = ""
+        api.put("/dealer/user/update", formData)
+            .then((response) => {
+                showMessageSuccess(response?.data?.message)
+                router.back()
+            }).catch((e) => {
+                console.log(e)
+                let errorString = ""
 
-            Object.keys(e?.response?.data?.errors).forEach((key) => {
-                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                    errorString += `${errorMessage}<br>`
+                Object.keys(e?.response?.data?.errors).forEach((key) => {
+                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                        errorString += `${errorMessage}<br>`
+                    })
                 })
-            })
 
-            setAlertError(errorString)
-        }).finally(() => {
-            setProcessing(false)
-            setTimeout(() => {
-                setAlertError(null)
-            }, 10000)
-        })
+                setAlertError(errorString)
+            }).finally(() => {
+                setProcessing(false)
+                setTimeout(() => {
+                    setAlertError(null)
+                }, 10000)
+            })
     }
 
     return (
@@ -216,7 +217,7 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiAdmin(ctx)
-        const response = await api.post('/user/', {id: ctx?.params?.edit})
+        const response = await api.post('/dealer/user/', {id: ctx?.params?.user})
         const data = response?.data?.data || []
 
         return {

@@ -12,6 +12,7 @@ import Processing from "@/src/components/Processing"
 import { useAuthAdmin } from "@/src/hooks/adm/auth";
 import {GetServerSideProps} from "next";
 import {parseCookies} from "nookies";
+import {useMessageSuccess} from "@/src/hooks/message/success";
 
 const Login = () => {
     const { signIn } = useAuthAdmin()
@@ -22,7 +23,7 @@ const Login = () => {
     const [processing, setProcessing] = useState<boolean>(false)
 
     const [alertError, setAlertError] = useState<string|null>(null)
-    const [alertSuccess, setAlertSuccess] = useState<string|null>(null)
+    const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
 
     const handleLogin = async (e: any) => {
         e.preventDefault()
@@ -34,7 +35,7 @@ const Login = () => {
         })
 
         if (response) {
-            setAlertSuccess("Logged.")
+            showMessageSuccess("Logged.")
             setTimeout(() => {
                 router.push("/admin/")
             }, 1000)
@@ -57,7 +58,6 @@ const Login = () => {
             className="bg-login bg-cover bg-center w-screen h-screen flex items-center justify-center px-25px">
 
             { alertError && <AlertError text={alertError} /> }
-            { alertSuccess && <AlertSuccess text={alertSuccess} /> }
 
             <div className="w-540px h-auto p-35px md:px-50px md:py-60px bg-white rounded-8px shadow-login">
                 <div className="w-100% flex justify-center">

@@ -28,18 +28,33 @@ interface RecoverPasswordProviderProps {
 }
 
 export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
-    const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
     const { ['adminAuth.token']: token } = parseCookies();
 
-    useEffect(() => {
-        if (token) {
-            recoverInformationUser(token);
-        }
-    }, [token]);  // Alterado para observar apenas mudanças em token
+    const router = useRouter();
+    const [user, setUser] = useState<User | null>(null);
 
-    async function recoverInformationUser(token: any) {
+    if (!user) {
+        recoverInformationUser();
+    }
+
+    async function recoverInformationUser() {
         try {
+            if(!user?.id) {
+                const api = getApiAdmin('');
+                const response = await api.post('/user/profile', {});
+
+                if (response?.data?.id) {
+                    const userData = {
+                        id: response.data.id,
+                        name: response.data.name,
+                        email: response.data.email,
+                        type: response.data.type,
+                    };
+
+                    setUser(userData);
+                }
+            }
+
             return user;
         } catch (error) {
             console.error("Erro ao recuperar informações do usuário:", error);
@@ -55,8 +70,6 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
         try {
             const api = getApiAdmin('');
             const response = await api.post('login', data);
-
-            console.log(response?.data?.data?.user);
 
             setCookie(undefined, 'adminAuth.token', response?.data?.data?.token, {
                 maxAge: 3600,

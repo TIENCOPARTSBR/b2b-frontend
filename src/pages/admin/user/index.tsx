@@ -71,13 +71,10 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
         const response = await api.get(`user`);
         const userData = response?.data?.data || [];
 
-        console.log(userData);
-
         userData.forEach((user: any) => {
             user['is_active'] = user['is_active'] === 1 ? 'Active' : 'Inactive';
             user['type'] = user['type'] === 1 ? 'Admin' : 'User';
         });
-
 
         return {
             props: {

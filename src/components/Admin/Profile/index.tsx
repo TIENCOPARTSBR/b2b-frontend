@@ -37,7 +37,7 @@ const Profile = () => {
                     <h2 className="w-auto text-left mb-1 text-14px font-semibold text-black font-inter">{user?.name}</h2>
                     <p className="w-auto text-left mb-3 text-14px font-normal text-grey_for font-inter">{user?.email}</p>
 
-                    <Link href={`/partner/change-password`} className="w-100 flex items-center justify-between py-3 pb-6">
+                    <Link href={`/admin/change-password`} className="w-100 flex items-center justify-between py-3 pb-6">
                         <div className="flex items-center font-inter text-14px text-black font-normal">
                             <Image
                                 src="/icon/icon-lock.svg"

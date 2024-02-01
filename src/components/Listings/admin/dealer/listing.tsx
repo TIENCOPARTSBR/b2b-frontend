@@ -3,24 +3,24 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import DataTable from "@/src/components/Datatable";
-import ModalDelete from "@/src/components/Admin/ModalDelete";
 
-type PartnerType = {
+type DealerType = {
     id: number
     name: string
-    is_active: string
+    is_active: number
     created_at: string
+    type_of_access: number
+    allow_to_quotation: number
+    allow_to_partner: number
+    sisrev_br_code: string
+    sisrev_usa_code: string
+}
+interface ListDealers {
+    list: DealerType[]
 }
 
-interface ListPartners {
-    list: PartnerType[]
-}
-
-const Listing = ({ list }: ListPartners) => {
+const Listing = ({ list }: ListDealers) => {
     const router = useRouter()
-
-    const [displayDealerDeleteModal, setDisplayDealerDeleteModal] = useState(false)
-    const [dealerId, setDealerId] = useState<number>(0)
 
     const editDealerEndpoint = `/admin/dealer/`
 
@@ -34,24 +34,44 @@ const Listing = ({ list }: ListPartners) => {
 
     const columns = [
         {
-            Header: "ID",
-            accessor: "id",
+            Header: "NAME",
+            accessor: "name",
             width: "20%",
         },
         {
-            Header: "NAME",
-            accessor: "name",
-            width: "30%",
+            Header: "TYPE OF ACCESS",
+            accessor: "type_of_access",
+            width: "10%",
+        },
+        {
+            Header: "ALLOW QUOTATION",
+            accessor: "allow_to_quotation",
+            width: "10%",
+        },
+        {
+            Header: "ALLOW PARTNER",
+            accessor: "allow_to_partner",
+            width: "10%",
+        },
+        {
+            Header: "SISREV BR",
+            accessor: "sisrev_br_code",
+            width: "10%",
+        },
+        {
+            Header: "SISREV USA",
+            accessor: "sisrev_usa_code",
+            width: "10%",
         },
         {
             Header: "STATUS",
             accessor: "is_active",
-            width: "40%",
+            width: "10%",
         },
         {
             Header: "CREATED",
             accessor: "created_at",
-            width: "40%",
+            width: "10%",
         },
         {
             Header: "ACTIONS",

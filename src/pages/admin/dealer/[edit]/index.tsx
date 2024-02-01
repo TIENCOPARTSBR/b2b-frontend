@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 
@@ -26,7 +26,7 @@ type Dealer = {
     type_of_access: number,
     allow_quotation: number,
     allow_partner: number,
-    sisrev_llc_code: string,
+    sisrev_usa_code: string,
     sisrev_br_code: string,
 }
 
@@ -42,7 +42,7 @@ interface PropsDealer {
 const EditDealer = ({ dealer, token } : PropsDealer) => {
     const router = useRouter()
 
-    const { message: messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
+    const { showMessage : showMessageSuccess } = useMessageSuccess()
     const [ alertError, setAlertError] = useState<string|null>(null)
     const [ processingDealer, setProcessingDealer] = useState<boolean>(false)
     const [ processingToken, setProcessingToken] = useState<boolean>(false)
@@ -56,7 +56,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
         type_of_access: dealer?.type_of_access,
         allow_quotation: dealer?.allow_quotation,
         allow_partner: dealer?.allow_partner,
-        sisrev_llc_code: dealer?.sisrev_llc_code,
+        sisrev_llc_code: dealer?.sisrev_usa_code,
         sisrev_br_code: dealer?.sisrev_br_code
     });
 
@@ -64,6 +64,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
         const { name, value } = e.target
         setFormData((formData) => ({ ...formData, [name]: value }))
     }
+
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormData((formData) => ({ ...formData, [name]: value }))
@@ -79,6 +80,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
         api.put('/dealer/update', {...formData})
             .then((response) => {
                 showMessageSuccess(response?.data?.message)
+                handleReloadTokenApi()
         }).catch((e) => {
             let errorString = ''
 
@@ -128,6 +130,17 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
             })
     }
 
+    const handleReloadTokenApi = () => {
+        const api = getApiAdmin('')
+            api.post('/dealer/token/get', {
+                id_dealer: router?.query?.edit
+            }).then((response) => {
+                setTokenApi(response?.data?.data)
+            }).catch(() => {
+                setTokenApi('')
+            });
+    }
+
     return (
         <Main>
             {alertError && <AlertError text={alertError}/>}
@@ -159,7 +172,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <select
                         className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
                         name='is_active'
-                        value={formData.is_active ? '1' : '0'} // Use '1' e '0' como strings
+                        value={formData.is_active} // Use '1' e '0' como strings
                         onChange={handleSelectChange}
                         required={true}
                     >
@@ -300,7 +313,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
             id_dealer: ctx?.params?.edit
         }).then((response) => {
             responseToken = response?.data?.data;
-        }).catch((e: any) => {
+        }).catch(() => {
             responseToken = '';
         });
 

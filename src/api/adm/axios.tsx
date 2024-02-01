@@ -5,7 +5,8 @@ export const getApiAdmin = (ctx: any) => {
     const { 'adminAuth.token': token } = parseCookies(ctx);
 
     const api = axios.create({
-        baseURL: 'https://b2b-qas.azurewebsites.net/api/v1/admin/',
+        //baseURL: 'https://b2b-qas.azurewebsites.net/api/v1/admin/',
+        baseURL: 'http://localhost:8000/api/v1/admin/',
         headers: {
             Authorization: `Bearer ${token}`,
         },
