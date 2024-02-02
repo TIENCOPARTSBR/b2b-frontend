@@ -2,6 +2,7 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { getApiDealer } from "@/src/api/dealer/axios";
 import { useRouter } from "next/navigation";
+import {getApiAdmin} from "@/src/api/adm/axios";
 
 type User = {
     id: string;
@@ -31,16 +32,30 @@ interface RecoverPasswordProviderProps {
 export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
-    const { ['dealerAuth.token']: token } = parseCookies();
 
-    useEffect(() => {
-        if (token) {
-            recoverInformationUser(token);
-        }
-    }, [token]);  // Alterado para observar apenas mudanças em token
+    if (!user) {
+        recoverInformationUser();
+    }
 
-    async function recoverInformationUser(token: any) {
+    async function recoverInformationUser() {
         try {
+            if(!user?.id) {
+                const api = getApiDealer('');
+                const response = await api.post('/user/profile', {});
+
+                if (response?.data?.id) {
+                    const userData = {
+                        id: response.data.id,
+                        name: response.data.name,
+                        email: response.data.email,
+                        type: response.data.type,
+                        dealer_id: response.data.id_dealer,
+                    };
+
+                    setUser(userData);
+                }
+            }
+
             return user;
         } catch (error) {
             console.error("Erro ao recuperar informações do usuário:", error);
@@ -55,28 +70,27 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
 
         try {
             const api = getApiDealer(``);
-            const response = await api.post('login', data);
+            const response = await api.post('/login', data);
 
-            setCookie(undefined, 'dealerAuth.token', response?.data?.token, {
+            setCookie(undefined, 'dealerAuth.token', response?.data?.data?.token, {
                 maxAge: 3600,
                 path: '/',
             });
 
-            if (response?.data?.user) {
-                setCookie(undefined, 'dealerAuth.id_dealer', response?.data?.user?.id_dealer as any, {
+            if (response?.data?.data?.user) {
+                setCookie(undefined, 'dealerAuth.id_dealer', response?.data?.data?.user?.id_dealer as any, {
                     maxAge: 3600,
                     path: '/',
                 })
-                
+
                 setUser({
-                    id: response?.data?.user?.id,
-                    dealer_id: response?.data?.user?.id_dealer,
-                    name: response?.data?.user?.name,
-                    email: response?.data?.user?.email,
-                    type: response?.data?.user?.type,
+                    id: response?.data?.data?.user?.id,
+                    dealer_id: response?.data?.data?.user?.id_dealer,
+                    name: response?.data?.data?.user?.name,
+                    email: response?.data?.data?.user?.email,
+                    type: response?.data?.data?.user?.type,
                 })
 
-                return true;
             }
             return false;
         } catch (error) {

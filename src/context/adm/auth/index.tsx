@@ -28,8 +28,6 @@ interface RecoverPasswordProviderProps {
 }
 
 export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
-    const { ['adminAuth.token']: token } = parseCookies();
-
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 

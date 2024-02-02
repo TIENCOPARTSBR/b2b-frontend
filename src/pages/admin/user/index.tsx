@@ -67,8 +67,9 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
     }
 
     try {
+
         const api = getApiAdmin(ctx);
-        const response = await api.get(`user`);
+        const response = await api.get('/user/all');
         const userData = response?.data?.data || [];
 
         userData.forEach((user: any) => {

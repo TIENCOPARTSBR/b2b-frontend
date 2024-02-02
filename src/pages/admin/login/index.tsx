@@ -58,6 +58,7 @@ const Login = () => {
             className="bg-login bg-cover bg-center w-screen h-screen flex items-center justify-center px-25px">
 
             { alertError && <AlertError text={alertError} /> }
+            { messageSuccess && <AlertSuccess text={messageSuccess} /> }
 
             <div className="w-540px h-auto p-35px md:px-50px md:py-60px bg-white rounded-8px shadow-login">
                 <div className="w-100% flex justify-center">

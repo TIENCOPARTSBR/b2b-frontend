@@ -101,8 +101,8 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
                         'name': index?.name,
                         'email': index?.email,
                         'created_at': index?.created_at,
-                        'is_active': (index?.status == 1 ? 'Active' : 'Inactive'),
-                        'type': (index?.status == 1 ? 'Admin' : 'User'),
+                        'is_active': (index?.is_active == 1 ? 'Active' : 'Inactive'),
+                        'type': (index?.type == 1 ? 'Admin' : 'User'),
                     })
                 })
             })

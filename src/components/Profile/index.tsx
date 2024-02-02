@@ -1,7 +1,8 @@
 "use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
-import {useAuthDealer} from "@/src/hooks/dealer/auth";
+import { useAuthDealer } from "@/src/hooks/dealer/auth";
 import Link from "next/link";
 
 const Profile = () => {

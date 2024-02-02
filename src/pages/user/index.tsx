@@ -9,7 +9,6 @@ import Main from "@/src/components/Dealer/Main";
 import Breadcrumb from "@/src/components/Breadcrumb";
 import Title from "@/src/components/Title";
 import LinkSmall from "@/src/components/LinkSmall";
-
 import Listing from "@/src/components/Listings/user/listing";
 
 import { 
@@ -17,6 +16,7 @@ import {
     newUser,
     title 
 } from "@/src/utils/constants/Dealer/User/util";
+import { useAuthDealer } from "@/src/hooks/dealer/auth";
 
 type User = {
     id: number
@@ -52,7 +52,6 @@ const User = ({ user } : UserProps) => {
             </div>
 
             <Listing list={user} />
-
         </Main>
     )
 }
@@ -74,7 +73,9 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiDealer(ctx);
-        const response = await api.get(`/users/${id_dealer}`);
+        const response = await api.post("/user/all", {
+            id_dealer: id_dealer
+        });
         const userData = response?.data?.data || [];
 
         return {

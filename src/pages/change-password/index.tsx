@@ -1,18 +1,14 @@
-import MainDirectDistributor from "@/src/components/Main";
+import React, { useState } from "react";
+
+import { getApiDealer } from "@/src/api/dealer/axios";
+import { useAuthDealer } from "@/src/hooks/dealer/auth";
+import { useMessageSuccess } from "@/src/hooks/message/success";
+
+import Main from "@/src/components/Dealer/Main";
 import AlertError from "@/src/components/AlertError";
-import AlertSuccess from "@/src/components/AlertSuccess";
-import Image from "next/image";
-import Link from "next/link";
 import Processing from "@/src/components/Processing";
-import React, {useState} from "react";
-import {getApiDealer} from "@/src/api/dealer/axios";
-import {useAuthDealer} from "@/src/hooks/dealer/auth";
-import {useRouter} from "next/navigation";
 import Title from "@/src/components/Title";
 import ButtonSmall from "@/src/components/ButtonSmall";
-import Breadcrumb from "@/src/components/Breadcrumb";
-import {breadcrumb, title} from "@/src/utils/constants/Dealer/Partner/New/util";
-import {useMessageSuccess} from "@/src/hooks/message/success";
 
 const ChangePassword = () => {
     const { user, logout } = useAuthDealer()
@@ -20,9 +16,9 @@ const ChangePassword = () => {
     const [password, setPassword] = useState<string|null>(null)
     const [passwordConfirmation, setPasswordConfirmation] = useState<string|null>(null)
 
-    const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
-    const [alertError, setAlertError] = useState<string|null>(null)
-    const [processing, setProcessing] = useState<boolean>(false)
+    const { showMessage: showMessageSuccess } = useMessageSuccess()
+    const [ alertError, setAlertError] = useState<string|null>(null)
+    const [ processing, setProcessing] = useState<boolean>(false)
 
     const handleFormLogin = (e: any) => {
         e.preventDefault()
@@ -30,7 +26,7 @@ const ChangePassword = () => {
 
         const api = getApiDealer('')
 
-        api.put('/user/change-password', {
+        api.put('/user/reset-password', {
             id: user?.id,
             password: password,
             password_confirmation: passwordConfirmation,
@@ -59,7 +55,7 @@ const ChangePassword = () => {
     }
 
     return (
-        <MainDirectDistributor>
+        <Main>
             <div className="w-100% md:w-50% flex flex-col mb-25px">
                 <Title title={'Change password'}/>
             </div>
@@ -91,7 +87,7 @@ const ChangePassword = () => {
                     {processing && <Processing/>}
                 </ButtonSmall>
             </form>
-        </MainDirectDistributor>
+        </Main>
     )
 }
 

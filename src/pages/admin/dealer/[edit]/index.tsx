@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 
@@ -46,6 +46,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
     const [ alertError, setAlertError] = useState<string|null>(null)
     const [ processingDealer, setProcessingDealer] = useState<boolean>(false)
     const [ processingToken, setProcessingToken] = useState<boolean>(false)
+    const [ showFormApiToken,  SetShowFormApiToken ] = useState<boolean>(false)
 
     const [ tokenApi, setTokenApi ] = useState<string>(token?.token)
 
@@ -59,6 +60,11 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
         sisrev_llc_code: dealer?.sisrev_usa_code,
         sisrev_br_code: dealer?.sisrev_br_code
     });
+
+    useEffect(() => {
+        if (formData.type_of_access === 1)
+            SetShowFormApiToken(true)
+    }, [formData])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -263,28 +269,32 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                 </div>
             </form>
 
-            <div className='w-100% md:w-50% flex flex-col mt-45px mb-45px'>
-                <Title title="Generate token API"/>
-            </div>
+            { showFormApiToken && (
+                <>
+                    <div className='w-100% md:w-50% flex flex-col mt-45px mb-45px'>
+                        <Title title="Generate token API"/>
+                    </div>
 
-            <form onSubmit={handleGenerateTokenApi}
-                  className="w-100% border-1 border-grey_six p-25px rounded-8px flex flex-col">
-                <input
-                    className='w-auto mb-5 border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
-                    type='text'
-                    readOnly={true}
-                    disabled={true}
-                    name="token_api"
-                    value={tokenApi}
-                />
+                    <form onSubmit={handleGenerateTokenApi}
+                          className="w-100% border-1 border-grey_six p-25px rounded-8px flex flex-col">
+                        <input
+                            className='w-auto mb-5 border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                            type='text'
+                            readOnly={true}
+                            disabled={true}
+                            name="token_api"
+                            value={tokenApi}
+                        />
 
-                <div>
-                    <ButtonSmall bgColor='bg-yellow_one'>
-                        Generate new token
-                        {processingToken && <Processing/>}
-                    </ButtonSmall>
-                </div>
-            </form>
+                        <div>
+                            <ButtonSmall bgColor='bg-yellow_one'>
+                                Generate new token
+                                {processingToken && <Processing/>}
+                            </ButtonSmall>
+                        </div>
+                    </form>
+                </>
+            )}
         </Main>
     )
 }
@@ -305,7 +315,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     try {
         const api = getApiAdmin(ctx);
-        const dealerData = await api.post('/dealer/', { id: ctx?.params?.edit });
+        const dealerData = await api.post('/dealer/', {id: ctx?.params?.edit});
 
         let responseToken = '';
 

@@ -48,7 +48,6 @@ const UpdateUser = (data: UserProps) => {
         password: undefined,
         password_confirmation: undefined,
         is_active: data?.data?.is_active,
-        id_dealer: router?.query?.user,
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +71,7 @@ const UpdateUser = (data: UserProps) => {
         }
 
         const api = getApiAdmin("")
-        api.put("/dealer/user/update", formData)
+            api.put("/dealer/user/update", formData)
             .then((response) => {
                 showMessageSuccess(response?.data?.message)
                 router.back()
@@ -154,7 +153,7 @@ const UpdateUser = (data: UserProps) => {
 
                     <select
                         className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                        name="is_active"
+                            name="is_active"
                         value={formData.is_active}
                         onChange={handleSelectChange}
                         required={true}

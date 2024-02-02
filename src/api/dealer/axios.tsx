@@ -5,7 +5,7 @@ export const getApiDealer = (ctx: any) => {
     const { 'dealerAuth.token': token } = parseCookies(ctx);
 
     const api = axios.create({
-        baseURL: 'https://b2b-qas.azurewebsites.net/api/v1/dealer/',
+        baseURL: 'http://127.0.0.1:9000/api/v1/dealer',
         headers: {
             Authorization: `Bearer ${token}`,
         },
