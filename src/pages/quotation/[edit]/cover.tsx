@@ -1,16 +1,18 @@
-import Label from "@/src/components/Label";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import { useRouter } from "next/router";
+
 import { useMessageSuccess } from "@/src/hooks/message/success";
 import { getApiDealer } from "@/src/api/dealer/axios";
-import { useRouter } from "next/navigation";
-import AlertError from "@/src/components/AlertError";
+import { useMessageError } from "@/src/hooks/message/error";
+
+import Label from "@/src/components/Label";
 
 type QuotationItem = {
     id: number
     client_name: string
     client_order: string
     requested_by: string
-    urgent: number
+    urgent: boolean
     deadline: string
     type: string
     status: string
@@ -22,13 +24,12 @@ interface Quotation {
 }
 
 const Cover = ({ quotation } : Quotation) => {
-    const router = useRouter()
-
-    const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
-    const [ alertError, setAlertError ] = useState<string|null>(null)
-    const [ processing, setProcessing ] = useState<boolean>(false)
+    const router = useRouter();
+    const { showMessage } = useMessageSuccess();
+    const { setMessageError  } = useMessageError();
 
     const [formData, setFormData] = useState({
+        id_dealer: quotation?.id_dealer,
         client_name: quotation?.client_name,
         client_order: quotation?.client_order,
         requested_by: quotation?.requested_by,
@@ -36,59 +37,60 @@ const Cover = ({ quotation } : Quotation) => {
         deadline: quotation?.deadline,
         type: quotation?.type,
         status: quotation?.status,
-        id_dealer: quotation?.id_dealer
-    })
+    });
+
+    useEffect(() => {
+        handleChange();
+    }, [formData]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setFormData((prevData) => ({ ...prevData, [name]: value }))
-    }
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target
-        setFormData((prevData) => ({ ...prevData, [name]: value }))
-    }
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
     const handeRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked  } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: checked }));
-    }
+    };
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault()
-        setProcessing(true)
-
+    const handleChange = async () => {
         const api = getApiDealer("")
-        await api.post('/quotation/create', formData)
-            .then((response) => {
-                showMessageSuccess(response?.data?.message)
-                router.push('/quotation')
+        await api.put('/quotation/update/', {
+            id: router?.query?.edit,
+            client_name: formData?.client_name,
+            client_order: formData?.client_order,
+            requested_by: formData?.requested_by,
+            urgent: formData?.urgent,
+            deadline: formData?.deadline,
+            type: formData?.type,
+            status: formData?.status,
+            id_dealer: formData?.id_dealer
+        })
+            .then(() => {
             })
             .catch((e) => {
                 let errorString = ""
-
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
                     e?.response?.data?.errors[key].forEach((errorMessage: any) => {
                         errorString += `${errorMessage}<br>`
                     })
                 })
-
-                setAlertError(errorString)
+                setMessageError(errorString)
             })
             .finally(() => {
-                setProcessing(false)
                 setTimeout(() => {
-                    setAlertError(null)
-                }, 2500)
+                    setMessageError('')
+                }, 10000)
             })
     }
 
     return (
-        <form onSubmit={(e) => {
-            handleSubmit(e)
-        }}>
-            { alertError && <AlertError text={ alertError } /> }
-
+        <form>
             <div className="flex flex-wrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
                 <div className="w-full md:w-4/6 md:pr-5 mb-5">
                     <Label>Client name</Label>
@@ -99,6 +101,8 @@ const Cover = ({ quotation } : Quotation) => {
                            value={formData.client_name}
                            onChange={handleInputChange}
                            required={true}
+                           disabled={formData.status > '0'}
+                           readOnly={formData.status > '0'}
                     />
                 </div>
                 <div className="w-full md:w-1/3 md:pr-5 mb-5">
@@ -110,6 +114,8 @@ const Cover = ({ quotation } : Quotation) => {
                            value={formData.client_order}
                            onChange={handleInputChange}
                            required={true}
+                           disabled={formData.status > '0'}
+                           readOnly={formData.status > '0'}
                     />
                 </div>
                 <div className="w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
@@ -121,6 +127,8 @@ const Cover = ({ quotation } : Quotation) => {
                            value={formData.requested_by}
                            onChange={handleInputChange}
                            required={true}
+                           disabled={formData.status > '0'}
+                           readOnly={formData.status > '0'}
                     />
                 </div>
                 <div className="w-auto md:pr-5 mb-5 md:mb-0">
@@ -131,8 +139,10 @@ const Cover = ({ quotation } : Quotation) => {
                                    id="toggle"
                                    className="sr-only peer"
                                    name="urgent"
-                                   checked={formData.urgent === 1}
+                                   checked={formData.urgent}
                                    onChange={handeRadioChange}
+                                   disabled={formData.status > '0'}
+                                   readOnly={formData.status > '0'}
                             />
                             <div
                                 className="block relative bg-grey_eight w-60px h-32px p-1 rounded-full before:absolute before:bg-white before:w-6 before:h-6 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:before:bg-white peer-checked:bg-red_one"></div>
@@ -147,7 +157,10 @@ const Cover = ({ quotation } : Quotation) => {
                            value={formData.deadline}
                            placeholder={formData.deadline}
                            onChange={handleInputChange}
+                           min={(new Date()).toISOString().slice(0, 16)}
                            required={true}
+                           disabled={formData.status > '0'}
+                           readOnly={formData.status > '0'}
                     />
                 </div>
                 <div className="flex-auto w-full md:w-1/4 mb-5 md:mb-0">
@@ -158,10 +171,10 @@ const Cover = ({ quotation } : Quotation) => {
                         value={formData.type}
                         onChange={handleSelectChange}
                         required={true}
+                        disabled={formData.status > '0'}
                     >
-                        <option value="0">Spot</option>
-                        <option value="1">Contrato</option>
-                        <option value="2">Template</option>
+                        <option value="1">Spot</option>
+                        <option value="0">Template</option>
                     </select>
                 </div>
             </div>

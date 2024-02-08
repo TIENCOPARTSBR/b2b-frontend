@@ -17,7 +17,8 @@ import Listing from "@/src/components/Listings/partners/listing";
 type PartnerType = {
     id: number
     name: string
-    status: string
+    is_active: string
+    created_at: string
 }
 
 interface PartnerProps {
@@ -57,6 +58,7 @@ export default Partner;
 
 export const getServerSideProps: GetServerSideProps<PartnerProps> = async (ctx) => {
     const { ['dealerAuth.token'] : token} = parseCookies(ctx);
+    const { ['dealerAuth.id_dealer'] : id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -69,14 +71,17 @@ export const getServerSideProps: GetServerSideProps<PartnerProps> = async (ctx) 
 
     try {
         const api = getApiDealer(ctx);
-        const response= await api.get('/partner');
+        const response= await api.post('/partner/all', {
+            id_dealer: id_dealer
+        });
         const data: any = [];
 
         response?.data?.data.map((index: any) => {
             data.push({
-                'id': index?.id,
-                'name': index?.name,
-                'status': (index?.status == 0 ? 'Inativo' : 'Ativo'),
+                id: index?.id,
+                name: index?.name,
+                created_at: index?.created_at,
+                is_active: (index?.is_active == 0 ? 'Inactive' : 'Active'),
             });
         });
 

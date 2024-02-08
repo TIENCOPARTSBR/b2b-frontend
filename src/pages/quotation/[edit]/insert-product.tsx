@@ -31,7 +31,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         location: undefined,
         price: undefined,
         observation: undefined,
-        application: undefined,
+        application: "CAT",
         lead_time_br: undefined,
         lead_time_usa: undefined,
         lead_time: undefined,
@@ -62,16 +62,12 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         setProductData((prevData) => ({
             ...prevData,
             locations: [""],
-            price_br: undefined,
-            price_eua: undefined,
             moq: undefined,
             quantity: 1,
             location: undefined,
             price: undefined,
             observation: undefined,
-            application: undefined,
-            lead_time_br: undefined,
-            lead_time_usa: undefined,
+            application: "CAT",
             lead_time: undefined,
         }))
     }
@@ -83,14 +79,16 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         setProcessing(true)
 
         const api = getApiDealer("")
-        await api.post("/quotation/product", { part_number: productData.part_number })
+        await api.post("/quotation/product/unique/", {
+            part_number: productData.part_number
+        })
             .then((response) => {
                 setProductData((prevData) => ({
                     ...prevData,
                     locations: response?.data?.data?.locations ||  [""],
                     location: response?.data?.data?.locations[0] || undefined,
                     price_br: response?.data?.data?.price_br || undefined,
-                    price_eua: response?.data?.data?.price_eua || undefined,
+                    price_eua: response?.data?.data?.price_usa || undefined,
                     moq: response?.data?.data?.moq || 0,
                     quantity: response?.data?.data?.moq || 1,
                     lead_time: (response?.data?.data?.locations[0] == "USA" ? response?.data?.data?.lead_time_usa : response?.data?.data?.lead_time_br) ?? 0,
@@ -143,7 +141,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                 setProcessing(false)
                 setTimeout(() => {
                     setAlertError(null)
-                }, 2500)
+                }, 10000)
             })
     }
 

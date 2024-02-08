@@ -3,12 +3,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import DataTable from "@/src/components/Datatable";
-import ModalDelete from "@/src/components/ModalDelete";
+import ModalDelete from "@/src/components/Dealer/ModalDelete";
 
 type PartnerType = {
     id: number
     name: string
-    status: string
+    is_active: string
+    created_at: string
 }
 
 interface ListPartners {
@@ -42,19 +43,19 @@ const Listing = ({ list }: ListPartners) => {
 
     const columns = [
         {
-            Header: "ID",
-            accessor: "id",
-            width: "20%",
-        },
-        {
             Header: "NAME",
             accessor: "name",
-            width: "30%",
+            width: "70%",
         },
         {
             Header: "STATUS",
-            accessor: "status",
-            width: "40%",
+            accessor: "is_active",
+            width: "10%",
+        },
+        {
+            Header: "CREATED",
+            accessor: "created_at",
+            width: "10%",
         },
         {
             Header: "ACTIONS",

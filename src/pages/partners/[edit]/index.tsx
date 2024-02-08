@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { GetServerSideProps } from "next";
 
 import { getApiDealer } from "@/src/api/dealer/axios";
-
+import { useMessageSuccess } from "@/src/hooks/message/success";
 import {
     breadcrumb,
     title
@@ -18,12 +18,11 @@ import ButtonSmall from "@/src/components/ButtonSmall";
 import AlertError from "@/src/components/AlertError";
 import AlertSuccess from "@/src/components/AlertSuccess";
 import Processing from "@/src/components/Processing";
-import {useMessageSuccess} from "@/src/hooks/message/success";
 
 type PartnerType = {
     id: number,
     name: string,
-    status: number,
+    is_active: number,
     id_dealer: number,
 }
 
@@ -40,10 +39,10 @@ const EditPartner = ({ partner }: PartnerProps) => {
     const [ processing, setProcessing] = useState<boolean>(false)
 
     const [formData, setFormData] = useState({
-        id: partner?.id,
+        id_partner: partner?.id,
         id_dealer: partner?.id_dealer,
         name: partner?.name,
-        status: partner?.status
+        is_active: partner?.is_active
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +81,7 @@ const EditPartner = ({ partner }: PartnerProps) => {
             setProcessing(false)
             setTimeout(() => {
                 setAlertError(null)
-            }, 2500)
+            }, 10000)
         })
     }
 
@@ -116,8 +115,8 @@ const EditPartner = ({ partner }: PartnerProps) => {
 
                     <select
                         className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                        name="status"
-                        value={formData.status}
+                        name="is_active"
+                        value={formData.is_active}
                         onChange={handleSelectChange}
                         required={true}
                     >
@@ -141,6 +140,7 @@ export default EditPartner;
 
 export const getServerSideProps: GetServerSideProps<PartnerProps> = async (ctx) => {
     const {['dealerAuth.token']: token} = parseCookies(ctx);
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -153,7 +153,10 @@ export const getServerSideProps: GetServerSideProps<PartnerProps> = async (ctx) 
 
     try {
         const api = getApiDealer(ctx);
-        const response= await api.get('/partner/'+ctx?.params?.edit);
+        const response= await api.post('/partner/unique', {
+            id_partner: ctx?.params?.edit,
+            id_dealer: id_dealer
+        });
 
         return {
             props: {

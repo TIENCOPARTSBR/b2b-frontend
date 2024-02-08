@@ -55,7 +55,7 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
 
             return user;
         } catch (error) {
-            console.error("Erro ao recuperar informações do usuário:", error);
+            //console.error("Erro ao recuperar informações do usuário:", error);
         }
     }
 

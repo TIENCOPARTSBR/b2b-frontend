@@ -1,25 +1,24 @@
 import Image from "next/image";
 
 import DataTable from "@/src/components/Datatable";
-import { useRouter } from "next/router";
 import {useState} from "react";
-import ModalDelete from "@/src/components/ModalDelete";
 import ModalDeleteDatatable from "@/src/components/Dealer/ModalDeleteDatatable";
+import ModalEditItemQuotationDatatable from "@/src/components/Dealer/ModalEditItemQuotationDatatable";
 
 interface QuotationItemProps {
     itens: {}
     onUpdateListing: () => void
+    status?: string
 }
 
-const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
-    const router = useRouter()
-
+const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
     const [displayItemQuotationDeleteModal, setDisplayItemQuotationDeleteModal] = useState<boolean>(false)
+    const [displayItemQuotationEditModal, setDisplayItemQuotationEditModal] = useState<boolean>(false)
     const [itemId, setItemId] = useState<number>(0)
 
-
-    const handleToViewQuotation = (id: number) => {
-        router.push(`/quotation/${id}`)
+    const handleToEditQuotation = (id: number) => {
+        setItemId(id)
+        setDisplayItemQuotationEditModal((prev) => !prev)
     }
 
     const handleItemQuotationDelete = (id: number) => {
@@ -27,14 +26,14 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
         setDisplayItemQuotationDeleteModal((prev) => !prev)
     }
 
-    const columns = [
+    let columns = [
         {
             Header: "Actions",
             accessor: "action",
             width: "5%",
             Cell: ({ row }: any) => (
                 <div className="flex items-center w-auto text-right">
-                    <button onClick={() => handleToViewQuotation(row.original.id)}
+                    <button onClick={() => handleToEditQuotation(row.original.id)}
                             className="w-25px h-25px flex items-center justify-centers">
                         <Image src="/icon/icon-edit.svg" width="18" height="18" alt="icon edit"/>
                     </button>
@@ -53,11 +52,6 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
             ),
         },
         {
-            Header: "ID",
-            accessor: "id",
-            width: "2%",
-        },
-        {
             Header: "Part number",
             accessor: "part_number",
             width: "5%",
@@ -65,12 +59,12 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
         {
             Header: "Quantity",
             accessor: "quantity",
-            width: "5%",
+            width: "4%",
         },
         {
             Header: "MOQ",
             accessor: "moq",
-            width: "5%",
+            width: "3%",
         },
         {
             Header: "Description",
@@ -90,7 +84,7 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
         {
             Header: "Unit price",
             accessor: "unit_price",
-            width: "8%",
+            width: "5%",
         },
         {
             Header: "Total price",
@@ -120,7 +114,7 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
         {
             Header: "In stock",
             accessor: "stock",
-            width: "5%",
+            width: "3%",
         },
         {
             Header: "Availability",
@@ -129,6 +123,10 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
         },
     ]
 
+    if (status != '0') {
+        columns = columns.filter((item, index) => index !== 0);
+    }
+
     return (
         <>
             {displayItemQuotationDeleteModal && (
@@ -136,6 +134,16 @@ const Listing = ({ onUpdateListing, itens } : QuotationItemProps) => {
                     deleteTargetId={itemId}
                     handleOnVisible={() => setDisplayItemQuotationDeleteModal(false)}
                     handleApiDelete={`/quotation/item/delete`}
+                    handleUpdateListing={onUpdateListing}
+                />
+            )}
+
+
+            {displayItemQuotationEditModal && (
+                <ModalEditItemQuotationDatatable
+                    editTargetId={itemId}
+                    handleOnVisible={() => setDisplayItemQuotationEditModal(false)}
+                    handleApiUpdate={`/quotation/item/update`}
                     handleUpdateListing={onUpdateListing}
                 />
             )}

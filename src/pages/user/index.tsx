@@ -16,12 +16,13 @@ import {
     newUser,
     title 
 } from "@/src/utils/constants/Dealer/User/util";
-import { useAuthDealer } from "@/src/hooks/dealer/auth";
 
 type User = {
     id: number
     name: string
     email: string
+    is_active: number
+    created_at: string
 }
 
 interface UserProps {
@@ -76,7 +77,18 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
         const response = await api.post("/user/all", {
             id_dealer: id_dealer
         });
-        const userData = response?.data?.data || [];
+
+        let userData: any = [];
+
+        response?.data?.data.map(function(row: any) {
+            userData.push({
+                id: row?.id,
+                name: row?.name,
+                email: row?.email,
+                is_active: row?.is_active === 1 ? 'Active' : 'Inactive',
+                created_at: row?.created_at,
+            })
+        })
 
         return {
             props: {

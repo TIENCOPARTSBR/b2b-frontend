@@ -51,14 +51,12 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
                         type: response.data.type,
                         dealer_id: response.data.id_dealer,
                     };
-
                     setUser(userData);
                 }
             }
-
             return user;
         } catch (error) {
-            console.error("Erro ao recuperar informações do usuário:", error);
+            //console.error("Erro ao recuperar informações do usuário:", error);
         }
     }
 
@@ -91,7 +89,9 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
                     type: response?.data?.data?.user?.type,
                 })
 
+                return true;
             }
+
             return false;
         } catch (error) {
             return false;

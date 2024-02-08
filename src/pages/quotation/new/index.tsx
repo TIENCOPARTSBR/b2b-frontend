@@ -58,7 +58,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
         await api.post('/quotation/create', formData)
            .then((response) => {
                showMessageSuccess(response?.data?.message)
-               router.push('/quotation')
+               router.push(`/quotation/${response?.data?.data?.id}`)
            })
            .catch((e) => {
                let errorString = ""
@@ -75,7 +75,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                setProcessing(false)
                setTimeout(() => {
                    setAlertError(null)
-               }, 2500)
+               }, 10000)
            })
     }
 
@@ -152,15 +152,14 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                 <div className="flex-auto w-auto">
                     <Label>Type</Label>
                     <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
-                            name="type"
-                            value={formData.type}
-                            onChange={handleSelectChange}
-                            required={true}
+                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleSelectChange}
+                        required={true}
                     >
-                        <option value="0">Spot</option>
-                        <option value="1">Contrato</option>
-                        <option value="2">Template</option>
+                        <option value="0">Template</option>
+                        <option value="1">Spot</option>
                     </select>
                 </div>
                 </div>

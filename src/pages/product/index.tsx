@@ -11,24 +11,33 @@ import Main from "@/src/components/Dealer/Main";
 import Breadcrumb from "@/src/components/Breadcrumb";
 import Title from "@/src/components/Title";
 import CardProduct from "@/src/components/CardProduct";
+import Processing from "@/src/components/Processing";
 
 const Product = () => {
-    const [input, setInput] = useState<string>('')
-    const [data, setData] = useState<[]>([])
-    const [notFound, setNotFound] = useState<boolean>(false)
+    const [ input, setInput] = useState<string>('')
+    const [ data, setData] = useState<[]>([])
+    const [ notFound, setNotFound] = useState<boolean>(false)
+    const [ processing, setProcessing ] = useState<boolean>(false)
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
 
+        setProcessing(true)
+
         const api = getApiDealer('')
-        api.post('/product', { part_number: input })
+        api.post('/product/', {
+            part_number: input
+        })
             .then((response) => {
                 setNotFound(false)
                 setData(response?.data?.data)
             })
-            .catch((e) => {
+            .catch((e: any) => {
                 setData([])
                 setNotFound(true)
+            })
+            .finally(() => {
+                setProcessing(false)
             })
     }
 
@@ -55,13 +64,17 @@ const Product = () => {
                 </div>
 
             <form className="box-border relative z-0" onSubmit={handleSubmit}>
-                <button type="submit" className="w-50px h-100% absolute top-0 left-0 flex items-center justify-center">
+                <button type="submit" className="w-auto pl-5 h-100% absolute top-0 left-0 flex items-center justify-center">
                     <Image
                         src="/icon/icon-search.svg"
                         alt="Icon search"
                         width="18"
                         height="18" />
                 </button>
+
+                <div className="absolute top-0 right-0 w-50px h-100% flex items-center justify-items-center">
+                    { processing && <Processing color="border-yellow_two" />}
+                </div>
 
                 <input
                     type="text"

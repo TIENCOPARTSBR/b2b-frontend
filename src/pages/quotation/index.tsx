@@ -1,12 +1,14 @@
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
+
+import { getApiDealer } from "@/src/api/dealer/axios";
+import { breadcrumb, TitlePage } from "@/src/utils/constants/Dealer/Quotation/util";
+
 import Main from "@/src/components/Dealer/Main";
 import Breadcrumb from "@/src/components/Breadcrumb";
 import Title from "@/src/components/Title";
-import {breadcrumb, TitlePage} from "@/src/utils/constants/Dealer/Quotation/util";
 import Row from "@/src/components/Dealer/Row";
 import Listing from "@/src/components/Listings/quotation/listing";
-import {GetServerSideProps} from "next";
-import {parseCookies} from "nookies";
-import {getApiDealer} from "@/src/api/dealer/axios";
 
 type QuotationItem = {
     id: number,
@@ -55,7 +57,9 @@ export const getServerSideProps: GetServerSideProps<QuotationProps> = async (ctx
 
     try {
         const api = getApiDealer(ctx);
-        const response= await api.get(`/quotation/${id_dealer}/`);
+        const response= await api.post('/quotation/all', {
+            id_dealer: id_dealer
+        });
 
         return {
             props: {

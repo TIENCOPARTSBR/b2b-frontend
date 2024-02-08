@@ -80,6 +80,7 @@ export default User;
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => {
     const { ["dealerAuth.token"] : token} = parseCookies(ctx);
+    const { ["dealerAuth.id_dealer"] : id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -91,13 +92,27 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
     }
 
     try {
-        const api = getApiDealer('');
-        const userResponse = await api.get(`/partner/users/${ctx?.params?.edit}`);
-        console.error('userResponse')
-        const userData = userResponse?.data?.data
+        const api = getApiDealer(ctx);
+        const userResponse = await api.post('/partner/user/all', {
+            id_partner: ctx?.params?.edit,
+            id_dealer: id_dealer
+        });
+        const userData: any = [];
 
+        userResponse?.data?.data.map(function(row: any) {
+           userData.push({
+               id: row?.id,
+               name: row?.name,
+               email: row?.email,
+               created_at: row?.created_at,
+               is_active: row?.is_active === 1 ? 'Active' : 'Inactive'
+           })
+        });
 
-        const partnerResponse = await api.get(`/partner/${ctx?.params?.edit}`);
+        const partnerResponse = await api.post('/partner/unique', {
+            id_partner : ctx?.params?.edit,
+            id_dealer : id_dealer
+        });
         const partnerData = partnerResponse?.data?.data;
 
         return {

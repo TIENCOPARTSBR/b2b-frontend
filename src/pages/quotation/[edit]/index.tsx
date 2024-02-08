@@ -13,6 +13,8 @@ import InsertProduct from "@/src/pages/quotation/[edit]/insert-product";
 import Listing from "@/src/components/Listings/quotation/edit/listing";
 import Cover from "@/src/pages/quotation/[edit]/cover";
 import Submit from "@/src/pages/quotation/[edit]/submit";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 type QuotationItem = {
     id: number
@@ -39,18 +41,22 @@ type QuotationItens = {
 }
 
 interface NewQuotationProps {
-    quotation: QuotationItem
-    quotationItem: QuotationItens
+    quotation: QuotationItem|any
+    quotationItem?: QuotationItens|any
+    errorAPI?: any
 }
 
-const Index = ({ quotation, quotationItem } : NewQuotationProps) => {
+const Index = ({ quotation, quotationItem, errorAPI } : NewQuotationProps) => {
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies();
+
     const [ updateListing,  setUpdateListing ] = useState<{}>(quotationItem)
 
     const handleUpdateListing =  async () => {
         const api = getApiDealer("")
 
-        const response = await api.post(`/quotation/item/all`, {
-            id_quotation: quotation?.id
+        const response = await api.post("/quotation/item/all", {
+            id_quotation: quotation?.id,
+            id_dealer: id_dealer,
         })
 
         setUpdateListing(response?.data?.data)
@@ -58,23 +64,24 @@ const Index = ({ quotation, quotationItem } : NewQuotationProps) => {
 
     return (
         <Main>
-            <Row>
-                <Breadcrumb list={breadcrumb()}/>
-                <Title title={TitleConst}/>
-            </Row>
+            { !errorAPI ? (
+                <>
+                    <Row>
+                        <Breadcrumb list={breadcrumb()}/>
+                        <Title title={TitleConst}/>
+                    </Row>
 
-            <Cover quotation={quotation}/>
+                    <Cover quotation={quotation}/>
 
-            <InsertProduct
-                onUpdateListing={handleUpdateListing}
-            />
+                    { quotation?.status <= 0 && <InsertProduct onUpdateListing={handleUpdateListing} /> }
 
-            <Listing
-                onUpdateListing={handleUpdateListing}
-                itens={updateListing}
-            />
+                    <Listing status={quotation?.status} onUpdateListing={ handleUpdateListing } itens={ updateListing } />
 
-            <Submit />
+                    { quotation?.status <= 0  && <Submit /> }
+                </>
+            ) : (
+                <Title title="This quotation is not allowed for this dealer."/>
+            )}
         </Main>
     )
 }
@@ -83,6 +90,7 @@ export default Index
 
 export const getServerSideProps: GetServerSideProps<NewQuotationProps> = async (ctx) => {
     const {['dealerAuth.token']: token} = parseCookies(ctx);
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -94,26 +102,50 @@ export const getServerSideProps: GetServerSideProps<NewQuotationProps> = async (
     }
     
     try {
-        const api = getApiDealer(ctx)
-        const quotation = await api.post(`/quotation`, {
-            id: ctx?.params?.edit
-        })
+        let quotation = "";
+        let quotationItem = "";
+        let errorString = "";
 
-        const quotationItem = await api.post(`/quotation/item/all`, {
-            id_quotation: ctx?.params?.edit
+        const api = getApiDealer(ctx)
+            await api.post(`/quotation/unique/`, {
+                id: ctx?.params?.edit,
+                id_dealer: id_dealer
+            })
+                .then((response) => {
+                    quotation = response?.data?.data;
+                })
+                .catch((e) => {
+                    Object.keys(e?.response?.data?.errors).forEach((key) => {
+                        e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                            errorString += `${errorMessage}<br>`
+                        })
+                    })
+                })
+
+        await api.post("/quotation/item/all", {
+            id_quotation: ctx?.params?.edit,
+            id_dealer: id_dealer,
         })
+            .then((response) => {
+                quotationItem = response.data.data;
+            })
+                .catch((error) => {
+                console.error(error)
+            })
 
         return {
             props: {
-                quotation: quotation?.data?.data || [],
-                quotationItem: quotationItem?.data?.data || []
+                quotation: quotation,
+                quotationItem: quotationItem,
+                errorAPI: errorString ?? null
             }
         }
     } catch (e) {
         return {
             props: {
                 quotation: [],
-                quotationItem: []
+                quotationItem: [],
+                errorAPI: null
             }
         }
     }

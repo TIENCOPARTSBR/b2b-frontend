@@ -3,59 +3,66 @@ import { useState } from "react"
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 
-import { getApiDealer } from "@/src/api/dealer/axios"
-import { useMessageSuccess } from "@/src/hooks/message/success"
+import {getApiDealer} from "@/src/api/dealer/axios"
 
 import AlertError from "@/src/components/AlertError"
 import Processing from "@/src/components/Processing"
+import { useMessageSuccess } from "@/src/hooks/message/success"
 
 interface ModalProps {
     deleteTargetId: number
     handleOnVisible: () => void
     handleApiDelete: string
-    handleUpdateListing: () => void
+    idPartner?: any
 }
 
-const ModalDeleteDatatable = ({ deleteTargetId, handleOnVisible, handleApiDelete, handleUpdateListing }: ModalProps) => {
+const ModalDelete = ({ deleteTargetId, handleOnVisible, handleApiDelete, idPartner }: ModalProps) => {
+    const { ['dealerAuth.id_dealer'] : id_dealer} = parseCookies();
+
     const router = useRouter()
 
-    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies();
-
-    const { message : messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
-    const [alertError, setAlertError] = useState<string|null>(null)
-    const [processing, setProcessing] = useState<boolean>(false)
+    const { showMessage : showMessageSuccess } = useMessageSuccess()
+    const [ alertError, setAlertError] = useState<string|null>(null)
+    const [ processing, setProcessing] = useState<boolean>(false)
 
     const handleDelete = (e: any) => {
         e.preventDefault()
+
         setProcessing(true)
 
-        const api = getApiDealer('')
-        api.post(handleApiDelete, {
+        const requestBody = {
             id: deleteTargetId,
-            id_quotation : router?.query?.edit,
-            id_dealer : id_dealer,
-        })
-        .then((response) => {
-            showMessageSuccess(response?.data?.message)
-            handleOnVisible()
-            handleUpdateListing()
-        })
-        .catch((e) => {
-            let errorString = ""
+            id_dealer: id_dealer,
+            id_partner: undefined
+        }
 
-            Object.keys(e?.response?.data?.errors).forEach((key) => {
-                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                    errorString += `${errorMessage}<br>`
-                })
+        if (idPartner) {
+            requestBody.id_partner = idPartner;
+        }
+
+        const api = getApiDealer('')
+            api.post(handleApiDelete, requestBody)
+            .then((response) => {
+                router.reload()
+                handleOnVisible()
+                showMessageSuccess(response?.data?.message)
             })
+            .catch((e) => {
+                let errorString = ""
 
-            setAlertError(errorString)
-        }).finally(() => {
-            setProcessing(false)
-            setTimeout(() => {
-                setAlertError(null)
-            }, 10000)
-        })
+                Object.keys(e?.response?.data?.errors).forEach((key) => {
+                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                        errorString += `${errorMessage}<br>`
+                    })
+                })
+
+                setAlertError(errorString)
+            }).finally(() => {
+                setProcessing(false)
+                setTimeout(() => {
+                    setAlertError(null)
+                }, 10000)
+            })
     }
 
     return (
@@ -102,4 +109,4 @@ const ModalDeleteDatatable = ({ deleteTargetId, handleOnVisible, handleApiDelete
     )
 }
 
-export default ModalDeleteDatatable;
+export default ModalDelete;

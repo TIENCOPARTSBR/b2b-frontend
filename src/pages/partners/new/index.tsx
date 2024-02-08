@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 import { useAuthDealer } from "@/src/hooks/dealer/auth";
 import { getApiDealer } from "@/src/api/dealer/axios";
+import { useMessageSuccess } from "@/src/hooks/message/success";
 
 import {
     breadcrumb,
@@ -15,28 +16,30 @@ import Title from "@/src/components/Title";
 import Label from "@/src/components/Label";
 import ButtonSmall from "@/src/components/ButtonSmall";
 import AlertError from "@/src/components/AlertError";
-import AlertSuccess from "@/src/components/AlertSuccess";
 import Processing from "@/src/components/Processing";
-import {useMessageSuccess} from "@/src/hooks/message/success";
+import { GetServerSideProps } from "next";
+import {parseCookies} from "nookies";
 
 const NewPartner = () => {
     const router = useRouter()
-    const { user} = useAuthDealer()
 
-    const { message: messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies();
 
+    const { showMessage : showMessageSuccess } = useMessageSuccess()
     const [ alertError, setAlertError] = useState<string|null>(null)
     const [ processing, setProcessing] = useState<boolean>(false)
 
     const [formData, setFormData] = useState({
         name: "",
-        status: "1", // fica ativo por padrão
-        id_dealer: user?.dealer_id
+        is_active: 1,
+        id_dealer: id_dealer
     })
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prevData) => ({ ...prevData, [name]: value }))
     }
+
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormData((prevData) => ({ ...prevData, [name]: value }))
@@ -47,37 +50,37 @@ const NewPartner = () => {
         
         setProcessing(true)
 
-        console.error({...formData});
-
         const api = getApiDealer("")
-        api.post("/partner/create", {...formData})
-        .then((response) => {
-            showMessageSuccess(response?.data?.message)
-            router.push("/partners")
-        }).catch((e) => {
-            console.error(e)
-            
-            let errorString = ""
-
-            Object.keys(e?.response?.data?.errors).forEach((key) => {
-                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                    errorString += `${errorMessage}<br>`
-                })
-            })
-
-            setAlertError(errorString)
-        }).finally(() => {
-            setProcessing(false)
-            setTimeout(() => {
-                setAlertError(null)
-            }, 2500)
+        api.post("/partner/create", {
+            id_dealer: formData?.id_dealer,
+            is_active: formData?.is_active,
+            name: formData?.name
         })
+            .then((response) => {
+                showMessageSuccess(response?.data?.message)
+                router.push("/partners")
+            }).catch((e) => {
+                let errorString = ""
+
+                Object.keys(e?.response?.data?.errors).forEach((key) => {
+                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                        errorString += `${errorMessage}<br>`
+                    })
+                })
+
+                setAlertError(errorString)
+            }).finally(() => {
+                setProcessing(false)
+
+                setTimeout(() => {
+                    setAlertError(null)
+                }, 10000)
+            })
     }
 
     return (
         <Main>
             { alertError && <AlertError text={ alertError } /> }
-            { messageSuccess && <AlertSuccess text={ messageSuccess } /> }
 
             <div className="w-100% md:w-50% flex flex-col mb-45px">
                 <Breadcrumb list={ breadcrumb }/>
@@ -104,8 +107,8 @@ const NewPartner = () => {
 
                     <select
                         className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                        name="status"
-                        value={formData.status}
+                        name="is_active"
+                        value={formData.is_active}
                         onChange={handleSelectChange}
                         required={true}
                     >
@@ -126,3 +129,20 @@ const NewPartner = () => {
 }
 
 export default NewPartner;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { ['dealerAuth.token']: token } = parseCookies(ctx);
+
+    if (!token) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            }
+        }
+    }
+
+    return {
+        props: {}
+    }
+}

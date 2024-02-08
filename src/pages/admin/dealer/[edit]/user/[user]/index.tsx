@@ -204,6 +204,7 @@ export default UpdateUser;
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => {
     const {['adminAuth.token']: token} = parseCookies(ctx);
+    const {['adminAuth.id_dealer']: id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -216,7 +217,10 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiAdmin(ctx)
-        const response = await api.post('/dealer/user/', {id: ctx?.params?.user})
+        const response = await api.post('/dealer/user', {
+            id_user: ctx?.params?.user,
+            id_dealer: ctx?.params?.edit
+        })
         const data = response?.data?.data || []
 
         return {
@@ -224,7 +228,8 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
                 data: data
             }
         }
-    } catch (error) {
+    } catch (e) {
+        console.error(e)
         return {
             props: {
                 data: []

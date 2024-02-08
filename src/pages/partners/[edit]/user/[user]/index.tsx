@@ -22,11 +22,12 @@ import {useMessageSuccess} from "@/src/hooks/message/success"
 
 type UserType = {
     id: number,
-    type: string,
+    type: number,
     name: string,
     email: string,
     password: string,
-    id_dealer: number
+    id_dealer: number,
+    is_active: number
 }
 
 interface UserProps {
@@ -36,7 +37,7 @@ interface UserProps {
 const UpdateUser = (data: UserProps) => {
     const router = useRouter()
 
-    const { message : messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
+    const { showMessage : showMessageSuccess } = useMessageSuccess()
 
     const [ processing, setProcessing] = useState<boolean>(false)
     const [ alertError, setAlertError] = useState<string|null>(null)
@@ -45,9 +46,11 @@ const UpdateUser = (data: UserProps) => {
         id: data?.data?.id,
         name: data?.data?.name,
         email: data?.data?.email,
-        type: (data?.data?.type === "Admin" ? 1 : 0),
+        type: data?.data?.type,
         password: undefined,
+        is_active: data?.data?.is_active,
         password_confirmation: undefined,
+        id_partner: router?.query?.edit,
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,13 +92,12 @@ const UpdateUser = (data: UserProps) => {
             setProcessing(false)
             setTimeout(() => {
                 setAlertError(null)
-            }, 2500)
+            }, 10000)
         })
     }
 
     return (
         <Main>
-            { messageSuccess && <AlertSuccess text={ messageSuccess } /> }
             { alertError && <AlertError text={ alertError } /> }
 
             <div className="w-100% md:w-50% flex flex-col mb-45px">
@@ -103,39 +105,42 @@ const UpdateUser = (data: UserProps) => {
                 <Title title={ title } />
             </div>
 
-            <form onSubmit={ handleFormSubmit }
+            <form onSubmit={handleFormSubmit}
                   className="w-100% border-1 border-grey_six p-25px rounded-8px flex flex-wrap md:justify-between">
-                <div className="md:w-32.3% w-100% mb-5">
+                <div className="md:w-1/4 md:mr-5 flex-auto w-100% mb-5">
                     <Label>Name</Label>
 
-                    <input className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                           type="text"
-                           placeholder="User name"
-                           name="name"
-                           value={formData.name}
-                           onChange={handleInputChange}
-                           required={true}
+                    <input
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        type="text"
+                        placeholder="User name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required={true}
                     />
                 </div>
 
-                <div className="md:w-32.3% w-100% mb-5">
+                <div className="md:w-1/4 md:mr-5 flex-auto w-100% mb-5">
                     <Label>Email</Label>
 
-                    <input className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                           type="text"
-                           placeholder="User email"
-                           name="email"
-                           value={formData.email}
-                           onChange={handleInputChange}
-                           required={true}
+                    <input
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        type="text"
+                        placeholder="User email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required={true}
                     />
                 </div>
 
-                <div className="md:w-32.3% w-100% mb-5">
+                <div className="md:w-1/6 md:mr-5 flex-auto w-100% mb-5">
                     <Label>Type user</Label>
 
                     <select
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"   name="type"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        name="type"
                         value={formData.type}
                         onChange={handleSelectChange}
                         required={true}
@@ -145,34 +150,51 @@ const UpdateUser = (data: UserProps) => {
                     </select>
                 </div>
 
-                <div className="md:w-49% w-100% mb-5">
+                <div className="md:w-1/6 md:mr-5 flex-auto w-100% mb-5">
+                    <Label>Status</Label>
+
+                    <select
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        name="is_active"
+                        value={formData.is_active}
+                        onChange={handleSelectChange}
+                        required={true}
+                    >
+                        <option value="0">Inactive</option>
+                        <option value="1">Active</option>
+                    </select>
+                </div>
+
+                <div className="md:w-1/6 md:mr-5 flex-auto w-100% mb-5">
                     <Label>Password</Label>
 
-                    <input className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                           type="password"
-                           placeholder="Type your password"
-                           name="password"
-                           value={formData.password}
-                           onChange={handleInputChange}
+                    <input
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        type="password"
+                        placeholder="Type your password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
                     />
                 </div>
 
-                <div className="md:w-49% w-100% mb-5">
+                <div className="md:w-1/6 flex-auto w-100% mb-5">
                     <Label>Confirm Password</Label>
 
-                    <input className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
-                           type="password"
-                           placeholder="Type your password"
-                           name="password_confirmation"
-                           value={formData.password_confirmation}
-                           onChange={handleInputChange}
+                    <input
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        type="password"
+                        placeholder="Type your password"
+                        name="password_confirmation"
+                        value={formData.password_confirmation}
+                        onChange={handleInputChange}
                     />
                 </div>
 
                 <div className="w-100%">
                     <ButtonSmall bgColor="bg-yellow_one">
                         Update user
-                        {processing && <Processing/> }
+                        {processing && <Processing/>}
                     </ButtonSmall>
                 </div>
             </form>
@@ -183,7 +205,7 @@ const UpdateUser = (data: UserProps) => {
 export default UpdateUser
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => {
-    const { ["dealerAuth.token"]: token } = parseCookies(ctx)
+    const {["dealerAuth.token"]: token} = parseCookies(ctx)
 
     if (!token) {
         return {
@@ -196,7 +218,10 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiDealer(ctx)
-        const response = await api.get(`/partner/user/${ctx?.params?.user}`)
+        const response = await api.post('/partner/user/unique', {
+            id: ctx?.params?.user,
+            id_partner: ctx?.params?.edit
+        })
         const data = response?.data?.data || []
 
         return {

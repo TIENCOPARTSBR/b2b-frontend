@@ -1,14 +1,14 @@
-import {GetServerSideProps} from "next";
-import {parseCookies} from "nookies";
-import MainDirectDistributor from "@/src/components/Main";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
+import Main from "@/src/components/Dealer/Main";
 
 const Home = () => {
   return (
-      <MainDirectDistributor>
+      <Main>
           <h2 className="font-normal text-black text-14px font-inter">
               - Dashboard to be defined -
           </h2>
-      </MainDirectDistributor>
+      </Main>
   )
 }
 

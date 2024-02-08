@@ -34,19 +34,24 @@ const Listing = ({ list }: ListUserProps) => {
 
     const columns = [
         {
-            Header: "ID",
-            accessor: "id",
-            width: "20%",
-        },
-        {
             Header: "NAME",
             accessor: "name",
-            width: "30%",
+            width: "20%",
         },
         {
             Header: "EMAIL",
             accessor: "email",
             width: "40%",
+        },
+        {
+            Header: "STATUS",
+            accessor: "is_active",
+            width: "10%",
+        },
+        {
+            Header: "CREATED",
+            accessor: "created_at",
+            width: "10%",
         },
         {
             Header: "ACTIONS",
