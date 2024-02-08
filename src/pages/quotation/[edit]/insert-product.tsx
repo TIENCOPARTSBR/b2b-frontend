@@ -62,6 +62,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         setProductData((prevData) => ({
             ...prevData,
             locations: [""],
+            part_number: undefined,
             moq: undefined,
             quantity: 1,
             location: undefined,
@@ -247,6 +248,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                             className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                             name="application"
                             required={true}
+                            value={productData.application}
                             onChange={handleSelectChange}
                         >
                             <option value="CAT">CAT</option>
@@ -262,7 +264,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                                    name="observation"
                                    placeholder=""
                                    className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
-                                   value={productData.observation}
+                                   value={productData.observation != undefined ? productData.observation : ''}
                                    onChange={handleInputChange}
                             />
                         </div>
