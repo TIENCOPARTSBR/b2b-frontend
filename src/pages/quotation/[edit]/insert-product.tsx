@@ -160,10 +160,9 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                                    name="part_number"
                                    placeholder="Search by part number"
                                    className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
-                                   value={productData.part_number}
+                                   value={productData.part_number != undefined ? productData.part_number : ''}
                                    onChange={(e) => {
                                        handleInputChange(e);
-                                       clearSearchProduct();
                                    }}
                                    onBlur={handleSearchProduct}
                                    required={true}
