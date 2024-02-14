@@ -21,6 +21,8 @@ type User = {
     id: number
     name: string
     email: string
+    is_active: number
+    created_at: string
 }
 
 interface UserProps {
@@ -72,15 +74,28 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiPartner(ctx);
-        const response = await api.get(`/users/${id_partner}`);
-        const userData = response?.data?.data || [];
+        const response = await api.post("/user/all" , {
+            id_partner: id_partner
+        });
+
+        let userData: any = [];
+
+        response?.data?.data.map(function(row: any) {
+            userData.push({
+                id: row?.id,
+                name: row?.name,
+                email: row?.email,
+                is_active: row?.is_active === 1 ? 'Active' : 'Inactive',
+                created_at: row?.created_at
+            })
+        });
 
         return {
             props: {
                 user: userData,
             }
         }
-    } catch (error) {
+    } catch (e) {
         return {
             props: {
                 user: [],

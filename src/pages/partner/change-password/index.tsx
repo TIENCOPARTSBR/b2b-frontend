@@ -13,6 +13,7 @@ import {useAuthPartner} from "@/src/hooks/partner/auth";
 import {getApiPartner} from "@/src/api/partner/axios";
 import {GetServerSideProps} from "next";
 import {parseCookies} from "nookies";
+import {useMessageError} from "@/src/hooks/message/error";
 
 const ChangePassword = () => {
     const { user, logout } = useAuthPartner('')
@@ -21,8 +22,8 @@ const ChangePassword = () => {
     const [password, setPassword] = useState<string|null>(null)
     const [passwordConfirmation, setPasswordConfirmation] = useState<string|null>(null)
 
-    const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
-    const [alertError, setAlertError] = useState<string|null>(null)
+    const { showMessage: showMessageSuccess } = useMessageSuccess()
+    const { setMessageError } = useMessageError()
     const [processing, setProcessing] = useState<boolean>(false)
 
     const handleFormLogin = (e: any) => {
@@ -31,7 +32,7 @@ const ChangePassword = () => {
 
         const api = getApiPartner('')
 
-        api.put('/user/change-password', {
+        api.put('/user/reset-password', {
             id: user?.id,
             password: password,
             password_confirmation: passwordConfirmation,
@@ -41,8 +42,6 @@ const ChangePassword = () => {
             logout()
         })
         .catch((e) => {
-            console.error(e)
-
             let errorsString = ""
 
             Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -51,13 +50,14 @@ const ChangePassword = () => {
                 })
             })
 
-            setAlertError(errorsString)
+            setMessageError(errorsString)
         })
         .finally(() => {
             setProcessing(false)
+
             setTimeout(() => {
-                setAlertError(null)
-            }, 5000)
+                setMessageError('')
+            }, 10000)
         })
     }
 
@@ -69,8 +69,6 @@ const ChangePassword = () => {
 
             <form onSubmit={handleFormLogin}
                   className="w-100%p-25px rounded-8px flex flex-wrap md:justify-between">
-                { alertError && <AlertError text={alertError}/> }
-
                 <div className="w-100% flex justify-between mb-2">
                     <input
                         className="w-100% lg:w-49% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px mb-4"

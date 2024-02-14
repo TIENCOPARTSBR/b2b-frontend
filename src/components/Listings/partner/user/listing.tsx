@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import DataTable from "@/src/components/Datatable";
-import ModalDeletePartner from "@/src/components/ModalDeletePartner";
+import ModalDelete from "@/src/components/Partner/ModalDelete";
 
 type User = {
     id: number
@@ -37,7 +37,17 @@ const Listing = ({ list }: ListUserProps) => {
         {
             Header: "EMAIL",
             accessor: "email",
-            width: "40%",
+            width: "30%",
+        },
+        {
+            Header: "STATUS",
+            accessor: "is_active",
+            width: "10%",
+        },
+        {
+            Header: "CREATED",
+            accessor: "created_at",
+            width: "10%",
         },
         {
             Header: "ACTIONS",
@@ -74,7 +84,7 @@ const Listing = ({ list }: ListUserProps) => {
     return (
         <>
             { displayUserDeleteModal && (
-                <ModalDeletePartner
+                <ModalDelete
                     deleteTargetId={userId}
                     handleOnVisible={() => setDisplayUserDeleteModal(false)}
                     handleApiDelete={`/user/delete`}

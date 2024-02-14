@@ -12,6 +12,7 @@ import React, {
 import { useRouter } from "next/navigation";
 
 import { getApiPartner } from "@/src/api/partner/axios";
+import {getApiDealer} from "@/src/api/dealer/axios";
 
 type User = {
     id: string;
@@ -41,30 +42,31 @@ interface RecoverPasswordProviderProps {
 export const AuthProviderPartner: React.FC<RecoverPasswordProviderProps> = ({ children }) => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
-    const { ['partnerAuth.token']: token } = parseCookies();
 
-    useEffect(() => {
-        if (token) {
-            recoverInformationUser(token);
-        }
-    }, [token]);  // Alterado para observar apenas mudanças em token
+    if (!user) {
+        recoverInformationUser();
+    }
 
-    async function recoverInformationUser(token: any) {
+    async function recoverInformationUser() {
         try {
-            const api = getApiPartner(``);
-            const response = await api.get('/profile', token);
+            if(!user?.id) {
+                const api = getApiPartner('');
+                const response = await api.post('/user/profile', {});
 
-            setUser({
-                id: response?.data?.id,
-                id_partner: response?.data?.id_partner,
-                name: response?.data?.name,
-                email: response?.data?.email,
-                type: response?.data?.type,
-            });
-
+                if (response?.data?.id) {
+                    const userData = {
+                        id: response.data.id,
+                        name: response.data.name,
+                        email: response.data.email,
+                        type: response.data.type,
+                        id_partner: response.data.id_partner,
+                    };
+                    setUser(userData);
+                }
+            }
             return user;
         } catch (error) {
-            console.error("Erro ao recuperar informações do usuário:", error);
+            //console.error("Erro ao recuperar informações do usuário:", error);
         }
     }
 
@@ -78,19 +80,24 @@ export const AuthProviderPartner: React.FC<RecoverPasswordProviderProps> = ({ ch
             const api = getApiPartner(``);
             const response = await api.post('/login', data);
 
-            // Set
-            setCookie(undefined, 'partnerAuth.token', response?.data?.token, {
+            setCookie(undefined, 'partnerAuth.token', response?.data?.data?.token, {
                 maxAge: 3600,
                 path: '/',
             });
 
-            const user = await recoverInformationUser(response?.data?.token);
-
-            if (user?.id_partner != undefined) {
-                setCookie(undefined, 'partnerAuth.id_partner', user?.id_partner as string, {
+            if (response?.data?.data?.user) {
+                setCookie(undefined, 'partnerAuth.id_partner', response?.data?.data?.user?.id_partner as any, {
                     maxAge: 3600,
                     path: '/',
-                });
+                })
+
+                setUser({
+                    id: response?.data?.data?.user?.id,
+                    id_partner: response?.data?.data?.user?.id_partner,
+                    name: response?.data?.data?.user?.name,
+                    email: response?.data?.data?.user?.email,
+                    type: response?.data?.data?.user?.type,
+                })
 
                 return true;
             }
@@ -103,6 +110,7 @@ export const AuthProviderPartner: React.FC<RecoverPasswordProviderProps> = ({ ch
     const logout = () => {
         const expireDate = new Date(0); // Define a data de expiração para o Unix epoch (01/01/1970)
         destroyCookie(null, 'partnerAuth.token', { expires: expireDate, path: '/' });
+        destroyCookie(null, 'partnerAuth.id_partner', { expires: expireDate, path: '/' });
         router.push('/partner/login');
     };
 

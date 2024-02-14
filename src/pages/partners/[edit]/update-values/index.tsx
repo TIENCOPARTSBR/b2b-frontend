@@ -91,6 +91,7 @@ export default AdditionalValue;
 
 export const getServerSideProps: GetServerSideProps<AdditionalValueInterface> = async (ctx) => {
     const {['dealerAuth.token']: token} = parseCookies(ctx); // Get the token saved in the authentication cookie
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies(ctx); // Get the token saved in the authentication cookie
 
     if (!token) { // If the token does not exist, redirect the client to the login page
         return {
@@ -103,15 +104,30 @@ export const getServerSideProps: GetServerSideProps<AdditionalValueInterface> = 
 
     try {
         const api = getApiDealer(ctx)
-        const partner = await api.get('/partner/'+ctx?.params?.edit)
-        const additionalValues = await api.post('/partner/additional-values', {
+        const partner = await api.post('/partner/unique', {
+            id_partner: ctx?.params?.edit,
+            id_dealer: id_dealer
+        })
+        const additionalValues = await api.post('/partner/additional-values/all', {
             id_partner: ctx?.params?.edit
         })
+
+        let additionalValuesData: any = [];
+
+        additionalValues?.data?.data.map(function(row: any) {
+            additionalValuesData.push({
+                id: row?.id,
+                partnumber: row?.partnumber,
+                value: row?.value,
+                type: row?.type.trim() == '1' ? 'Percentage' : `Unit price`
+            })
+        })
+
 
         return {
             props: {
                 partner: partner?.data?.data || [],
-                additionalValues: additionalValues?.data?.data || []
+                additionalValues: additionalValuesData
             }
         }
     } catch (e) {

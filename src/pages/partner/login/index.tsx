@@ -10,6 +10,8 @@ import { useAuthPartner } from "@/src/hooks/partner/auth"
 import AlertError from "@/src/components/AlertError"
 import AlertSuccess from "@/src/components/AlertSuccess"
 import Processing from "@/src/components/Processing"
+import {useMessageSuccess} from "@/src/hooks/message/success";
+import {useMessageError} from "@/src/hooks/message/error";
 
 const Login = () => {
     const { signIn } = useAuthPartner()
@@ -19,8 +21,8 @@ const Login = () => {
     const [password, setPassword] = useState<string>("")
     const [processing, setProcessing] = useState<boolean>(false)
 
-    const [alertError, setAlertError] = useState<string|null>(null)
-    const [alertSuccess, setAlertSuccess] = useState<string|null>(null)
+    const { message, showMessage } = useMessageSuccess()
+    const { messageError , setMessageError} = useMessageError()
 
     const handleLogin = async (e: any) => {
         e.preventDefault()
@@ -32,30 +34,28 @@ const Login = () => {
         })
 
         if (response) {
-            setAlertSuccess("Logged.")
-            setTimeout(() => {
-                router.push("/partner/")
-            }, 1000)
+            showMessage("Logged.")
+            router.push("/partner/")
         }
 
         if (!response) {
             setProcessing(false)
-            setAlertError("Access denied. Please review your email and password information and try again.")
+            setMessageError("Access denied. Please review your email and password information and try again.")
         }
     }
 
     useEffect(() => {
         setTimeout(() => {
-            setAlertError(null)
-        }, 3000)
-    }, [alertError])
+            setMessageError('')
+        }, 10000)
+    }, [messageError])
 
     return (
         <form onSubmit={handleLogin}
             className="bg-login bg-cover bg-center w-screen h-screen flex items-center justify-center px-25px">
 
-            { alertError && <AlertError text={alertError} /> }
-            { alertSuccess && <AlertSuccess text={alertSuccess} /> }
+            { messageError && <AlertError text={messageError} /> }
+            { message && <AlertSuccess text={message} /> }
 
             <div className="w-540px h-auto p-35px md:px-50px md:py-60px bg-white rounded-8px shadow-login">
                 <div className="w-100% flex justify-center">

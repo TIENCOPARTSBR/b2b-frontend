@@ -7,6 +7,7 @@ import ModalDelete from "@/src/components/ModalDelete";
 import {getApiDealer} from "@/src/api/dealer/axios";
 import ModalEditAdditionalValue from "@/src/components/ModalUpdateAdditionalValue";
 import AlertError from "@/src/components/AlertError";
+import {useAuthPartner} from "@/src/hooks/partner/auth";
 
 interface ListingInterface {
     list: [];
@@ -18,6 +19,7 @@ interface buttonProps {
 }
 
 const Listing = ({ id_dealer, list }: ListingInterface) => {
+    const { user } = useAuthPartner()
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showModalEdit, setShowModalEdit] = useState<boolean>(false)
     const [userId, setUserId] = useState<number>(0)
@@ -26,12 +28,16 @@ const Listing = ({ id_dealer, list }: ListingInterface) => {
 
     const handleEdit = (id: number) => {
         const api = getApiDealer('')
-        api.get('/partner/additional-values/'+id)
+        api.post('/partner/additional-values/unique', {
+            id_value: id,
+            id_partner: 2
+        })
         .then((response) => {
             setData({})
             setData(response?.data?.data)
         })
         .catch((e) => {
+            console.log(e)
             let errorString = ""
 
             Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -44,7 +50,7 @@ const Listing = ({ id_dealer, list }: ListingInterface) => {
         }).finally(() => {
             setTimeout(() => {
                 setAlertError(null)
-            }, 2500)
+            }, 10000)
 
             setShowModalEdit((prev) => !prev)
         })
@@ -58,7 +64,7 @@ const Listing = ({ id_dealer, list }: ListingInterface) => {
     const columns = () => [
         {
             Header: "PART NUMBER",
-            accessor: "part_number",
+            accessor: "partnumber",
             width: "25%",
         },
         {
@@ -68,7 +74,7 @@ const Listing = ({ id_dealer, list }: ListingInterface) => {
         },
         {
             Header: "OPTION",
-            accessor: "type_name",
+            accessor: "type",
             width: "25%",
         },
         {

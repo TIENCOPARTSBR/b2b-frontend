@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {getApiDealer} from "@/src/api/dealer/axios";
 import {useState} from "react";
 import {useRouter} from "next/router";
@@ -6,6 +5,7 @@ import AlertError from "@/src/components/AlertError";
 import AlertSuccess from "@/src/components/AlertSuccess";
 import Processing from "@/src/components/Processing";
 import {useMessageSuccess} from "@/src/hooks/message/success";
+import {useAuthPartner} from "@/src/hooks/partner/auth";
 
 interface ModalProps {
     data: any;
@@ -14,12 +14,13 @@ interface ModalProps {
 }
 const ModalEditAdditionalValue = ({data, onShow, routeApi}: ModalProps) => {
     const router = useRouter()
+    const { user } = useAuthPartner()
 
     const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
     const [alertError, setAlertError] = useState<string|null>(null)
     const [processing, setProcessing] = useState<boolean>(false)
 
-    const [partNumber, setPartNumber] = useState<string>(data?.part_number)
+    const [partNumber, setPartNumber] = useState<string>(data?.partnumber)
     const [value, setValue] = useState<number>(parseInt(data?.value, 10))
     const [type, setType] = useState<number>(parseInt(data?.type, 10))
 
@@ -33,6 +34,7 @@ const ModalEditAdditionalValue = ({data, onShow, routeApi}: ModalProps) => {
             id: data?.id,
             value: value,
             type: type,
+            id_partner: user?.id_partner
         }).then((response) => {
             showMessageSuccess(response?.data?.message)
             router.push(router.asPath);
@@ -84,9 +86,10 @@ const ModalEditAdditionalValue = ({data, onShow, routeApi}: ModalProps) => {
 
                                 <select
                                     className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                                    value={type}
                                     onChange={(e) => {setType(parseInt(e.target.value, 10))}} >
-                                    <option value="0" selected={type === 0}>Unit price</option>
-                                    <option value="1" selected={type === 1}>Percentage</option>
+                                    <option value="0">Unit price</option>
+                                    <option value="1">Percentage</option>
                                 </select>
                             </div>
 

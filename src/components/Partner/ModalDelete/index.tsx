@@ -2,13 +2,13 @@ import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/router"
 
-import {getApiDealer} from "@/src/api/dealer/axios"
-
 import AlertError from "@/src/components/AlertError"
 import AlertSuccess from "@/src/components/AlertSuccess"
 import Processing from "@/src/components/Processing"
 import { useMessageSuccess } from "@/src/hooks/message/success"
 import {getApiPartner} from "@/src/api/partner/axios";
+import {useAuthPartner} from "@/src/hooks/partner/auth";
+import {useMessageError} from "@/src/hooks/message/error";
 
 interface ModalProps {
     deleteTargetId: number
@@ -18,10 +18,11 @@ interface ModalProps {
 
 const ModalDelete = ({deleteTargetId, handleOnVisible, handleApiDelete}: ModalProps) => {
     const router = useRouter()
+    const { user } = useAuthPartner()
 
-    const { message : messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
+    const { showMessage : showMessageSuccess } = useMessageSuccess()
+    const { setMessageError } = useMessageError()
 
-    const [alertError, setAlertError] = useState<string|null>(null)
     const [processing, setProcessing] = useState<boolean>(false)
 
     const handleDelete = (e: any) => {
@@ -30,35 +31,35 @@ const ModalDelete = ({deleteTargetId, handleOnVisible, handleApiDelete}: ModalPr
         setProcessing(true)
 
         const api = getApiPartner('')
-        api.post(handleApiDelete, {id: deleteTargetId})
-        .then((response) => {
-            showMessageSuccess(response?.data?.message)
-            handleOnVisible()
-            router.push(router.asPath)
+        api.post(handleApiDelete, {
+            id: deleteTargetId,
+            id_partner: user?.id_partner
         })
-        .catch((e) => {
-            let errorString = ""
-
-            Object.keys(e?.response?.data?.errors).forEach((key) => {
-                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                    errorString += `${errorMessage}<br>`
-                })
+            .then((response) => {
+                showMessageSuccess(response?.data?.message)
+                handleOnVisible()
+                router.push(router.asPath)
             })
+            .catch((e) => {
+                let errorString = ""
 
-            setAlertError(errorString)
-        }).finally(() => {
-            setProcessing(false)
-            setTimeout(() => {
-                setAlertError(null)
-            }, 2500)
-        })
+                Object.keys(e?.response?.data?.errors).forEach((key) => {
+                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                        errorString += `${errorMessage}<br>`
+                    })
+                })
+
+                setMessageError(errorString)
+            }).finally(() => {
+                setProcessing(false)
+                setTimeout(() => {
+                    setMessageError('')
+                }, 2500)
+            })
     }
 
     return (
         <>
-            { alertError && <AlertError text={alertError} /> }
-            { messageSuccess && <AlertSuccess text={ messageSuccess } /> }
-
             <div className={`w-100% h-100% top-0 left-0 fixed z-10 flex items-center justify-center animate-opacity-in`}>
                     <div className={`w-screen h-screen absolute top-0 left-0 bg-black opacity-60 z-20`}></div>
                     <div className={`w-auto h-auto p-25px z-30 bg-white flex flex-wrap items-start animate-show-in`}>
