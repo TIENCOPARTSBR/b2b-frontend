@@ -25,6 +25,7 @@ const config: Config = {
         red_one: '#FB1837',
         black_one: '#1E1E1E',
         black_two: '#1D2630',
+        black_three: '#353535',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

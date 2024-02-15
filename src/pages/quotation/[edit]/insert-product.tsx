@@ -9,6 +9,8 @@ import Row from "@/src/components/Dealer/Row"
 import Label from "@/src/components/Label"
 import AlertError from "@/src/components/AlertError";
 import Processing from "@/src/components/Processing";
+import Excel from "@/src/pages/quotation/[edit]/excel";
+import ModalDelete from "@/src/components/ModalDelete";
 
 interface Props {
     onUpdateListing: () => void
@@ -16,6 +18,8 @@ interface Props {
 
 const InsertProduct = ({ onUpdateListing } : Props) => {
     const router = useRouter()
+
+    const [displayExcel, setDisplayExcel] = useState<boolean>(false)
 
     const { showMessage: showMessageSuccess } = useMessageSuccess()
     const [ alertError, setAlertError ] = useState<string|null>(null)
@@ -146,9 +150,25 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
             })
     }
 
+    const handleDisplayExcel = () => {
+        setDisplayExcel(!displayExcel);
+    }
+
     return (
         <Row>
-            { alertError && <AlertError text={alertError} /> }
+            {alertError && <AlertError text={alertError}/>}
+
+            <button className="px-15px py-12px rounded-60px bg-yellow_two mb-25px text-white flex-nowrap text-14px font-medium font-inter"
+                    onClick={handleDisplayExcel}>
+                Upload Excel
+            </button>
+
+            { displayExcel &&
+                <Excel
+                    onUpdateListing={onUpdateListing}
+                    handleOnVisible={() => setDisplayExcel(false)}
+                />
+            }
 
             <form className="w-screen" onSubmit={handleSubmit}>
                 <div className="w-full flex p-35px rounded-8px border-1 border-grey_six items-end flex-wrap">
@@ -269,7 +289,8 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </div>
                     </div>
 
-                    <button className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-14px font-medium font-inter">
+                    <button
+                        className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-14px font-medium font-inter">
                         Insert Product
                     </button>
                 </div>
