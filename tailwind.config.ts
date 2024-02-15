@@ -19,6 +19,7 @@ const config: Config = {
         grey_seven: '#AAAAAA',
         grey_eight: '#9FA2AA',
         grey_nine: 'rgb(245, 245, 245)',
+        grey_ten: '#FAFAFA',
         yellow_one: '#FBBB21',
         yellow_two: '#FF9900',
         green_one: '#2CA87F',
@@ -69,6 +70,9 @@ const config: Config = {
         '50%' : '50%',
         '100%' : '100%',
         'm15px' : '-15px',
+        '2rem' : '2rem',
+        '4rem' : '4rem',
+        '8rem' : '8rem',
       },
       borderWidth: {
         DEFAULT: '1px',

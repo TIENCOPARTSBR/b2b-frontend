@@ -6,6 +6,7 @@ import {useMessageError} from "@/src/hooks/message/error";
 import {useMessageSuccess} from "@/src/hooks/message/success";
 import AlertSuccess from "@/src/components/AlertSuccess";
 import Processing from "@/src/components/Processing";
+import Image from "next/image";
 
 interface PropsExcel {
     handleOnVisible: () => void;
@@ -75,7 +76,27 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
         if (fileList && fileList.length > 0) {
             setFile(fileList[0]);
         }
-    }
+    };
+
+    const handleFileRemove = () => {
+        setFile(null);
+        const inputElement = document.getElementById('fileInput') as HTMLInputElement;
+        if (inputElement) {
+            inputElement.value = '';
+        }
+    };
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const fileList = event.dataTransfer.files;
+        if (fileList && fileList.length > 0) {
+            setFile(fileList[0]);
+        }
+    };
 
     return (
         <div className={`w-100% h-100% top-0 left-0 fixed z-10 flex items-center justify-center animate-opacity-in`}>
@@ -86,15 +107,44 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
 
             <form onSubmit={handleInputPnsExcel}
                   className={`w-auto h-auto p-45px z-30 bg-white flex flex-wrap items-center justify-center animate-show-in rounded-12px flex-col`}>
-                <input type="file" className="mb-25px max-w-min" onChange={handleFileChange}/>
+                <div className="w-100% mb-25px relative">
+                    <input
+                        id="fileInput"
+                        type="file"
+                        className="w-full h-full absolute inset-0 opacity-0 cursor-pointer"
+                        onChange={handleFileChange}
+                        onDragOver={handleDragOver}
+                        onDrop={handleDrop}
+                    />
+                    <div
+                        className="w-full h-full px-8rem py-2rem border-2 rounded-8px bg-grey_ten border-grey_one p-4 flex flex-col items-center justify-center">
+                        <Image src="/icon/icon-drag-file.svg" alt="alt" width="48" height="48" className="mb-25px"/>
+                        <p className="text-black_one font-inter font-normal text-center text-16px">
+                            Click or drag file to this area to upload <br />
+                            This uploader only accepts <strong>.xls</strong> and <strong>.xlsx</strong> extensions
+                        </p>
+                    </div>
+                </div>
+
+                {file && (
+                    <div className="w-100% flex justify-center items-center mb-20px text-center">
+                        <p className="text-black mr-2">{file.name}</p>
+                        <button
+                            type="button"
+                            className="text-red-600 hover:text-red-800"
+                            onClick={handleFileRemove} >
+                            Remover
+                        </button>
+                    </div>
+                )}
 
                 <p className="w-auto font-inter text-16px text-red_one text-center font-normal">
-                    <strong>Important:</strong> Do not upload more than 500 parts.
+                    <strong>Important:</strong> Do not upload more than 2.000 parts.
                 </p>
 
                 <div className="w-auto flex justify-center text-center mt-35px">
                     <div className="flex flex-nowrap items-center mr-50px">
-                        <p className="font-inter text-14px font-normal text-black_three mr-3">Part number column :</p>
+                        <p className="font-inter text-14px font-normal text-black_three mr-3">Part number column:</p>
                         <input
                             className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="A"
@@ -104,7 +154,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                     </div>
 
                     <div className="flex flex-nowrap items-center">
-                        <p className="font-inter text-14px font-normal text-black_three mr-3">Price column :</p>
+                        <p className="font-inter text-14px font-normal text-black_three mr-3">Price column:</p>
                         <input
                             className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="B"
@@ -116,9 +166,9 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
 
                 <div className="w-100% flex justify-center mt-40px">
                     <button type="submit"
-                        className="px-20px py-12px rounded-60px bg-yellow_one text-white flex flex-nowrap text-14px font-semibold font-inter">
+                            className="px-20px py-12px rounded-60px bg-yellow_one text-white flex flex-nowrap text-14px font-semibold font-inter">
                         Submit file
-                        { processing && <Processing />}
+                        {processing && <Processing/>}
                     </button>
                 </div>
             </form>
