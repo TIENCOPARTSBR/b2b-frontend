@@ -31,7 +31,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
         client_name: "",
         client_order: "",
         requested_by: "",
-        urgent: "",
+        urgent: 0,
         deadline: "",
         type: "0",
         status: "0",

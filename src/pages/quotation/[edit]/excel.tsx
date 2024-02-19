@@ -33,12 +33,15 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
         if (file) {
             formData.append('excel', file);
         }
+
         if (columnOne) {
             formData.append('partnumber', columnOne);
         }
+
         if (columnTwo) {
             formData.append('quantity', columnTwo);
         }
+
         if (router?.query?.edit) {
             formData.append('id_quotation', router.query.edit.toString());
         }
@@ -51,7 +54,6 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 onUpdateListing()
             })
             .catch((e) => {
-                console.log(e)
                 let errorString = ""
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -117,7 +119,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                         onDrop={handleDrop}
                     />
                     <div
-                        className="w-full h-full px-8rem py-2rem border-2 rounded-8px bg-grey_ten border-grey_one p-4 flex flex-col items-center justify-center">
+                        className="w-full h-full px-2rem md:px-8rem py-2rem border-2 rounded-8px bg-grey_ten border-grey_one p-4 flex flex-col items-center justify-center">
                         <Image src="/icon/icon-drag-file.svg" alt="alt" width="48" height="48" className="mb-25px"/>
                         <p className="text-black_one font-inter font-normal text-center text-16px">
                             Click or drag file to this area to upload <br />
@@ -139,7 +141,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 )}
 
                 <p className="w-auto font-inter text-16px text-red_one text-center font-normal">
-                    <strong>Important:</strong> Do not upload more than 2.000 parts.
+                    <strong>Important:</strong> Do not upload more than 500 parts.
                 </p>
 
                 <div className="w-auto flex justify-center text-center mt-35px">
@@ -148,18 +150,20 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                         <input
                             className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="A"
+                            maxLength={1}
                             value={columnOne}
-                            onChange={(event) => setColumnOne(event.target.value)}
+                            onChange={(event) => setColumnOne(event.target.value.toUpperCase())}
                         />
                     </div>
 
                     <div className="flex flex-nowrap items-center">
-                        <p className="font-inter text-14px font-normal text-black_three mr-3">Price column:</p>
+                        <p className="font-inter text-14px font-normal text-black_three mr-3">Quantity column:</p>
                         <input
                             className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="B"
+                            maxLength={1}
                             value={columnTwo}
-                            onChange={(event) => setColumnTwo(event.target.value)}
+                            onChange={(event) => setColumnTwo(event.target.value.toUpperCase())}
                         />
                     </div>
                 </div>
