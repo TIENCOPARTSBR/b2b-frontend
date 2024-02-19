@@ -1,18 +1,15 @@
 import {
     destroyCookie,
-    parseCookies,
     setCookie
 } from "nookies";
 import React, {
     createContext,
     useState,
-    ReactNode,
-    useEffect
+    ReactNode
 } from "react";
 import { useRouter } from "next/navigation";
 
 import { getApiPartner } from "@/src/api/partner/axios";
-import {getApiDealer} from "@/src/api/dealer/axios";
 
 type User = {
     id: string;
