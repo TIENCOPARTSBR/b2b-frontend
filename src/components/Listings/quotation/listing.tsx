@@ -74,6 +74,18 @@ const Listing = ({ quotation } : QuotationProps) => {
             Header: "CLIENT",
             accessor: "client_name",
             width: "15%",
+            Cell: ({ row }: any) => (
+                <>
+                    {row.original.urgent == 1 ? (
+                        <div className="flex items-center w-auto text-right">
+                            {row.original.client_name}
+                            <Image src="/icon/icon-info-circle.svg" width="14" height="14" alt="icon urgent" className="ml-3"/>
+                        </div>
+                    ) : (
+                        row.original.client_name
+                    )}
+                </>
+            ),
         },
         {
             Header: "REQUESTED BY",

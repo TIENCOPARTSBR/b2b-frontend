@@ -110,6 +110,21 @@ const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
             Header: "Location",
             accessor: "location",
             width: "5%",
+            Cell: ({ row }: any) => (
+                <>
+                    {row.original.location == "BR" && (
+                        <div className="flex items-center w-auto text-right">
+                            <Image src="/icon/icon-br-flag.svg" width="23" height="15" alt="icon br flag" className="ml-3"/>
+                        </div>
+                    )}
+
+                    {row.original.location == "USA" && (
+                        <div className="flex items-center w-auto text-right">
+                            <Image src="/icon/icon-usa-flag.svg" width="23" height={'15'} alt="icon usa flag" className="ml-3"/>
+                        </div>
+                    )}
+                </>
+            ),
         },
         {
             Header: "In stock",
@@ -151,7 +166,7 @@ const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
             <DataTable
                 columns={columns}
                 data={itens}
-                page_size={10}
+                page_size={50}
             />
         </>
     )

@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { parseCookies } from "nookies";
 import { GetServerSideProps } from "next";
 
-import { breadcrumb, TitleConst } from "@/src/utils/constants/quotation/new/util"
 import { getApiDealer } from "@/src/api/dealer/axios";
 
 import Main from "@/src/components/Dealer/Main"
@@ -13,8 +12,6 @@ import InsertProduct from "@/src/pages/quotation/[edit]/insert-product";
 import Listing from "@/src/components/Listings/quotation/edit/listing";
 import Cover from "@/src/pages/quotation/[edit]/cover";
 import Submit from "@/src/pages/quotation/[edit]/submit";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 type QuotationItem = {
     id: number
@@ -62,13 +59,28 @@ const Index = ({ quotation, quotationItem, errorAPI } : NewQuotationProps) => {
         setUpdateListing(response?.data?.data)
     }
 
+    const breadcrumb= () => [
+        {
+            name: "Home",
+            link: "/",
+        },
+        {
+            name: "Quotations",
+            link: "/quotation",
+        },
+        {
+            name: "View",
+            link: "#",
+        },
+    ];
+
     return (
         <Main>
             { !errorAPI ? (
                 <>
                     <Row>
                         <Breadcrumb list={breadcrumb()}/>
-                        <Title title={TitleConst}/>
+                        <Title title={`Quotation ${quotation?.id}`} />
                     </Row>
 
                     <Cover quotation={quotation}/>
