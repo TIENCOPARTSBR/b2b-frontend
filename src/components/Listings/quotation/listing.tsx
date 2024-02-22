@@ -31,7 +31,7 @@ const Listing = ({ quotation } : QuotationProps) => {
 
                 if (fileUrl) {
                     // Concatenar a URL base com a URL do arquivo
-                    //const fullUrl = 'http://127.0.0.1:9000'+fileUrl;
+                    //const fullUrl = 'http://127.0.0.1:8000'+fileUrl;
                     const fullUrl = 'https://b2b-qas.azurewebsites.net'+fileUrl;
                     const link = document.createElement('a');
                     link.href = fullUrl;
