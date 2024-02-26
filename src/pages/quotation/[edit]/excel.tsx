@@ -23,6 +23,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
     const [ file, setFile] = useState<File | null>(null);
     const [ columnOne, setColumnOne] = useState<string>('');
     const [ columnTwo, setColumnTwo] = useState<string>('');
+    const [ existsHeader, setExistsHeader] = useState<string>('');
 
     const handleInputPnsExcel = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -43,6 +44,10 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
             formData.append('quantity', columnTwo);
         }
 
+        if (existsHeader) {
+            formData.append('existsHeader', existsHeader);
+        }
+
         if (router?.query?.edit) {
             formData.append('id_quotation', router.query.edit.toString());
         }
@@ -55,8 +60,6 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 onUpdateListing()
             })
             .catch((e) => {
-                console.error(e);
-
                 let errorString = ""
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -69,7 +72,6 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
             })
             .finally(() => {
                 setProcessing(false);
-
                 setTimeout(() => {
                     setMessageError('')
                 }, 10000)
@@ -99,7 +101,14 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
         event.preventDefault();
         const fileList = event.dataTransfer.files;
         if (fileList && fileList.length > 0) {
-            setFile(fileList[0]);
+            const allowedExtensions = ['.xls', '.xlsx'];
+            const file = fileList[0];
+            const fileExtension = file.name.split('.').pop()?.toLowerCase(); // Adicionando "?" para tratar o possível valor undefined
+            if (fileExtension && allowedExtensions.includes(`.${fileExtension}`)) {
+                setFile(file);
+            } else {
+                setMessageError('Please, send a file with the extension .xls or .xlsx.');
+            }
         }
     };
 
@@ -147,6 +156,14 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 <p className="w-auto font-inter text-16px text-red_one text-center font-normal">
                     <strong>Important:</strong> Do not upload more than 500 parts.
                 </p>
+
+                <div className="font-inter text-16px text-black_two font-normal w-100% flex flex-wrap items-center justify-center mt-5">Does your file have a header?
+                    <input
+                        type="checkbox"
+                        className="ml-2"
+                        onChange={(e) => setExistsHeader(e.target.value)}
+                    />
+                </div>
 
                 <div className="w-auto flex justify-center text-center mt-35px">
                     <div className="flex flex-nowrap items-center mr-50px">

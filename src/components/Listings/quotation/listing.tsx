@@ -124,7 +124,7 @@ const Listing = ({ quotation } : QuotationProps) => {
                             <Image src="/icon/icon-view.svg" width="18" height="18" alt="icon edit"/>
                         </button>
                     </div>
-                    {row.original.status == "Conclude" && (
+                    {row.original.status == "Completed" && (
                         <div className="flex items-center w-auto text-right">
                             <button onClick={() => handleRequestExcel(row.original.id)}
                                     className="w-25px h-25px flex items-center justify-centers">

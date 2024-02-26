@@ -15,6 +15,7 @@ import AlertError from "@/src/components/AlertError";
 import Processing from "@/src/components/Processing";
 import {GetServerSideProps} from "next";
 import {parseCookies} from "nookies";
+import {useAuthDealer} from "@/src/hooks/dealer/auth";
 
 interface NewQuotationProps {
     id_dealer: number|any
@@ -22,6 +23,7 @@ interface NewQuotationProps {
 
 const Index = ({ id_dealer } : NewQuotationProps) => {
     const router = useRouter()
+    const { user } = useAuthDealer('');
     
     const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
     const [ alertError, setAlertError ] = useState<string|null>(null)
@@ -30,7 +32,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
     const [formData, setFormData] = useState({
         client_name: "",
         client_order: "",
-        requested_by: "",
+        requested_by: user?.name,
         urgent: 0,
         deadline: "",
         type: "0",
