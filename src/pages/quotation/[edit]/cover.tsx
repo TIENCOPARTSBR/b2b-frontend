@@ -59,12 +59,6 @@ const Cover = ({ quotation } : Quotation) => {
         setFormData((prevData) => ({ ...prevData, [name]: checked }));
     };
 
-    // Função para formatar a data no formato desejado
-    const formatDateTime = (dateTime: string | number | Date) => {
-        const date = new Date(dateTime);
-        return date.toISOString().slice(0, 19).replace("T", " ");
-    };
-
     const handleChange = async () => {
         const api = getApiDealer("")
         api.put('/quotation/update/', {
@@ -161,7 +155,7 @@ const Cover = ({ quotation } : Quotation) => {
                         type="datetime-local"
                         name="deadline"
                         className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                        value={formatDateTime(formData.deadline)}
+                        value={formData.deadline}
                         onChange={handleInputChange}
                         required={true}
                         disabled={formData.status > '0'}
