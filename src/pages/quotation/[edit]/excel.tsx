@@ -30,6 +30,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
         setProcessing(true);
 
         const formData = new FormData();
+
         if (file) {
             formData.append('excel', file);
         }
@@ -54,6 +55,8 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 onUpdateListing()
             })
             .catch((e) => {
+                console.error(e);
+
                 let errorString = ""
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -116,6 +119,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                         className="w-full h-full absolute inset-0 opacity-0 cursor-pointer"
                         onChange={handleFileChange}
                         onDragOver={handleDragOver}
+                        accept=".xls, .xlsx"
                         onDrop={handleDrop}
                     />
                     <div

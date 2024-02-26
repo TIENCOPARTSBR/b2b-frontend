@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
-import { useMessageSuccess } from "@/src/hooks/message/success";
-import { getApiDealer } from "@/src/api/dealer/axios";
-import { useMessageError } from "@/src/hooks/message/error";
+import {useMessageSuccess} from "@/src/hooks/message/success";
+import {getApiDealer} from "@/src/api/dealer/axios";
+import {useMessageError} from "@/src/hooks/message/error";
 
 import Label from "@/src/components/Label";
 
@@ -40,7 +40,8 @@ const Cover = ({ quotation } : Quotation) => {
     });
 
     useEffect(() => {
-        handleChange();
+        setFormData(formData)
+        handleChange().then();
     }, [formData]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +59,15 @@ const Cover = ({ quotation } : Quotation) => {
         setFormData((prevData) => ({ ...prevData, [name]: checked }));
     };
 
+    // Função para formatar a data no formato desejado
+    const formatDateTime = (dateTime: string | number | Date) => {
+        const date = new Date(dateTime);
+        return date.toISOString().slice(0, 19).replace("T", " ");
+    };
+
     const handleChange = async () => {
         const api = getApiDealer("")
-        await api.put('/quotation/update/', {
+        api.put('/quotation/update/', {
             id: router?.query?.edit,
             client_name: formData?.client_name,
             client_order: formData?.client_order,
@@ -71,22 +78,22 @@ const Cover = ({ quotation } : Quotation) => {
             status: formData?.status,
             id_dealer: formData?.id_dealer
         })
-            .then(() => {
-            })
-            .catch((e) => {
-                let errorString = ""
-                Object.keys(e?.response?.data?.errors).forEach((key) => {
-                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                        errorString += `${errorMessage}<br>`
-                    })
+        .then(() => {
+        })
+        .catch((e) => {
+            let errorString = ""
+            Object.keys(e?.response?.data?.errors).forEach((key) => {
+                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                    errorString += `${errorMessage}<br>`
                 })
-                setMessageError(errorString)
             })
-            .finally(() => {
-                setTimeout(() => {
-                    setMessageError('')
-                }, 10000)
-            })
+            setMessageError(errorString)
+        })
+        .finally(() => {
+            setTimeout(() => {
+                setMessageError('')
+            }, 10000)
+        })
     }
 
     return (
@@ -113,7 +120,6 @@ const Cover = ({ quotation } : Quotation) => {
                            className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.client_order}
                            onChange={handleInputChange}
-                           required={true}
                            disabled={formData.status > '0'}
                            readOnly={formData.status > '0'}
                     />
@@ -151,16 +157,15 @@ const Cover = ({ quotation } : Quotation) => {
                 </div>
                 <div className="flex-auto w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
                     <Label>Deadline</Label>
-                    <input type="datetime-local"
-                           name="deadline"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                           value={formData.deadline}
-                           placeholder={formData.deadline}
-                           onChange={handleInputChange}
-                           min={(new Date()).toISOString().slice(0, 16)}
-                           required={true}
-                           disabled={formData.status > '0'}
-                           readOnly={formData.status > '0'}
+                    <input
+                        type="datetime-local"
+                        name="deadline"
+                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                        value={formatDateTime(formData.deadline)}
+                        onChange={handleInputChange}
+                        required={true}
+                        disabled={formData.status > '0'}
+                        readOnly={formData.status > '0'}
                     />
                 </div>
                 <div className="flex-auto w-full md:w-1/4 mb-5 md:mb-0">

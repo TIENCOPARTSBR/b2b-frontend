@@ -10,7 +10,6 @@ import Label from "@/src/components/Label"
 import AlertError from "@/src/components/AlertError";
 import Processing from "@/src/components/Processing";
 import Excel from "@/src/pages/quotation/[edit]/excel";
-import ModalDelete from "@/src/components/ModalDelete";
 
 interface Props {
     onUpdateListing: () => void
@@ -82,6 +81,20 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
             return false;
 
         setProcessing(true)
+
+        setProductData((prevData) => ({
+            ...prevData,
+            locations: [""],
+            moq: undefined,
+            quantity: 1,
+            location: undefined,
+            price: undefined,
+            price_br: undefined,
+            price_eua: undefined,
+            observation: undefined,
+            application: "CAT",
+            lead_time: undefined,
+        }))
 
         const api = getApiDealer("")
         await api.post("/quotation/product/unique/", {

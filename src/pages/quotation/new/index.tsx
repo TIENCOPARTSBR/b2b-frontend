@@ -109,7 +109,6 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                                className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.client_order}
                                onChange={handleInputChange}
-                               required={true}
                     />
                 </div>
                 <div className="flex-auto w-2/12 pr-5">
