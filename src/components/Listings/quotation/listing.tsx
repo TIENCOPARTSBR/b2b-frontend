@@ -63,7 +63,7 @@ const Listing = ({ quotation } : QuotationProps) => {
         {
             Header: "ID",
             accessor: "id",
-            width: "5%",
+            width: "5%"
         },
         {
             Header: "TYPE",
@@ -80,6 +80,7 @@ const Listing = ({ quotation } : QuotationProps) => {
                         <div className="flex items-center w-auto text-right">
                             {row.original.client_name}
                             <Image src="/icon/icon-info-circle.svg" width="14" height="14" alt="icon urgent" className="ml-3"/>
+                            <span className="px-1.5 py-1 ml-3 text-10px text-white font-inter font-semibold rounded-4px bg-yellow_two ">NEW</span>
                         </div>
                     ) : (
                         row.original.client_name

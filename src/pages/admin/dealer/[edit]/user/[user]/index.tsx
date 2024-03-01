@@ -4,7 +4,6 @@ import { parseCookies } from "nookies";
 import { GetServerSideProps } from "next";
 
 import {
-    breadcrumb,
     title
 } from "@/src/utils/constants/Admin/User/Edit/util";
 
@@ -28,11 +27,17 @@ type UserType = {
     is_active: number
 }
 
-interface UserProps {
-    data: UserType
+type Dealer = {
+    id: number
+    name: string
 }
 
-const UpdateUser = (data: UserProps) => {
+interface UserProps {
+    data: UserType|undefined
+    dealer: Dealer|undefined
+}
+
+const UpdateUser = ({ data, dealer } : UserProps) => {
     const router = useRouter()
 
     const { message : messageSuccess, showMessage : showMessageSuccess } = useMessageSuccess()
@@ -41,13 +46,13 @@ const UpdateUser = (data: UserProps) => {
     const [ alertError, setAlertError] = useState<string|null>(null)
 
     const [formData, setFormData] = useState({
-        id: data?.data?.id,
-        name: data?.data?.name,
-        email: data?.data?.email,
-        type: data?.data?.type,
+        id: data?.id,
+        name: data?.name,
+        email: data?.email,
+        type: data?.type,
         password: undefined,
         password_confirmation: undefined,
-        is_active: data?.data?.is_active,
+        is_active: data?.is_active,
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +98,26 @@ const UpdateUser = (data: UserProps) => {
                 }, 10000)
             })
     }
+
+
+    const breadcrumb = [
+        {
+            name: "Home",
+            link: "/admin",
+        },
+        {
+            name: "Dealer",
+            link: "/admin/dealer",
+        },
+        {
+            name: `${dealer?.name}`,
+            link: `/admin/dealer/${dealer?.id}`,
+        },
+        {
+            name: "Users",
+            link: `/admin/dealer/${dealer?.id}/user`,
+        }
+    ]
 
     return (
         <Main>
@@ -204,7 +229,6 @@ export default UpdateUser;
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => {
     const {['adminAuth.token']: token} = parseCookies(ctx);
-    const {['adminAuth.id_dealer']: id_dealer} = parseCookies(ctx);
 
     if (!token) {
         return {
@@ -221,18 +245,21 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
             id_user: ctx?.params?.user,
             id_dealer: ctx?.params?.edit
         })
+        const dealer = await api.post('/dealer/',{ id: ctx?.params?.edit });
+
         const data = response?.data?.data || []
 
         return {
             props: {
-                data: data
+                data: data,
+                dealer: dealer?.data?.data,
             }
         }
     } catch (e) {
-        console.error(e)
         return {
             props: {
-                data: []
+                data: undefined,
+                dealer: undefined,
             }
         }
     }

@@ -20,6 +20,7 @@ const config: Config = {
         grey_eight: '#9FA2AA',
         grey_nine: 'rgb(245, 245, 245)',
         grey_ten: '#FAFAFA',
+        grey_eleven: '#dbe0e5a6',
         yellow_one: '#FBBB21',
         yellow_two: '#FF9900',
         green_one: '#2CA87F',
@@ -27,6 +28,7 @@ const config: Config = {
         black_one: '#1E1E1E',
         black_two: '#1D2630',
         black_three: '#353535',
+        yellow_three: 'rgba(251,187,33, 0.1)'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -40,6 +42,7 @@ const config: Config = {
         '0px' : '0px !important',
         '1px' : '1px',
         '7px' : '7px',
+        '4px' : '4px',
         '8px' : '8px',
         '9px' : '9px',
         '12px' : '12px',
@@ -57,8 +60,10 @@ const config: Config = {
         '50px' : '50px',
         '55px' : '55px',
         '96px' : '96px',
+        '80px' : '80px',
         '200px' : '200px',
         '350px' : '350px',
+        '400px' : '400px',
         '450px' : '450px',
         '420px' : '420px',
         '540px' : '540px',
@@ -80,12 +85,14 @@ const config: Config = {
         '0.5' : '.5px'
       },
       fontSize: {
+        '10px': '10px',
         '12px': '12px',
         '14px': '14px',
         '16px': '16px',
         '20px' : '20px',
       },
       borderRadius: {
+        '4px': '4px',
         '8px': '8px',
         '12px': '12px',
         '18px' : '18px',
@@ -97,7 +104,8 @@ const config: Config = {
         'login' : ' 0px 8px 24px 0px rgba(27, 46, 94, 0.12)',
         'submenu' : ' 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12)',
         'shadow_btn_small' : '0px 2px 0px 0px rgba(0, 0, 0, 0.04)',
-        'alert_error' : '0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12)'
+        'alert_error' : '0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12)',
+        'card_notifications' : 'rgba(19, 25, 32, 0.08) 0px 8px 24px'
       },
       fontFamily: {
         inter: ['var(--font-inter)'],
@@ -116,6 +124,7 @@ const config: Config = {
       animation: {
         'show-in': 'show-in 400ms linear normal',
         'opacity-in': 'opacity-in 300ms linear normal',
+        'explode': 'explode 0.5s ease',
       },
       keyframes: {
         'opacity-in': {
@@ -125,7 +134,14 @@ const config: Config = {
         'show-in': {
           '0%': { transform: '0%' },
           '100%': { transform: '100%' },
-        }
+        },
+        'explode': {
+          '0%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-10px)' },
+          '50%': { transform: 'translateX(10px)' },
+          '75%': { transform: 'translateX(-10px)' },
+          '100%': { transform: 'translateX(20px)' },
+        },
       }
     },
   },

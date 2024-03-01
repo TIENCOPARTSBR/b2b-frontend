@@ -1,11 +1,11 @@
 export const breadcrumb = [
     {
         name: "Home",
-        link: "/",
+        link: "/admin",
     },
     {
         name: "Dealer",
-        link: "/dealer",
+        link: "/admin/dealer",
     },
 ];
 

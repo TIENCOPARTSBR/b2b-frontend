@@ -4,8 +4,8 @@ import { getApiDealer } from "@/src/api/dealer/axios";
 import { useRouter } from "next/navigation";
 
 type User = {
-    id: string;
-    dealer_id: string;
+    id: number;
+    dealer_id: number|undefined;
     name: string;
     email: string;
     type: string;

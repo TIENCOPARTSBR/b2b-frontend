@@ -3,9 +3,10 @@
 import React from "react";
 import { AuthProviderDealer } from '../context/dealer/auth';
 import { MessageSuccessProvider } from "@/src/context/message/success";
-import {AuthProviderPartner} from "@/src/context/partner/auth";
-import {AuthProviderAdmin} from "@/src/context/adm/auth";
-import {MessageErrorProvider} from "@/src/context/message/error";
+import { AuthProviderPartner } from "@/src/context/partner/auth";
+import { AuthProviderAdmin } from "@/src/context/adm/auth";
+import { MessageErrorProvider } from "@/src/context/message/error";
+import { NotificationsProvider } from "@/src/context/dealer/notifications";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
     return  (
@@ -13,9 +14,11 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             <AuthProviderPartner>
                 <AuthProviderAdmin>
                     <MessageSuccessProvider>
-                        <MessageErrorProvider>
-                        {children}
-                        </MessageErrorProvider>
+                        <NotificationsProvider>
+                            <MessageErrorProvider>
+                            {children}
+                            </MessageErrorProvider>
+                        </NotificationsProvider>
                     </MessageSuccessProvider>
                 </AuthProviderAdmin>
             </AuthProviderPartner>

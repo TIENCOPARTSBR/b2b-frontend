@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Profile from "@/src/components/Profile";
+import Notifications from "@/src/components/Dealer/Notifications";
 
 type NavItem = {
     icon: string;
@@ -117,6 +118,7 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
                 </nav>
             ) : (
                 <nav className="w-auto h-24 bg-white flex items-center justify-between lg:px-45px border-b-1 border-grey_one">
+
                     <ul className="w-auto flex items-center">
                         <li>
                             <Link href={homepage}>
@@ -171,7 +173,10 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
                         ))}
                     </ul>
 
-                    <Profile/>
+                    <div className="flex">
+                        <Notifications />
+                        <Profile/>
+                    </div>
                 </nav>
             )}
         </header>

@@ -216,7 +216,9 @@ export const getServerSideProps: GetServerSideProps<UserProps> = async (ctx) => 
 
     try {
         const api = getApiAdmin(ctx)
-        const response = await api.post('/user/unique', {id: ctx?.params?.edit})
+        const response = await api.post('/user/unique', {
+            id: ctx?.params?.edit
+        })
         const data = response?.data?.data || []
 
         return {
