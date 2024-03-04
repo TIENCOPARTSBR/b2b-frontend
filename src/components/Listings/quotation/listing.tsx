@@ -17,11 +17,23 @@ const Listing = ({ quotation } : QuotationProps) => {
     const { setMessageError } = useMessageError()
     const { showMessage } = useMessageSuccess()
 
+    const viewedQuotation = async (id: number) => {
+        const api = getApiDealer('')
+        await api.put('/quotation/update', {
+            id: id,
+            viewed: true
+        }).then(r => {});
+    }
+
     const handleToViewQuotation = (id: number) => {
-        router.push(`/quotation/${id}`)
+        router.push(`/quotation/${id}`);
+
+        viewedQuotation(id).then(r => {})
     }
 
     const handleRequestExcel = async (id: number) => {
+        viewedQuotation(id).then(r => {})
+
         const api = getApiDealer('')
         await api.post('/quotation/generate-excel', {
             id_quotation: id
@@ -41,6 +53,8 @@ const Listing = ({ quotation } : QuotationProps) => {
                     document.body.removeChild(link);
 
                     showMessage('Your Excel file download is ready.')
+
+                    router.reload();
                 } else {
                     setMessageError('Error while fetching file URL.');
                 }
@@ -80,7 +94,7 @@ const Listing = ({ quotation } : QuotationProps) => {
                         <div className="flex items-center w-auto text-right">
                             {row.original.client_name}
                             <Image src="/icon/icon-info-circle.svg" width="14" height="14" alt="icon urgent" className="ml-3"/>
-                            <span className="px-1.5 py-1 ml-3 text-10px text-white font-inter font-semibold rounded-4px bg-yellow_two ">NEW</span>
+                            {row.original.viewed != 1 ? <span className="px-1.5 py-1 ml-3 text-10px text-white font-inter font-semibold rounded-4px bg-yellow_two ">NEW</span> : '' }
                         </div>
                     ) : (
                         row.original.client_name

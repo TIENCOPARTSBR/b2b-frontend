@@ -27,16 +27,19 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
     };
 
     useEffect(() => {
-        // Busca inicial de notificações ao montar o componente
-        getNotifications();
 
-        // Define o intervalo de busca de notificações a cada 5 segundos
-        const intervalId = setInterval(() => {
+        if (user?.dealer_id) {
+            // Busca inicial de notificações ao montar o componente
             getNotifications();
-        }, 15000);
 
-        // Limpeza do intervalo ao desmontar o componente
-        return () => clearInterval(intervalId);
+            // Define o intervalo de busca de notificações a cada 5 segundos
+            const intervalId = setInterval(() => {
+                getNotifications();
+            }, 15000);
+
+            // Limpeza do intervalo ao desmontar o componente
+            return () => clearInterval(intervalId);
+        }
     }, [user?.dealer_id]); // Certifique-se de incluir user?.dealer_id como dependência do efeito para que ele seja executado quando o ID do revendedor mudar
 
     const setHideNotification = (id: number) => {

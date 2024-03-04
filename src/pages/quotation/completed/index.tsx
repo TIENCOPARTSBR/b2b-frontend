@@ -20,7 +20,8 @@ type QuotationItem = {
     type: string,
     status: string,
     created_at: string,
-    updated_at: string
+    updated_at: string,
+    viewed: boolean
 }
 
 interface QuotationProps {

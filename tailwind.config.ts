@@ -105,7 +105,7 @@ const config: Config = {
         'submenu' : ' 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12)',
         'shadow_btn_small' : '0px 2px 0px 0px rgba(0, 0, 0, 0.04)',
         'alert_error' : '0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12)',
-        'card_notifications' : 'rgba(19, 25, 32, 0.08) 0px 8px 24px'
+        'card_notifications' : 'rgba(19, 25, 32, 0.20) 0px 10px 50px'
       },
       fontFamily: {
         inter: ['var(--font-inter)'],

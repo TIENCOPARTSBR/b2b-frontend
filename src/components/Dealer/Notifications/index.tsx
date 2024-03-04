@@ -1,12 +1,25 @@
 import { useNotifications } from "@/src/hooks/dealer/notifications";
 import Image from "next/image";
-import React, { useState } from "react";
-import {useAuthDealer} from "@/src/hooks/dealer/auth";
+import React, { useState, useEffect, useRef } from "react";
+import { useAuthDealer } from "@/src/hooks/dealer/auth";
 
 const Notifications = () => {
-    const { user } = useAuthDealer('')
+    const { user } = useAuthDealer("");
     const [visible, setVisible] = useState<boolean>(false);
     const [clickedIndex, setClickedIndex] = useState<any>(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                setVisible(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [modalRef]);
 
     const handleVisible = () => {
         setVisible(!visible);
@@ -27,7 +40,7 @@ const Notifications = () => {
     return (
         <>
             <button
-                className={`w-45px h-45px rounded-8px relative flex items-center justify-center hover:bg-grey_nine transition-all ease-in-out duration-300 `}
+                className={`w-45px h-45px mr-3 rounded-8px relative flex items-center justify-center hover:bg-grey_nine transition-all ease-in-out duration-300 `}
                 onClick={handleVisible}
             >
                 <Image
@@ -37,13 +50,14 @@ const Notifications = () => {
                     height="24"
                 />
                 <span className="bg-grey_six w-20px h-20px flex items-center justify-center rounded-60px text-grey_for text-10px font-bold absolute top-0.5 left-5">
-                    {notifications?.length}
+                    {notifications?.length ?? 0}
                 </span>
             </button>
 
             {visible && (
                 <div
-                    className="w-420px p-30px bg-white shadow-card_notifications absolute top-80px right-80px right-120px rounded-18px z-50"
+                    ref={modalRef}
+                    className="w-420px p-30px bg-white border-1 border-grey_one shadow-card_notifications absolute top-80px right-80px right-120px rounded-8px  z-50"
                 >
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="w-100% text-black_three font-inter font-semibold">
@@ -102,7 +116,7 @@ const Notifications = () => {
                                 ))}
                         </ul>
                     ) : (
-                        <div className="w-100% text-left text-14px font-normal font-inter text-grey_for">
+                        <div className="w-100% h-2rem flex items-end text-left text-14px font-normal font-inter text-grey_for">
                             There are no notifications at the moment.
                         </div>
                     )}
