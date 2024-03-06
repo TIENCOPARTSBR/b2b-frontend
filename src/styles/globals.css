@@ -47,3 +47,19 @@ body {
 {
   background-color: #eeeeee;
 }
+
+input:disabled,
+input:read-only,
+select:read-only,
+select:disabled,
+input:checked
+{
+  background-color: #efefef !important;
+  opacity: 1;
+  cursor: no-drop;
+}
+
+.peer:checked ~ .peer-checked\:bg-red_one {
+  opacity: 1;
+  cursor: no-drop;
+}

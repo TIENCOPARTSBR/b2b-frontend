@@ -58,6 +58,20 @@ export const Nav = () => {
             link: '/order',
             width: 20,
             height: 20,
+            subMenu: [
+                {
+                    name: 'Place a P.O.s',
+                    link: '/order/choice'
+                },
+                {
+                    name: 'Review your P.O.s',
+                    link: '/order'
+                },
+                {
+                    name: 'Placed P.O.s',
+                    link: '/order/completed'
+                }
+            ]
         },
         {
             icon: '/icon/icon-collecting.svg',

@@ -7,36 +7,37 @@ import {useMessageError} from "@/src/hooks/message/error";
 
 import Label from "@/src/components/Label";
 
-type QuotationItem = {
+type OrderType = {
     id: number
     client_name: string
-    client_order: string
+    client_order_number: string
     requested_by: string
     urgent: boolean
     deadline: string
     type: string
     status: string
     id_dealer: number
+    payment_method: string
 }
 
-interface Quotation {
-    quotation: QuotationItem
+interface OrderInterface {
+    order: OrderType
 }
 
-const Cover = ({ quotation } : Quotation) => {
+const Cover = ({ order } : OrderInterface) => {
     const router = useRouter();
     const { showMessage } = useMessageSuccess();
     const { setMessageError  } = useMessageError();
 
     const [formData, setFormData] = useState({
-        id_dealer: quotation?.id_dealer,
-        client_name: quotation?.client_name,
-        client_order: quotation?.client_order,
-        requested_by: quotation?.requested_by,
-        urgent: quotation?.urgent,
-        deadline: quotation?.deadline,
-        type: quotation?.type,
-        status: quotation?.status,
+        id_dealer: order?.id_dealer,
+        client_name: order?.client_name,
+        client_order_number: order?.client_order_number,
+        urgent: order?.urgent,
+        deadline: order?.deadline,
+        type: order?.type,
+        status: order?.status,
+        payment_method: order?.payment_method,
     });
 
     useEffect(() => {
@@ -59,21 +60,22 @@ const Cover = ({ quotation } : Quotation) => {
         setFormData((prevData) => ({ ...prevData, [name]: checked }));
     };
 
+    const requestData = {
+        // Condicionalmente adiciona as chaves e valores ao objeto, dependendo do valor de order?.status
+        ...({ id: router?.query?.order }),
+        ...(order?.status == '0' && { client_name: formData?.client_name }),
+        ...({ client_order_number: formData?.client_order_number }),
+        ...({ payment_method: formData?.payment_method }),
+        ...(order?.status == '0' && { urgent: formData?.urgent }),
+        ...(order?.status == '0' && { deadline: formData?.deadline }),
+        ...(order?.status == '0' && { type: formData?.type }),
+        ...(order?.status == '0' && { status: formData?.status }),
+        ...(order?.status == '0' && { id_dealer: formData?.id_dealer }),
+    };
+
     const handleChange = async () => {
         const api = getApiDealer("")
-        api.put('/quotation/update/', {
-            id: router?.query?.edit,
-            client_name: formData?.client_name,
-            client_order: formData?.client_order,
-            requested_by: formData?.requested_by,
-            urgent: formData?.urgent,
-            deadline: formData?.deadline,
-            type: formData?.type,
-            status: formData?.status,
-            id_dealer: formData?.id_dealer
-        })
-        .then(() => {
-        })
+        api.put('/salesOrder/update/', requestData)
         .catch((e) => {
             console.log(e);
             let errorString = ""
@@ -84,17 +86,12 @@ const Cover = ({ quotation } : Quotation) => {
             })
             setMessageError(errorString)
         })
-        .finally(() => {
-            setTimeout(() => {
-                setMessageError('')
-            }, 10000)
-        })
     }
 
     return (
         <form>
             <div className="flex flex-wrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                <div className="w-full md:w-4/6 md:pr-5 mb-5">
+                <div className="w-full md:w-1/6 md:pr-5 mb-5">
                     <Label>Client name</Label>
                     <input type="text"
                            name="client_name"
@@ -107,29 +104,28 @@ const Cover = ({ quotation } : Quotation) => {
                            readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="w-full md:w-1/3 md:pr-5 mb-5">
+                <div className="w-full md:w-1/6 md:pr-5 mb-5">
                     <Label>Client order number</Label>
                     <input type="text"
-                           name="client_order"
+                           name="client_order_number"
                            placeholder="Insert cliente order number"
                            className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                           value={formData.client_order}
+                           value={formData.client_order_number}
                            onChange={handleInputChange}
-                           disabled={formData.status > '0'}
-                           readOnly={formData.status > '0'}
+                           disabled={formData.status > '2'}
+                           readOnly={formData.status > '2'}
                     />
                 </div>
-                <div className="w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
-                    <Label>Requested by</Label>
+                <div className="w-full md:w-1/6 md:pr-5 mb-5">
+                    <Label>Method Payment</Label>
                     <input type="text"
-                           name="requested_by"
-                           placeholder="Raul Vasquez"
+                           name="payment_method"
+                           placeholder="30 Days"
                            className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                           value={formData.requested_by}
+                           value={formData.payment_method}
                            onChange={handleInputChange}
-                           required={true}
-                           disabled={formData.status > '0'}
-                           readOnly={formData.status > '0'}
+                           disabled={formData.status > '2'}
+                           readOnly={formData.status > '2'}
                     />
                 </div>
                 <div className="w-auto md:pr-5 mb-5 md:mb-0">
@@ -150,7 +146,7 @@ const Cover = ({ quotation } : Quotation) => {
                         </label>
                     </div>
                 </div>
-                <div className="flex-auto w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
+                <div className="flex-auto w-full md:w-1/6 md:pr-5 mb-5 md:mb-0">
                     <Label>Deadline</Label>
                     <input
                         type="datetime-local"
@@ -163,7 +159,7 @@ const Cover = ({ quotation } : Quotation) => {
                         readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="flex-auto w-full md:w-1/4 mb-5 md:mb-0">
+                <div className="flex-auto w-full md:w-1/6 mb-5 md:mb-0">
                     <Label>Type</Label>
                     <select
                         className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
