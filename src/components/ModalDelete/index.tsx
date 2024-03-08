@@ -71,23 +71,23 @@ const ModalDelete = ({ deleteTargetId, handleOnVisible, handleApiDelete, handleU
                             className={`mr-3`}
                         />
                         <div>
-                            <h2 className={`w-100% md:w-350px text-black text-14px font-semibold mb-2`}>
+                            <h2 className={`w-100% md:w-350px text-black text-13px font-semibold mb-2`}>
                                 Modal delete
                             </h2>
 
-                            <p className={`w-100% text-black_two text-14px font-normal`}>
+                            <p className={`w-100% text-black_two text-13px font-normal`}>
                                 Are you sure you want to delete?
                             </p>
 
                             <div className={`flex items-center justify-end mt-5`}>
                                 <button
-                                    className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-14px font-medium mr-2`}
+                                    className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-13px font-medium mr-2`}
                                     onClick={handleOnVisible}>
                                     Cancel
                                 </button>
 
                                 <button
-                                    className={`px-15px py-9px rounded-60px bg-yellow_one text-grey_one text-14px font-semibold shadow-shadow_btn_small flex items-center`}
+                                    className={`px-15px py-9px rounded-60px bg-yellow_one text-grey_one text-13px font-semibold shadow-shadow_btn_small flex items-center`}
                                     onClick={handleDelete}>
                                     Confirm
                                     { processing && <Processing/> }

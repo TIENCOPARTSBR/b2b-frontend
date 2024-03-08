@@ -79,7 +79,7 @@ const Product = () => {
                 <input
                     type="text"
                     placeholder="Type the Part Number..."
-                    className="w-100% h-auto border-1 rounded-8px p-15px focus:outline-yellow_one pl-50px text-black font-normal font-inter text-14px"
+                    className="w-100% h-auto border-1 rounded-8px p-15px focus:outline-yellow_one pl-50px text-black font-normal font-inter text-13px"
                     onChange={(e: any) => {setInput(e.target.value)}}
                 />
             </form>
@@ -90,7 +90,7 @@ const Product = () => {
                 )}
 
                 { notFound && (
-                    <h2 className="w-100% flex items-center text-14px font-medium font-inter text-yellow_two">
+                    <h2 className="w-100% flex items-center text-13px font-medium font-inter text-yellow_two">
                         <Image src="/icon/icon-warning-yellow.svg"
                                alt="Icon Warning"
                                width="16"

@@ -7,6 +7,7 @@ import Label from "@/src/components/Label"
 import AlertError from "@/src/components/AlertError";
 import Processing from "@/src/components/Processing";
 import Excel from "@/src/pages/quotation/[edit]/excel";
+import {useMessageError} from "@/src/hooks/message/error";
 
 interface Props {
     onUpdateListing: () => void
@@ -17,8 +18,8 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
 
     const [displayExcel, setDisplayExcel] = useState<boolean>(false)
 
-    const { showMessage: showMessageSuccess } = useMessageSuccess()
-    const [ alertError, setAlertError ] = useState<string|null>(null)
+    const { showMessage: setMessageSuccess } = useMessageSuccess()
+    const { setMessageError } = useMessageError()
     const [ processing, setProcessing ] = useState<boolean>(false)
 
     const [productData, setProductData] = useState({
@@ -126,8 +127,8 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         setProcessing(true)
 
         const api = getApiDealer("")
-        await api.post("/quotation/item/create", {
-            id_quotation: router?.query?.edit,
+        await api.post("/order/item/create", {
+            id_sales_order: router?.query?.order,
             part_number: productData?.part_number,
             quantity: productData?.quantity,
             application: productData?.application,
@@ -138,7 +139,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
         })
             .then((response) => {
                 clearSearchProduct()
-                showMessageSuccess(response?.data?.message)
+                setMessageSuccess(response?.data?.message)
                 onUpdateListing()
             })
             .catch((e) => {
@@ -150,13 +151,10 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                     })
                 })
 
-                setAlertError(errorString)
+                setMessageError(errorString)
             })
             .finally(() => {
                 setProcessing(false)
-                setTimeout(() => {
-                    setAlertError(null)
-                }, 10000)
             })
     }
 
@@ -166,9 +164,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
 
     return (
         <Row>
-            {alertError && <AlertError text={alertError}/>}
-
-            <button className="px-15px py-12px rounded-60px bg-yellow_two mb-25px text-white flex-nowrap text-14px font-medium font-inter"
+            <button className="px-15px py-12px rounded-60px bg-yellow_two mb-25px text-white flex-nowrap text-13px font-medium font-inter"
                     onClick={handleDisplayExcel}>
                 Upload Excel
             </button>
@@ -182,14 +178,14 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
 
             <form className="w-screen" onSubmit={handleSubmit}>
                 <div className="w-full flex p-35px rounded-8px border-1 border-grey_six items-end flex-wrap">
-                    <div className="w-full md:w-1/4 md:pr-5 relative mb-5">
+                    <div className="w-full md:w-1/6 md:pr-5 relative mb-5">
                         <Label>Part Number</Label>
 
                         <div className="relative">
                             <input type="text"
                                    name="part_number"
                                    placeholder="Search by part number"
-                                   className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                                   className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                                    value={productData.part_number != undefined ? productData.part_number : ''}
                                    onChange={(e) => {
                                        handleInputChange(e);
@@ -203,10 +199,10 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-40px mb-5">
                         <Label>Location</Label>
                         <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                             name="location"
                             onChange={handleSelectChange}
                         >
@@ -222,59 +218,59 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </select>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-auto md:pr-5 mb-5">
                         <Label>Unit Price</Label>
 
                         <input type="text"
                                name="price"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
                                value={productData.price != undefined ? productData.price : ''}
                                disabled={true}
                                onChange={handleInputChange}
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Availability</Label>
 
                         <input type="text"
                                name="availability"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
                                value={productData.lead_time != undefined ? productData.lead_time : ''}
                                disabled={true}
                                onChange={handleInputChange}
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>MOQ</Label>
 
                         <input type="text"
                                name="moq"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven disabled:bg-grey_nine"
                                value={productData.moq != undefined ? productData.moq : ''}
                                onChange={handleInputChange}
                                disabled={true}
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Quantity</Label>
 
                         <input type="number"
                                name="quantity"
                                min={productData.moq != 1 ? productData.moq : 1}
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                                value={productData.quantity}
                                onChange={handleInputChange}
                                required={true}
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Application</Label>
                         <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                             name="application"
                             required={true}
                             value={productData.application}
@@ -285,24 +281,26 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </select>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/4 md:flex-auto mb-5">
                         <Label>Observation</Label>
 
                         <div className="relative">
                             <input type="text"
                                    name="observation"
                                    placeholder=""
-                                   className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                                   className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                                    value={productData.observation != undefined ? productData.observation : ''}
                                    onChange={handleInputChange}
                             />
                         </div>
                     </div>
 
-                    <button
-                        className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-14px font-medium font-inter">
-                        Insert Product
-                    </button>
+                    <div className="w-full">
+                        <button
+                            className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-13px font-medium font-inter">
+                            Insert Product
+                        </button>
+                    </div>
                 </div>
             </form>
         </Row>

@@ -162,7 +162,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Name</Label>
 
                     <input
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         type='text'
                         placeholder='Name'
                         name='name'
@@ -176,7 +176,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Status</Label>
 
                     <select
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         name='is_active'
                         value={formData.is_active} // Use '1' e '0' como strings
                         onChange={handleSelectChange}
@@ -192,7 +192,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Type of access</Label>
 
                     <select
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         name='type_of_access'
                         value={formData.type_of_access}
                         onChange={handleSelectChange}
@@ -207,7 +207,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Allow to quotation?</Label>
 
                     <select
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         name='allow_quotation'
                         value={formData.allow_quotation}
                         onChange={handleSelectChange}
@@ -222,7 +222,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Allow to partner?</Label>
 
                     <select
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         name='allow_partner'
                         value={formData.allow_partner}
                         onChange={handleSelectChange}
@@ -237,7 +237,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Code Sisrev Brazil</Label>
 
                     <input
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         type='text'
                         placeholder='5432'
                         name='sisrev_br_code'
@@ -251,7 +251,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <Label>Code Sisrev LLC</Label>
 
                     <input
-                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                        className='w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                         type='text'
                         placeholder='1234'
                         name='sisrev_llc_code'
@@ -278,7 +278,7 @@ const EditDealer = ({ dealer, token } : PropsDealer) => {
                     <form onSubmit={handleGenerateTokenApi}
                           className="w-100% border-1 border-grey_six p-25px rounded-8px flex flex-col">
                         <input
-                            className='w-auto mb-5 border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px'
+                            className='w-auto mb-5 border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px'
                             type='text'
                             readOnly={true}
                             disabled={true}

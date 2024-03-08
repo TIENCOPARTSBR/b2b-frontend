@@ -76,7 +76,7 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
                         value={globalFilter || ''}
                         onChange={(e) => setGlobalFilter(e.target.value)}
                         placeholder="Pesquisar..."
-                        className="flex w-280px py-3 px-6 rounded-8px focus:outline-none text-14px text-black border-grey_one border-1"
+                        className="flex w-280px py-3 px-6 rounded-8px focus:outline-none text-13px text-black border-grey_one border-1"
                     />
                 </div>
             </div>
@@ -86,11 +86,11 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
                     {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
-                                <td {...column.getHeaderProps()} style={{ width: column.width }} className="font-semibold text-14px font-inter text-black first:pl-25px">
+                                <td {...column.getHeaderProps()} style={{ width: column.width }} className="font-semibold text-13px font-inter text-black first:pl-25px">
                                     {column.render('Header')}
                                 </td>
                             ))}
-                            <td align="right" className="font-semibold text-14px font-inter text-black pr-25px">
+                            <td align="right" className="font-semibold text-13px font-inter text-black pr-25px">
                                 ACTIONS
                             </td>
                         </tr>
@@ -106,7 +106,7 @@ function DataTable({ columns, data }: DataTableProps): JSX.Element {
 
                                     return (
                                         <td {...cell.getCellProps()} style={{ width: cell.width }}
-                                            className={`font-normal text-14px font-inter text-black first:pl-25px`}>
+                                            className={`font-normal text-13px font-inter text-black first:pl-25px`}>
                                             <input type="text" value={cell.value} className={`${edit === row.index ? 'border-1 px-4 py-2.5 my-3 rounded-8px' : ''}`}/>
                                         </td>
                                     );

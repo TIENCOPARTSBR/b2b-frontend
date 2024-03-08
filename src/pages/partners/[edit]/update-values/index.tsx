@@ -58,12 +58,12 @@ const AdditionalValue = (props: AdditionalValueInterface) => {
             </div>
 
             <nav className="flex items-center border-b-1 z-0">
-                <button className={`flex items-center justify-center p-5 z-10 text-14px font-inter font-normal ${tab === 0 ? 'text-yellow_one border-b-yellow_one border-b-2' : 'text-black_one'}`}
+                <button className={`flex items-center justify-center p-5 z-10 text-13px font-inter font-normal ${tab === 0 ? 'text-yellow_one border-b-yellow_one border-b-2' : 'text-black_one'}`}
                         onClick={() => {handleClick(0)}}>
                     Single product
                 </button>
 
-                <button className={`flex items-center justify-center p-5 z-10 text-14px font-inter font-normal ${tab === 1 ? 'text-yellow_one border-b-yellow_one border-b-2' : 'text-black_one'}`}
+                <button className={`flex items-center justify-center p-5 z-10 text-13px font-inter font-normal ${tab === 1 ? 'text-yellow_one border-b-yellow_one border-b-2' : 'text-black_one'}`}
                         onClick={() => {handleClick(1)}}>
                     General update
                 </button>

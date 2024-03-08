@@ -67,7 +67,7 @@ const Submit = () => {
                 of the data, especially with regard to the "Application" and "Observation" columns.
             </label>
 
-            <button onClick={handleSubmitQuotation} className={`w-fill px-15px py-12px rounded-60px bg-grey_seven text-white flex items-center flex-nowrap text-14px font-medium font-inter ${!acceptedTerms ? 'pointer-events-none opacity-50' : ''}`}>
+            <button onClick={handleSubmitQuotation} className={`w-fill px-15px py-12px rounded-60px bg-grey_seven text-white flex items-center flex-nowrap text-13px font-medium font-inter ${!acceptedTerms ? 'pointer-events-none opacity-50' : ''}`}>
                 Submit { processing && <Processing /> }
             </button>
         </div>

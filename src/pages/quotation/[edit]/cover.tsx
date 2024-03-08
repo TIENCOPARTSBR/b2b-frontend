@@ -99,7 +99,7 @@ const Cover = ({ quotation } : Quotation) => {
                     <input type="text"
                            name="client_name"
                            placeholder="Insert cliente name"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                            value={formData.client_name}
                            onChange={handleInputChange}
                            required={true}
@@ -112,7 +112,7 @@ const Cover = ({ quotation } : Quotation) => {
                     <input type="text"
                            name="client_order"
                            placeholder="Insert cliente order number"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.client_order}
                            onChange={handleInputChange}
                            disabled={formData.status > '0'}
@@ -124,7 +124,7 @@ const Cover = ({ quotation } : Quotation) => {
                     <input type="text"
                            name="requested_by"
                            placeholder="Raul Vasquez"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.requested_by}
                            onChange={handleInputChange}
                            required={true}
@@ -155,7 +155,7 @@ const Cover = ({ quotation } : Quotation) => {
                     <input
                         type="datetime-local"
                         name="deadline"
-                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                         value={formData.deadline}
                         onChange={handleInputChange}
                         required={true}
@@ -166,7 +166,7 @@ const Cover = ({ quotation } : Quotation) => {
                 <div className="flex-auto w-full md:w-1/4 mb-5 md:mb-0">
                     <Label>Type</Label>
                     <select
-                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                         name="type"
                         value={formData.type}
                         onChange={handleSelectChange}

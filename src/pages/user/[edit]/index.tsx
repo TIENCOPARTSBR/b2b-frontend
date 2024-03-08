@@ -110,7 +110,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Name</Label>
 
                     <input
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         type="text"
                         placeholder="User name"
                         name="name"
@@ -124,7 +124,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Email</Label>
 
                     <input
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         type="text"
                         placeholder="User email"
                         name="email"
@@ -138,7 +138,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Type user</Label>
 
                     <select
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         name="type"
                         value={formData.type}
                         onChange={handleSelectChange}
@@ -153,7 +153,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Status</Label>
 
                     <select
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         name="is_active"
                         value={formData.is_active}
                         onChange={handleSelectChange}
@@ -168,7 +168,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Password</Label>
 
                     <input
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         type="password"
                         placeholder="Type your password"
                         name="password"
@@ -181,7 +181,7 @@ const UpdateUser = (data: UserProps) => {
                     <Label>Confirm Password</Label>
 
                     <input
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         type="password"
                         placeholder="Type your password"
                         name="password_confirmation"

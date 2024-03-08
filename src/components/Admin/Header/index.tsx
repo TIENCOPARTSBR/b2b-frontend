@@ -101,7 +101,7 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
                     <ul className={`w-screen h-screen bg-white absolute top-0 left-200%n p-25px flex flex-col flex-wrap z-0  transition-all duration-300 ${ isOpen ? "left-0px" : ""}`}>
                         {list.map((index: any, key: number) => (
                             <li className="h-auto mb-6" key={key}>
-                                <Link href={index.link} className="text-grey_for flex flex-nowrap font-normal font-inter text-14px">
+                                <Link href={index.link} className="text-grey_for flex flex-nowrap font-normal font-inter text-13px">
                                     <Image
                                         src={index.icon}
                                         alt="Icon de usuário"
@@ -133,7 +133,7 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
                         {list.map((index: any, key: number) => (
                             <li className="h-auto lg:mr-35px" key={key}>
                                 { index.subMenu ? (
-                                    <button className={`text-grey_for flex flex-nowrap font-normal font-inter text-14px relative`}
+                                    <button className={`text-grey_for flex flex-nowrap font-normal font-inter text-13px relative`}
                                             onClick={() => handleClickMenu(key)} >
                                         <Image
                                             src={index.icon}
@@ -156,7 +156,7 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
                                         </ul>
                                     </button>
                                 ) : (
-                                    <Link href={index.link} className="text-grey_for flex flex-nowrap font-normal font-inter text-14px">
+                                    <Link href={index.link} className="text-grey_for flex flex-nowrap font-normal font-inter text-13px">
                                         <Image
                                             src={index.icon}
                                             alt="Icon de usuário"

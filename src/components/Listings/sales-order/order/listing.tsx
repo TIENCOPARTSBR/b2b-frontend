@@ -5,13 +5,13 @@ import {useState} from "react";
 import ModalDeleteDatatable from "@/src/components/Dealer/ModalDeleteDatatable";
 import ModalEditItemQuotationDatatable from "@/src/components/Dealer/ModalEditItemQuotationDatatable";
 
-interface QuotationItemProps {
+interface OrderInterface {
     itens: {}
     onUpdateListing: () => void
     status?: string
 }
 
-const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
+const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
     const [displayItemQuotationDeleteModal, setDisplayItemQuotationDeleteModal] = useState<boolean>(false)
     const [displayItemQuotationEditModal, setDisplayItemQuotationEditModal] = useState<boolean>(false)
     const [itemId, setItemId] = useState<number>(0)
@@ -166,7 +166,7 @@ const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
             <DataTable
                 columns={columns}
                 data={itens}
-                page_size={50}
+                page_size={10}
             />
         </>
     )

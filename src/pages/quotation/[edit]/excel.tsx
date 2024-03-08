@@ -134,7 +134,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                     <div
                         className="w-full h-full px-2rem md:px-8rem py-2rem border-2 rounded-8px bg-grey_ten border-grey_one p-4 flex flex-col items-center justify-center">
                         <Image src="/icon/icon-drag-file.svg" alt="alt" width="48" height="48" className="mb-25px"/>
-                        <p className="text-black_one font-inter font-normal text-center text-16px">
+                        <p className="text-black_one font-inter font-normal text-center text-13px">
                             Click or drag file to this area to upload <br />
                             This uploader only accepts <strong>.xls</strong> and <strong>.xlsx</strong> extensions
                         </p>
@@ -153,11 +153,11 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                     </div>
                 )}
 
-                <p className="w-auto font-inter text-16px text-red_one text-center font-normal">
+                <p className="w-auto font-inter text-13px text-red_one text-center font-normal">
                     <strong>Important:</strong> Do not upload more than 500 parts.
                 </p>
 
-                <div className="font-inter text-16px text-black_two font-normal w-100% flex flex-wrap items-center justify-center mt-5">Does your file have a header?
+                <div className="font-inter text-13px text-black_two font-normal w-100% flex flex-wrap items-center justify-center mt-5">Does your file have a header?
                     <input
                         type="checkbox"
                         className="ml-2"
@@ -167,9 +167,9 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
 
                 <div className="w-auto flex justify-center text-center mt-35px">
                     <div className="flex flex-nowrap items-center mr-50px">
-                        <p className="font-inter text-14px font-normal text-black_three mr-3">Part number column:</p>
+                        <p className="font-inter text-13px font-normal text-black_three mr-3">Part number column:</p>
                         <input
-                            className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                            className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="A"
                             maxLength={1}
                             value={columnOne}
@@ -178,9 +178,9 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                     </div>
 
                     <div className="flex flex-nowrap items-center">
-                        <p className="font-inter text-14px font-normal text-black_three mr-3">Quantity column:</p>
+                        <p className="font-inter text-13px font-normal text-black_three mr-3">Quantity column:</p>
                         <input
-                            className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                            className="w-50px h-40px text-center border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                             placeholder="B"
                             maxLength={1}
                             value={columnTwo}
@@ -191,7 +191,7 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
 
                 <div className="w-100% flex justify-center mt-40px">
                     <button type="submit"
-                            className="px-20px py-12px rounded-60px bg-yellow_one text-white flex flex-nowrap text-14px font-semibold font-inter">
+                            className="px-20px py-12px rounded-60px bg-yellow_one text-white flex flex-nowrap text-13px font-semibold font-inter">
                         Submit file
                         {processing && <Processing/>}
                     </button>

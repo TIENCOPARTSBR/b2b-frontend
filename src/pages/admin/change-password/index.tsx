@@ -36,7 +36,6 @@ const ChangePassswordAdmin = () => {
             logout()
         })
         .catch((e) => {
-            console.error(e);
             let errorsString = ""
 
             Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -67,7 +66,7 @@ const ChangePassswordAdmin = () => {
 
                 <div className="w-100% flex justify-between mb-2">
                     <input
-                        className="w-100% lg:w-49% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px mb-4"
+                        className="w-100% lg:w-49% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px mb-4"
                         type="password"
                         placeholder="Enter your password"
                         required={true}
@@ -75,7 +74,7 @@ const ChangePassswordAdmin = () => {
                     />
 
                     <input
-                        className="w-100% lg:w-49% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px mb-5"
+                        className="w-100% lg:w-49% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px mb-5"
                         type="password"
                         placeholder="Confirm your password"
                         required={true}

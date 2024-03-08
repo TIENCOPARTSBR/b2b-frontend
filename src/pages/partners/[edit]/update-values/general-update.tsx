@@ -60,9 +60,9 @@ const GeneralUpdate = ({ partnerId, generalType, generalValue }: PropsInterface)
             { messageSuccess && <AlertSuccess text={ messageSuccess } />}
 
             <div className="flex flex-col mr-5">
-                <label className="text-14px font-inter font-normal text-black mb-2">Type:</label>
+                <label className="text-13px font-inter font-normal text-black mb-2">Type:</label>
                 <select
-                    className="w-200px p-2 border-1 rounded-8px text-14px font-inter font-normal text-black focus:outline-yellow_two"
+                    className="w-200px p-2 border-1 rounded-8px text-13px font-inter font-normal text-black focus:outline-yellow_two"
                     onChange={(e): void => {
                         setGeneralUpdateType(e.target.value)
                     }}>
@@ -72,13 +72,13 @@ const GeneralUpdate = ({ partnerId, generalType, generalValue }: PropsInterface)
             </div>
 
             <div className="flex flex-col">
-                <label className="text-14px font-inter font-normal text-black mb-2">Value:</label>
+                <label className="text-13px font-inter font-normal text-black mb-2">Value:</label>
                 <div
                     className={`relative ${(generalUpdateType === '0') ? 'before:content-["$"]' : 'before:content-["%"]'}  before:absolute text-grey_for before:left-10px before:top-7px`}>
                     <input
                         type="text"
                         value={generalUpdateValue}
-                        className="w-100px p-2 border-1 rounded-8px text-14px font-inter font-normal text-black pl-7 focus:outline-yellow_two placeholder:text-black"
+                        className="w-100px p-2 border-1 rounded-8px text-13px font-inter font-normal text-black pl-7 focus:outline-yellow_two placeholder:text-black"
                         onChange={(e) => {
                             setGeneralUpdateValue(e.target.value)
                         }}
@@ -88,7 +88,7 @@ const GeneralUpdate = ({ partnerId, generalType, generalValue }: PropsInterface)
 
             <div className="w-100% mt-5 lg:mt-10">
                 <button
-                    className="px-18px py-10px bg-yellow_one rounded-60px text-14px font-medium font-inter text-black shadow-shadow_btn_small flex items-center">
+                    className="px-18px py-10px bg-yellow_one rounded-60px text-13px font-medium font-inter text-black shadow-shadow_btn_small flex items-center">
                     Update
                     {processing && <Processing/>}
                 </button>

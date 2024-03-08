@@ -63,9 +63,9 @@ const Cover = ({ order } : OrderInterface) => {
     const requestData = {
         // Condicionalmente adiciona as chaves e valores ao objeto, dependendo do valor de order?.status
         ...({ id: router?.query?.order }),
-        ...(order?.status == '0' && { client_name: formData?.client_name }),
         ...({ client_order_number: formData?.client_order_number }),
         ...({ payment_method: formData?.payment_method }),
+        ...(order?.status == '0' && { client_name: formData?.client_name }),
         ...(order?.status == '0' && { urgent: formData?.urgent }),
         ...(order?.status == '0' && { deadline: formData?.deadline }),
         ...(order?.status == '0' && { type: formData?.type }),
@@ -91,12 +91,12 @@ const Cover = ({ order } : OrderInterface) => {
     return (
         <form>
             <div className="flex flex-wrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                <div className="w-full md:w-1/6 md:pr-5 mb-5">
+                <div className="w-full md:w-1/4 md:pr-5 mb-5">
                     <Label>Client name</Label>
                     <input type="text"
                            name="client_name"
                            placeholder="Insert cliente name"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px font-inter font-normal outline-yellow_two text-black placeholder:text-grey_seven"
                            value={formData.client_name}
                            onChange={handleInputChange}
                            required={true}
@@ -109,7 +109,7 @@ const Cover = ({ order } : OrderInterface) => {
                     <input type="text"
                            name="client_order_number"
                            placeholder="Insert cliente order number"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.client_order_number}
                            onChange={handleInputChange}
                            disabled={formData.status > '2'}
@@ -121,7 +121,7 @@ const Cover = ({ order } : OrderInterface) => {
                     <input type="text"
                            name="payment_method"
                            placeholder="30 Days"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.payment_method}
                            onChange={handleInputChange}
                            disabled={formData.status > '2'}
@@ -151,7 +151,7 @@ const Cover = ({ order } : OrderInterface) => {
                     <input
                         type="datetime-local"
                         name="deadline"
-                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                         value={formData.deadline}
                         onChange={handleInputChange}
                         required={true}
@@ -162,7 +162,7 @@ const Cover = ({ order } : OrderInterface) => {
                 <div className="flex-auto w-full md:w-1/6 mb-5 md:mb-0">
                     <Label>Type</Label>
                     <select
-                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                         name="type"
                         value={formData.type}
                         onChange={handleSelectChange}

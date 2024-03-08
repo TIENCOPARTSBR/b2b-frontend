@@ -36,11 +36,11 @@ const CardProduct = ({data}: ProductsType) => {
                          className="w-100% md:w-1/2 xl:w-450px bg-white h-auto flex flex-col border-1 border-grey_one rounded-8px overflow-hidden md:mr-8">
                         <div
                             className={`w-100% px-25px py-20px flex flex-nowrap items-center justify-between ${subindex?.is_updated ? 'bg-grey_three' : 'bg-red_one'}`}>
-                            <h2 className={`w-auto font-inter font-semibold text-16px text-black ${subindex?.is_updated ? 'text-black' : 'text-white'}`}>
+                            <h2 className={`w-auto font-inter font-semibold text-13px text-black ${subindex?.is_updated ? 'text-black' : 'text-white'}`}>
                                 {index?.part_number} - {index?.description_en}
                             </h2>
                             {!subindex?.is_updated && (
-                                <p className="font-inter font-normal text-14px flex flex-nowrap items-center">
+                                <p className="font-inter font-normal text-13px flex flex-nowrap items-center">
                                     Item outdated
 
                                     <Image src="/icon/icon-alert.svg"
@@ -53,27 +53,27 @@ const CardProduct = ({data}: ProductsType) => {
                         </div>
 
                         <ul className="w-100% px-25px py-20px bg-white shadow-card_product">
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>Price:</strong> {subindex?.cost}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>Weight:</strong> {index?.weight}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>NCM:</strong> {index?.ncm}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>HS Code:</strong> {index?.hscode}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>General notes:</strong> {subindex?.general_notes}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5 flex items-center">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5 flex items-center">
                                 <strong>Supplying location:</strong>
                                 <Image
                                     src={subindex?.location === 'USA' ? `/icon/icon-usa-flag.svg` : `/icon/icon-br-flag.svg`}
@@ -83,17 +83,17 @@ const CardProduct = ({data}: ProductsType) => {
                                     className="ml-2"/>
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>Stock quantity:</strong> {subindex?.balance}
                             </li>
 
-                            <li className="w-100% font-inter font-normal text-14px text-black mb-2.5">
+                            <li className="w-100% font-inter font-normal text-13px text-black mb-2.5">
                                 <strong>Lead time:</strong> {subindex?.lead_time}
                             </li>
                         </ul>
 
                         <div className="w-100% px-25px py-15px shadow-card_product flex items-center justify-between">
-                            <p className={`w-4/5 font-inter font-normal text-14px flex items-center ${subindex?.is_updated ? 'text-green_one' : 'text-red_one'}`}>
+                            <p className={`w-4/5 font-inter font-normal text-13px flex items-center ${subindex?.is_updated ? 'text-green_one' : 'text-red_one'}`}>
                                 <Image
                                     src={subindex?.is_updated ? '/icon/icon-list-green.svg' : '/icon/icon-message.svg'}
                                     alt="Task success"

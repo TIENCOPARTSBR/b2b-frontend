@@ -5,7 +5,7 @@ import Main from "@/src/components/Dealer/Main";
 const Home = () => {
   return (
       <Main>
-          <h2 className="font-normal text-black text-14px font-inter">
+          <h2 className="font-normal text-black text-13px font-inter">
               - Dashboard to be defined -
           </h2>
       </Main>

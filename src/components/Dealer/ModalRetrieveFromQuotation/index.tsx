@@ -48,7 +48,7 @@ const ModalRetrieveFromQuotation = ({ handleOnVisible }: ModalProps) => {
                 .then((response) => {
                     handleOnVisible()
                     showMessage(response?.data?.message)
-                    router.push('/sales-order/'+response?.data?.data?.id)
+                    router.push('/order/'+response?.data?.data?.id)
                 })
                 .catch((e) => {
                     let errorString = ""
@@ -115,7 +115,7 @@ const ModalRetrieveFromQuotation = ({ handleOnVisible }: ModalProps) => {
             <div className={`w-screen h-screen absolute top-0 left-0 bg-black opacity-60 z-20`} onClick={handleOnVisible}></div>
             <div className={`w-auto h-auto rounded-8px p-25px z-30 bg-white justify-center flex flex-wrap items-start animate-show-in`}>
                 <div className="w-500px flex items-center justify-center">
-                    <p className={`text-black_two text-14px font-normal font-inter mr-4`}>
+                    <p className={`text-black_two text-13px font-normal font-inter mr-4`}>
                         Select your quotation:
                     </p>
 
@@ -132,7 +132,7 @@ const ModalRetrieveFromQuotation = ({ handleOnVisible }: ModalProps) => {
 
                 <div className={`w-100% flex items-center justify-center mt-2rem`}>
                     <button
-                        className={`px-18px py-12px rounded-60px bg-yellow_one text-black text-14px font-semibold shadow-shadow_btn_small flex items-center`}
+                        className={`px-18px py-12px rounded-60px bg-yellow_one text-black text-13px font-semibold shadow-shadow_btn_small flex items-center`}
                         onClick={handleCreateSalesOrderFromQuotation}>
                         Generate P.O.
                         {processing && <Processing/> }

@@ -61,6 +61,7 @@ const config: Config = {
         '55px' : '55px',
         '96px' : '96px',
         '80px' : '80px',
+        '150px' : '150px',
         '200px' : '200px',
         '350px' : '350px',
         '400px' : '400px',
@@ -87,6 +88,7 @@ const config: Config = {
       fontSize: {
         '10px': '10px',
         '12px': '12px',
+        '13px': '13px',
         '14px': '14px',
         '16px': '16px',
         '20px' : '20px',

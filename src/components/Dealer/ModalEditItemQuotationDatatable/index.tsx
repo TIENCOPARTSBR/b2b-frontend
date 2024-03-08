@@ -107,7 +107,7 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
 
                         <input type="text"
                                name="part_number"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.part_number}
                                onChange={handleInputChange}
                                disabled={true}
@@ -120,7 +120,7 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
 
                         <input type="number"
                                name="quantity"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.quantity}
                                onChange={handleInputChange}
                                required={true}
@@ -132,7 +132,7 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
 
                         <input type="text"
                                name="description"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.description}
                                onChange={handleInputChange}
                                required={true}
@@ -143,7 +143,7 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
                         <Label>Application</Label>
 
                         <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                             name="application"
                             value={formData.application}
                             onChange={handleSelectChange}
@@ -159,7 +159,7 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
 
                         <input type="text"
                                name="observation"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.observation}
                                onChange={handleInputChange}
                                required={true}
@@ -168,13 +168,13 @@ const ModalEditItemQuotationDatatable = ({ editTargetId, handleOnVisible, handle
 
                     <div className={`flex items-center justify-end mt-5`}>
                         <button
-                            className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-14px font-medium mr-4`}
+                            className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-13px font-medium mr-4`}
                             onClick={handleOnVisible}>
                             Cancel
                         </button>
 
                         <button
-                            className={`px-15px py-9px rounded-60px bg-yellow_one text-black text-14px font-medium shadow-shadow_btn_small flex items-center`}
+                            className={`px-15px py-9px rounded-60px bg-yellow_one text-black text-13px font-medium shadow-shadow_btn_small flex items-center`}
                             onClick={handleEditItem}>
                             Update {processing && <Processing/>}
                         </button>

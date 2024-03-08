@@ -100,7 +100,7 @@ const EditPartner = ({ partner }: PartnerProps) => {
                     <Label>Name</Label>
 
                     <input
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         type="text"
                         placeholder="Name"
                         name="name"
@@ -114,7 +114,7 @@ const EditPartner = ({ partner }: PartnerProps) => {
                     <Label>Status</Label>
 
                     <select
-                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                        className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                         name="is_active"
                         value={formData.is_active}
                         onChange={handleSelectChange}

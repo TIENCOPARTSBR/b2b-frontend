@@ -72,7 +72,7 @@ function DataTable({ columns, data, buttons, page_size }: DataTableProps): JSX.E
                             value={globalFilter || ''}
                             onChange={(e) => setGlobalFilter(e.target.value)}
                             placeholder="Search..."
-                            className="flex w-100% md:w-280px py-2.5 md:py-3 px-6 rounded-8px focus:outline-none font-normal text-14px text-black border-grey_one border-1"
+                            className="flex w-100% md:w-280px py-2.5 md:py-3 px-6 rounded-8px focus:outline-none font-normal text-13px text-black border-grey_one border-1"
                         />
                     </div>
                     {buttons && (
@@ -102,7 +102,7 @@ function DataTable({ columns, data, buttons, page_size }: DataTableProps): JSX.E
                             <tr {...row.getRowProps()} className="bg-white h-50px border-b-1">
                                 {row.cells.map((cell: any) => {
                                     return (
-                                        <td {...cell.getCellProps()} style={{ width: cell.width }} className="font-normal text-14px font-inter text-black first:pl-25px whitespace-nowrap px-25px xl:px-0 last:flex last:items-center last:justify-end last:h-50px last:pr-4">
+                                        <td {...cell.getCellProps()} style={{ width: cell.width }} className="font-normal text-13px font-inter text-black first:pl-25px whitespace-nowrap px-25px xl:px-0 last:flex last:items-center last:justify-end last:h-50px last:pr-4">
                                             { cell.render('Cell') }
                                         </td>
                                     );
@@ -115,13 +115,13 @@ function DataTable({ columns, data, buttons, page_size }: DataTableProps): JSX.E
                 </div>
 
                 <div className="flex items-center justify-between p-25px">
-                    <div className="text-grey_for text-14px font-inter font-normal">
+                    <div className="text-grey_for text-13px font-inter font-normal">
                         Page{' '}
                         {pageIndex + 1} de {Math.ceil(data.length/ pageSize)}{' '}
                     </div>
 
                     <div className="flex items-center justify-center">
-                        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="fw-bold w-30px h-30px rounded-8px border-gray flex items-center justify-center border-1 text-black mr-1 pb-1">
+                        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="fw-bold w-30px h-30px rounded-8px border-gray flex items-center justify-center border-1 text-black mr-0 pb-1">
                             {'<'}
                         </button>
                             <button onClick={() => nextPage()} disabled={!canNextPage} className="fw-bold w-30px h-30px rounded-8px border-1 border-gray text-black flex items-center justify-center ml-1 pb-1">

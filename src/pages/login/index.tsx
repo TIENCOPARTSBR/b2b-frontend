@@ -86,7 +86,7 @@ const Login = () => {
                     />
                 </div>
 
-                <h1 className="text-14px text-black_two font-inter font-medium text-center mt-5">
+                <h1 className="text-13px text-black_two font-inter font-medium text-center mt-5">
                     Login with your email
                 </h1>
 
@@ -95,17 +95,17 @@ const Login = () => {
                     type="text"
                     placeholder="Email"
                     value={email}
-                    className="w-100% h-50px rounded-8px border-1 px-4 text-14px font-normal text-black mt-6 focus:outline-yellow_one" />
+                    className="w-100% h-50px rounded-8px border-1 px-4 text-13px font-normal text-black mt-6 focus:outline-yellow_one" />
 
                 <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
                     value={password}
-                    className="w-100% h-50px rounded-8px border-1 px-4 text-14px font-normal text-black mt-4 focus:outline-yellow_one"
+                    className="w-100% h-50px rounded-8px border-1 px-4 text-13px font-normal text-black mt-4 focus:outline-yellow_one"
                 />
 
-                <div className="flex items-center justify-between my-5 text-black text-14px font-inter font-medium">
+                <div className="flex items-center justify-between my-5 text-black text-13px font-inter font-medium">
                     <label htmlFor="remember" className="flex items-center">
                         <input id="remember" type="checkbox" checked={rememberEmail != '' && rememberPassword != ''} className="w-15px h-15px mr-2"/>
                         Remember me
@@ -118,7 +118,7 @@ const Login = () => {
 
                 <button
                     type="submit"
-                    className="w-100% h-50px md:h-60px bg-yellow_one flex items-center justify-center text-white text-14px font-inter font-medium mt-5 rounded-8px">
+                    className="w-100% h-50px md:h-60px bg-yellow_one flex items-center justify-center text-white text-13px font-inter font-medium mt-5 rounded-8px">
                     Log in
                     {processing && <Processing/>}
                 </button>

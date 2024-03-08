@@ -66,26 +66,26 @@ const ModalEditAdditionalValue = ({data, onShow, routeApi}: ModalProps) => {
                     <div className={`w-screen h-screen absolute top-0 left-0 bg-black opacity-60 z-20`}></div>
                     <div className={`w-auto h-auto p-25px z-30 bg-white flex flex-wrap items-start animate-show-in`}>
                         <div>
-                            <h2 className={`w-100% md:w-350px text-black text-16px font-semibold mb-4`}>
+                            <h2 className={`w-100% md:w-350px text-black text-13px font-semibold mb-4`}>
                                 Update value
                             </h2>
 
                             <div className={`flex flex-col`}>
                                 <input type={`text`}
-                                       className={`w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px mb-4`}
+                                       className={`w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px mb-4`}
                                        placeholder={`part number`}
                                        value={partNumber}
                                        readOnly={true}
                                        onChange={(e) => {setPartNumber(e.target.value)}} />
 
                                 <input type={`number`}
-                                       className={`w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px mb-4`}
+                                       className={`w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px mb-4`}
                                        placeholder={`0.00`}
                                        value={value}
                                        onChange={(e) => {setValue(parseInt(e.target.value, 10))}} />
 
                                 <select
-                                    className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-14px"
+                                    className="w-100% border-1 border-grey_six py-10px px-15px rounded-8px focus:outline-yellow_one text-black font-normal font-inter text-13px"
                                     value={type}
                                     onChange={(e) => {setType(parseInt(e.target.value, 10))}} >
                                     <option value="0">Unit price</option>
@@ -95,13 +95,13 @@ const ModalEditAdditionalValue = ({data, onShow, routeApi}: ModalProps) => {
 
                             <div className={`flex items-center justify-end mt-5`}>
                                 <button
-                                    className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-14px font-medium mr-2`}
+                                    className={`px-15px py-9px rounded-60px border-1 border-grey_seven text-black_two text-13px font-medium mr-2`}
                                     onClick={onShow}>
                                     Cancel
                                 </button>
 
                                 <button
-                                    className={`px-15px py-9px rounded-60px bg-yellow_one text-white text-14px font-semibold shadow-shadow_btn_small flex items-center`}
+                                    className={`px-15px py-9px rounded-60px bg-yellow_one text-white text-13px font-semibold shadow-shadow_btn_small flex items-center`}
                                     onClick={handleForm} >
                                     Confirm
                                     { processing && <Processing/> }

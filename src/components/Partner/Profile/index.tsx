@@ -34,11 +34,11 @@ const Profile = () => {
                     className="w-350px bg-white absolute top-50px right-10px p-25px flex flex-col rounded-lg border-1 border-grey_one shadow-profile"
                     onMouseLeave={() => { handleClick() }}
                 >
-                    <h2 className="w-auto text-left mb-1 text-14px font-semibold text-black font-inter">{user?.name}</h2>
-                    <p className="w-auto text-left mb-3 text-14px font-normal text-grey_for font-inter">{user?.email}</p>
+                    <h2 className="w-auto text-left mb-1 text-13px font-semibold text-black font-inter">{user?.name}</h2>
+                    <p className="w-auto text-left mb-3 text-13px font-normal text-grey_for font-inter">{user?.email}</p>
 
                     <Link href={`/partner/change-password`} className="w-100 flex items-center justify-between py-3 pb-6">
-                        <div className="flex items-center font-inter text-14px text-black font-normal">
+                        <div className="flex items-center font-inter text-13px text-black font-normal">
                             <Image
                                 src="/icon/icon-lock.svg"
                                 alt="Icon change password"
@@ -57,7 +57,7 @@ const Profile = () => {
                         />
                     </Link>
 
-                    <button className="w-auto bg-yellow_one h-40px text-black flex rounded-60px mb-0 text-14px font-normal items-center justify-center font-inter"
+                    <button className="w-auto bg-yellow_one h-40px text-black flex rounded-60px mb-0 text-13px font-normal items-center justify-center font-inter"
                         onClick={handleLogout}>
                         <Image
                             src="/icon/icon-logout.svg"

@@ -96,8 +96,8 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         <Label>Client name</Label>
                         <input type="text"
                                name="client_name"
-                               placeholder="Insert cliente name"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               placeholder="Insert client name"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.client_name}
                                onChange={handleInputChange}
                                required={true}
@@ -107,8 +107,8 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         <Label>Client order number</Label>
                         <input type="text"
                                name="client_order"
-                               placeholder="Insert cliente order number"
-                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                               placeholder="Insert client order number"
+                               className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                                value={formData.client_order}
                                onChange={handleInputChange}
                     />
@@ -118,7 +118,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                     <input type="text"
                            name="requested_by"
                            placeholder="Raul Vasquez"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.requested_by}
                            onChange={handleInputChange}
                            required={true}
@@ -143,7 +143,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                     <Label>Deadline</Label>
                     <input type="datetime-local"
                            name="deadline"
-                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                           className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.deadline}
                            checked={formData.deadline === 'true'}
                            onChange={handleInputChange}
@@ -153,7 +153,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                 <div className="flex-auto w-auto">
                     <Label>Type</Label>
                     <select
-                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-grey_seven font-inter font-normal outline-yellow_two"
+                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-grey_seven font-inter font-normal outline-yellow_two"
                         name="type"
                         value={formData.type}
                         onChange={handleSelectChange}

@@ -5,7 +5,7 @@ import Main from "@/src/components/Admin/Main";
 const DashboardAdmin = () => {
   return (
       <Main>
-          <h2 className="font-normal text-black text-14px font-inter">
+          <h2 className="font-normal text-black text-13px font-inter">
               - Dashboard to be defined - Admin
           </h2>
       </Main>

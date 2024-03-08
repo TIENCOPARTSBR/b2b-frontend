@@ -24,7 +24,7 @@ const SelectWithImage: React.FC<FlagSelectProps> = ({ value, onChange }) => {
                 id="countrySelect"
                 value={value}
                 onChange={handleSelectChange}
-                className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-14px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                 name="location"
                 required={true}
             >

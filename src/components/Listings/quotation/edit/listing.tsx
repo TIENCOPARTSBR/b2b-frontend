@@ -166,7 +166,7 @@ const Listing = ({ onUpdateListing, itens, status } : QuotationItemProps) => {
             <DataTable
                 columns={columns}
                 data={itens}
-                page_size={50}
+                page_size={10}
             />
         </>
     )

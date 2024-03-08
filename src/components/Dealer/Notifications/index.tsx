@@ -69,7 +69,7 @@ const Notifications = () => {
                                     user?.dealer_id
                                 )
                             }
-                            className="text-14px font-inter text-yellow_two whitespace-nowrap">
+                            className="text-13px font-inter text-yellow_two whitespace-nowrap">
                             Clear all
                         </button>
                     </div>
@@ -101,7 +101,7 @@ const Notifications = () => {
                                             />
                                         </div>
                                         <div className="flex-row flex">
-                                            <span className="text-14px font-inter font-normal text-black_two">
+                                            <span className="text-13px font-inter font-normal text-black_two">
                                                 <span className="font-inter font-semibold text-12px">
                                                     Quotations
                                                 </span>
@@ -116,7 +116,7 @@ const Notifications = () => {
                                 ))}
                         </ul>
                     ) : (
-                        <div className="w-100% h-2rem flex items-end text-left text-14px font-normal font-inter text-grey_for">
+                        <div className="w-100% h-2rem flex items-end text-left text-13px font-normal font-inter text-grey_for">
                             There are no notifications at the moment.
                         </div>
                     )}

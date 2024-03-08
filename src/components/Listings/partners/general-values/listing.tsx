@@ -146,7 +146,7 @@ export const ButtonDatatable = ({id_dealer}: buttonProps) => {
             )}
 
             <div className={`w-100% flex items-center`}>
-                <button className={`py-10px px-18px bg-yellow_one text-14px font-semibold text-black_two rounded-60px`}
+                <button className={`py-10px px-18px bg-yellow_one text-13px font-semibold text-black_two rounded-60px`}
                         onClick={handleAdd}>
                     Insert Product
                 </button>

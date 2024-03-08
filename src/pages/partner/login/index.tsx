@@ -67,7 +67,7 @@ const Login = () => {
                     />
                 </div>
 
-                <h1 className="text-14px text-black_two font-inter font-medium text-center mt-5">
+                <h1 className="text-13px text-black_two font-inter font-medium text-center mt-5">
                     Login with your email
                 </h1>
 
@@ -75,22 +75,22 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     placeholder="Email"
-                    className="w-100% h-50px rounded-8px border-1 px-4 text-14px font-normal text-black mt-6 focus:outline-yellow_one" />
+                    className="w-100% h-50px rounded-8px border-1 px-4 text-13px font-normal text-black mt-6 focus:outline-yellow_one" />
 
                 <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
-                    className="w-100% h-50px rounded-8px border-1 px-4 text-14px font-normal text-black mt-4 focus:outline-yellow_one"
+                    className="w-100% h-50px rounded-8px border-1 px-4 text-13px font-normal text-black mt-4 focus:outline-yellow_one"
                 />
 
-                <Link href="#" className="w-100% flex items-center justify-end my-5 text-black text-14px font-inter font-medium">
+                <Link href="#" className="w-100% flex items-center justify-end my-5 text-black text-13px font-inter font-medium">
                     Forgot Password?
                 </Link>
 
                 <button
                     type="submit"
-                    className="w-100% h-50px md:h-60px bg-yellow_one flex items-center justify-center text-white text-14px font-inter font-medium mt-5 rounded-8px">
+                    className="w-100% h-50px md:h-60px bg-yellow_one flex items-center justify-center text-white text-13px font-inter font-medium mt-5 rounded-8px">
                     Log in
                     { processing && <Processing/> }
                 </button>
