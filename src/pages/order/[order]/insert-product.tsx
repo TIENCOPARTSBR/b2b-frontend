@@ -164,12 +164,15 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
 
     return (
         <Row>
-            <button className="px-15px py-12px rounded-60px bg-yellow_two mb-25px text-white flex-nowrap text-13px font-medium font-inter"
-                    onClick={handleDisplayExcel}>
+            <h2 className="w-full mb-5 text-20px font-semibold font-inter text-black">Insert Product</h2>
+
+            <button
+                className="px-15px py-12px rounded-60px bg-yellow_two mb-25px text-white flex-nowrap text-13px font-medium font-inter"
+                onClick={handleDisplayExcel}>
                 Upload Excel
             </button>
 
-            { displayExcel &&
+            {displayExcel &&
                 <Excel
                     onUpdateListing={onUpdateListing}
                     handleOnVisible={() => setDisplayExcel(false)}

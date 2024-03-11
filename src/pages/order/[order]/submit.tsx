@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-
 import { getApiDealer } from "@/src/api/dealer/axios";
 import { useMessageSuccess } from "@/src/hooks/message/success";
 import { useMessageError } from "@/src/hooks/message/error";
@@ -20,21 +19,21 @@ const Submit = () => {
         SetAcceptedTerms(e.target.value === 'on')
     }
 
-    const handleSubmitQuotation = async (e: any) => {
+    const handleSubmitQuotation = async (e: any) => {3
         e.preventDefault();
-
         setProcessing(true)
 
         const api = getApiDealer('');
-        await api.post('/quotation/sisrev', {
-            id_quotation: router?.query?.edit,
+        await api.post('/pre-order/send-to-sisrev', {
+            id_sales_order: router?.query?.order,
             id_dealer: id_dealer,
         })
             .then((response: any) => {
                 showMessage(response?.data?.message);
-                router?.push('/quotation');
+                router?.push('/order');
             })
             .catch((e: any) => {
+                console.error(e);
                 let errorString = "";
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
@@ -47,7 +46,6 @@ const Submit = () => {
             })
             .finally(() => {
                 setProcessing(false)
-
                 setTimeout(() => {
                     setMessageError('')
                 }, 10000)
@@ -58,6 +56,7 @@ const Submit = () => {
         <div className="w-fill mt-10 flex flex-wrap md:justify-between items-center">
             <label htmlFor="accepted" className="w-fill md:w-8/12 items-center flex text-12px font-normal font-inter text-black mb-5 md:mb-0 md:pr-5">
                 <input
+                    id="accepted"
                     type="checkbox"
                     name="accepted"
                     className="mr-2 w-15px h-15px"

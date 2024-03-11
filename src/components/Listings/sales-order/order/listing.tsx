@@ -138,7 +138,7 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
         },
     ]
 
-    if (status != '0') {
+    if (status != '0' && status != '1') {
         columns = columns.filter((item, index) => index !== 0);
     }
 

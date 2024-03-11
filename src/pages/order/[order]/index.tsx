@@ -192,7 +192,7 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
             props: {
                 order: [],
                 items: [],
-                resume: undefined,
+                resume: null,
                 error: null
             }
         }

@@ -112,8 +112,8 @@ const Cover = ({ order } : OrderInterface) => {
                            className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.client_order_number}
                            onChange={handleInputChange}
-                           disabled={formData.status > '2'}
-                           readOnly={formData.status > '2'}
+                           disabled={formData.status > '1'}
+                           readOnly={formData.status > '1'}
                     />
                 </div>
                 <div className="w-full md:w-1/6 md:pr-5 mb-5">
@@ -124,8 +124,8 @@ const Cover = ({ order } : OrderInterface) => {
                            className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
                            value={formData.payment_method}
                            onChange={handleInputChange}
-                           disabled={formData.status > '2'}
-                           readOnly={formData.status > '2'}
+                           disabled={formData.status > '1'}
+                           readOnly={formData.status > '1'}
                     />
                 </div>
                 <div className="w-auto md:pr-5 mb-5 md:mb-0">

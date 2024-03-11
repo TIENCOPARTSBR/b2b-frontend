@@ -24,8 +24,6 @@ interface PurchaseInterface {
 }
 
 const Purchase = ({ order, orderResume }: PurchaseInterface) => {
-    console.error(orderResume)
-
     const router = useRouter();
     const api = getApiDealer('');
     const { showMessage } = useMessageSuccess();
@@ -34,9 +32,9 @@ const Purchase = ({ order, orderResume }: PurchaseInterface) => {
 
     const ROUTE_SEND_TO_SISREV: string = "/salesOrder/sendToSisrev";
 
-    const formData: { id_dealer: number, id: number } = {
+    const formData: { id_dealer: number, id_sales_order: number } = {
         id_dealer: order?.id_dealer,
-        id: order?.id,
+        id_sales_order: order?.id,
     }
 
     const handleRequestPurchase = () => {
@@ -45,6 +43,7 @@ const Purchase = ({ order, orderResume }: PurchaseInterface) => {
                 showMessage(response?.data?.message);
                 router?.push('/order');
             }).catch((e) => {
+                console.error(e);
                 let errorString = ""
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
