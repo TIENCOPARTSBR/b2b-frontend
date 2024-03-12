@@ -32,14 +32,14 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
     const [user, setUser] = useState<User | null>(null);
 
     if (!user) {
-        recoverInformationUser();
+        recoverInformationUser().then();
     }
 
     async function recoverInformationUser() {
         try {
             if(!user?.id) {
                 const api = getApiAdmin('');
-                const response = await api.post('/user/profile', {});
+                const response = await api.post('/user/profile',{});
 
                 if (response?.data?.id) {
                     const userData = {
@@ -48,11 +48,9 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
                         email: response.data.email,
                         type: response.data.type,
                     };
-
                     setUser(userData);
                 }
             }
-
             return user;
         } catch (error) {
             //console.error("Erro ao recuperar informações do usuário:", error);

@@ -26,7 +26,6 @@ interface OrderInterface {
 
 const Cover = ({ order } : OrderInterface) => {
     const router = useRouter();
-    const { showMessage } = useMessageSuccess();
     const { setMessageError  } = useMessageError();
 
     const [formData, setFormData] = useState({
@@ -74,18 +73,20 @@ const Cover = ({ order } : OrderInterface) => {
     };
 
     const handleChange = async () => {
-        const api = getApiDealer("")
-        api.put('/salesOrder/update/', requestData)
-        .catch((e) => {
-            console.log(e);
-            let errorString = ""
-            Object.keys(e?.response?.data?.errors).forEach((key) => {
-                e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                    errorString += `${errorMessage}<br>`
+        if (order?.status <= '3'){
+            const api = getApiDealer("")
+            api.put('/salesOrder/update/', requestData)
+            .catch((e) => {
+                let errorString = ""
+
+                Object.keys(e?.response?.data?.errors).forEach((key) => {
+                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
+                        errorString += `${errorMessage}<br>`
+                    })
                 })
+                setMessageError(errorString)
             })
-            setMessageError(errorString)
-        })
+        }
     }
 
     return (

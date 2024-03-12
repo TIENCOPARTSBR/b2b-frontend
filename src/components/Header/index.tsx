@@ -147,12 +147,12 @@ const Header: React.FC<NavProps> = ({ list, logoEnco, homepage}) => {
 
                                         {index.name}
 
-                                        <ul className={`w-200px bg-white flex flex-col top-40px shadow-submenu absolute ${subMenuOpen === key ? "" : "hidden"}`}
+                                        <ul className={`w-210px break-normal bg-white flex flex-col top-40px shadow-submenu absolute ${subMenuOpen === key ? "" : "hidden"}`}
                                             onMouseLeave={() => {setSubMenuOpen(9999)}}>
                                             {index.subMenu.map((subIndex: any, subKey: number) => (
-                                                <li className="w-100% h-100%" key={subKey}>
+                                                <li className="w-100% h-100% break-normal" key={subKey}>
                                                     <Link href={subIndex.link}
-                                                          className="w-100% p-4 flex hover:bg-grey_six">{subIndex.name}</Link>
+                                                          className="w-100% p-4 flex hover:bg-grey_six break-normal">{subIndex.name}</Link>
                                                 </li>
                                             ))}
                                         </ul>

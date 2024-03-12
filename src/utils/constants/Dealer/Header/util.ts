@@ -60,15 +60,15 @@ export const Nav = () => {
             height: 20,
             subMenu: [
                 {
-                    name: 'Place a P.O.s',
+                    name: 'Place a Purchase Order',
                     link: '/order/choice'
                 },
                 {
-                    name: 'Review your P.O.s',
+                    name: 'Processing Purchase Orders',
                     link: '/order'
                 },
                 {
-                    name: 'Placed P.O.s',
+                    name: 'Delivered Purchase Orders',
                     link: '/order/completed'
                 }
             ]

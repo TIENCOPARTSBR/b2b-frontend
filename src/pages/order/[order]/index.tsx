@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react"
-import { parseCookies } from "nookies";
+import React, { useState } from "react"
 import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 import { getApiDealer } from "@/src/api/dealer/axios";
 import Main from "@/src/components/Dealer/Main"
 import Breadcrumb from "@/src/components/Breadcrumb"
@@ -26,7 +26,6 @@ type ItemOrder = {
     total_weight: number
     total_items: number
 }
-
 
 interface OrderProps {
     order: ItemOrder|any

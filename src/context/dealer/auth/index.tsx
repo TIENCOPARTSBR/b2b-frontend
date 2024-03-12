@@ -33,7 +33,7 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
     const [user, setUser] = useState<User | null>(null);
 
     if (!user) {
-        recoverInformationUser();
+        recoverInformationUser().then(r => {});
     }
 
     async function recoverInformationUser() {
