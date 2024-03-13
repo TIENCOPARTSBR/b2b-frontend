@@ -46,15 +46,12 @@ const Submit = () => {
             })
             .finally(() => {
                 setProcessing(false)
-                setTimeout(() => {
-                    setMessageError('')
-                }, 10000)
             })
     }
 
     return (
         <div className="w-fill mt-10 flex flex-wrap md:justify-between items-center">
-            <label htmlFor="accepted" className="w-fill md:w-8/12 items-center flex text-12px font-normal font-inter text-black mb-5 md:mb-0 md:pr-5">
+            <label htmlFor="accepted" className="w-fill md:w-8/12 items-center flex text-12px font-normal cursor-pointer font-inter text-black mb-5 md:mb-0 md:pr-5">
                 <input
                     id="accepted"
                     type="checkbox"

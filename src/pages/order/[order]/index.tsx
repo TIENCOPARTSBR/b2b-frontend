@@ -171,12 +171,13 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
                 items = response.data.data;
             })
 
-        await api.post("/salesOrder/resume", {
-            id: ctx?.params?.order,
-        })
-        .then((response) => {
-            resume = response.data.data;
-        })
+        if (items.length > 1) {
+            await api.post("/salesOrder/resume", {
+                id: ctx?.params?.order,
+            }).then((response) => {
+                resume = response.data.data;
+            })
+        }
 
         return {
             props: {

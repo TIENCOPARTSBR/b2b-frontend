@@ -18,13 +18,13 @@ const ChoicePO = () => {
         },
         {
             name: "Orders",
-            link: "/sales-order",
+            link: "/order",
         },
         {
             name: "Place P.O.",
-            link: "/sales-order/choice",
+            link: "/order/choice",
         },
-    ]
+    ];
 
     const [modalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ const ChoicePO = () => {
                     Retrieve from quotation
                 </button>
 
-                <a href="/sales-order/new" className="py-12px px-18px bg-grey_seven text-13px text-black font-semibold  font-inter rounded-60px flex items-center justify-center bg-yellow_one shadow-shadow_btn_small">
+                <a href="/order/new" className="py-12px px-18px bg-grey_seven text-13px text-black font-semibold  font-inter rounded-60px flex items-center justify-center bg-yellow_one shadow-shadow_btn_small">
                     Place a new P.O.
                 </a>
             </div>
