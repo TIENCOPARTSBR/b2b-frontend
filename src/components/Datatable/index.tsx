@@ -117,7 +117,7 @@ function DataTable({ columns, data, buttons, page_size }: DataTableProps): JSX.E
                 <div className="flex items-center justify-between p-25px">
                     <div className="text-grey_for text-13px font-inter font-normal">
                         Page{' '}
-                        {pageIndex + 1} de {Math.ceil(data.length/ pageSize)}{' '}
+                        {pageIndex + 1} of {Math.ceil(data.length/ pageSize)}{' '}
                     </div>
 
                     <div className="flex items-center justify-center">

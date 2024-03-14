@@ -32,8 +32,8 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 
-    /*if (!user) {
-        recoverInformationUser().then(r => {});
+    if (!user?.id) {
+        recoverInformationUser();
     }
 
     async function recoverInformationUser() {
@@ -54,9 +54,9 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
                 }
             }
         } catch (error) {
-            //console.error("Erro ao recuperar informações do usuário:", error);
+            console.error("Erro ao recuperar informações do usuário:", error);
         }
-    }*/
+    }
 
     async function signIn({ email, password }: SignInData) {
         const data = {

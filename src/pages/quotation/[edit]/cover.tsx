@@ -93,8 +93,8 @@ const Cover = ({ quotation } : Quotation) => {
 
     return (
         <form>
-            <div className="flex flex-wrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                <div className="w-full md:w-4/6 md:pr-5 mb-5">
+            <div className="flex p-35px flex-wrap xl:flex-nowrap mt-35px rounded-8px border-1 border-grey_six mb-35px">
+                <div className="flex-auto w-full md:w-4/12 xl:w-4/12 mb-5 xl:mb-0 pr-5">
                     <Label>Client name</Label>
                     <input type="text"
                            name="client_name"
@@ -107,7 +107,8 @@ const Cover = ({ quotation } : Quotation) => {
                            readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="w-full md:w-1/3 md:pr-5 mb-5">
+
+                <div className="flex-auto w-full md:w-4/12 xl:w-2/12 mb-5 xl:mb-0 pr-5">
                     <Label>Client order number</Label>
                     <input type="text"
                            name="client_order"
@@ -119,7 +120,8 @@ const Cover = ({ quotation } : Quotation) => {
                            readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
+
+                <div className="flex-auto w-full md:w-3/12 xl:w-2/12 mb-5 xl:mb-0 md:pr-5">
                     <Label>Requested by</Label>
                     <input type="text"
                            name="requested_by"
@@ -132,7 +134,8 @@ const Cover = ({ quotation } : Quotation) => {
                            readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="w-auto md:pr-5 mb-5 md:mb-0">
+
+                <div className="flex-auto w-full md:w-auto xl:w-auto mb-5 xl:mb-0 pr-5">
                     <Label>Urgent?</Label>
                     <div>
                         <label htmlFor="toggle" className="flex items-center cursor-pointer">
@@ -150,7 +153,8 @@ const Cover = ({ quotation } : Quotation) => {
                         </label>
                     </div>
                 </div>
-                <div className="flex-auto w-full md:w-1/4 md:pr-5 mb-5 md:mb-0">
+
+                <div className="flex-auto w-full md:w-4/12 xl:w-auto pr-5">
                     <Label>Deadline</Label>
                     <input
                         type="datetime-local"
@@ -163,7 +167,8 @@ const Cover = ({ quotation } : Quotation) => {
                         readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="flex-auto w-full md:w-1/4 mb-5 md:mb-0">
+
+                <div className="flex-auto w-full md:w-4/12 xl:w-2/12">
                     <Label>Type</Label>
                     <select
                         className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"

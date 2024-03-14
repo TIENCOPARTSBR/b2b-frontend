@@ -88,8 +88,8 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
             </Row>
             
             <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {handleSubmit(e)}}>
-                <div className="flex p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                    <div className="flex-auto w-4/12 pr-5">
+                <div className="flex flex-wrap xl:flex-nowrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
+                    <div className="flex-auto w-full md:w-4/12 xl:w-4/12 mb-5 xl:mb-0 pr-5">
                         <Label>Client name</Label>
                         <input type="text"
                                name="client_name"
@@ -101,7 +101,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12 pr-5">
+                    <div className="flex-auto w-full md:w-4/12 xl:w-2/12 mb-5 xl:mb-0 pr-5">
                         <Label>Client order number</Label>
                         <input type="text"
                                name="client_order"
@@ -112,7 +112,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12 pr-5">
+                    <div className="flex-auto w-full md:w-3/12 xl:w-2/12 mb-5 xl:mb-0 md:pr-5">
                         <Label>Requested by</Label>
                         <input type="text"
                                name="requested_by"
@@ -124,7 +124,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-auto pr-5">
+                    <div className="flex-auto w-full md:w-auto xl:w-auto mb-5 xl:mb-0 pr-5">
                         <Label>Urgent?</Label>
                         <div>
                             <label htmlFor="toggle" className="flex items-center cursor-pointer">
@@ -140,7 +140,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         </div>
                     </div>
 
-                    <div className="flex-auto w-auto pr-5">
+                    <div className="flex-auto w-full md:w-4/12 xl:w-auto pr-5">
                         <Label>Deadline</Label>
                         <input type="datetime-local"
                                name="deadline"
@@ -152,7 +152,7 @@ const Index = ({ id_dealer } : NewQuotationProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12">
+                    <div className="flex-auto w-full md:w-4/12 xl:w-2/12">
                         <Label>Type</Label>
                         <select
                             className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px placeholder:text-grey_seven text-black font-inter font-normal outline-yellow_two"
