@@ -64,12 +64,16 @@ export const Nav = () => {
                     link: '/order/choice'
                 },
                 {
-                    name: 'Processing Purchase Orders',
+                    name: 'Submited Orders',
                     link: '/order'
                 },
                 {
-                    name: 'Delivered Purchase Orders',
-                    link: '/order/completed'
+                    name: 'Placed Orders',
+                    link: '/order/placed-orders'
+                },
+                {
+                    name: 'Part Number Overview',
+                    link: '/order/overview'
                 }
             ]
         },

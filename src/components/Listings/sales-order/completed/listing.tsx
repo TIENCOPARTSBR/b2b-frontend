@@ -34,6 +34,11 @@ const ListingCompleted = ({ order } : OrderProps) => {
             width: "5%",
         },
         {
+            Header: "CLIENT",
+            accessor: "client_name",
+            width: "5%",
+        },
+        {
             Header: "CLIENT ORDER",
             accessor: "client_order_number",
             width: "5%",
