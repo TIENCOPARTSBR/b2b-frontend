@@ -117,7 +117,7 @@ const Index = ({ order, items, error, resume } : OrderProps) => {
 
                     { order?.status <= 1  && <Submit /> }
 
-                    { order?.status == 3  && <Purchase order={order} orderResume={orderResume} /> }
+                    { order?.status >= 2  && <Purchase order={order} orderResume={orderResume} /> }
                 </>
             ) : (
                 <Title title="This order is not allowed for this dealer."/>

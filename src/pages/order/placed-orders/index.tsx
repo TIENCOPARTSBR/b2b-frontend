@@ -7,9 +7,9 @@ import Main from "@/src/components/Dealer/Main";
 import Breadcrumb from "@/src/components/Breadcrumb";
 import Title from "@/src/components/Title";
 import Row from "@/src/components/Dealer/Row";
-import ListingCompleted from "@/src/components/Listings/sales-order/completed/listing";
+import Listing from "@/src/components/Listings/sales-order/listing";
 
-type OrderItem = {
+type SalesOrderItem = {
     id: number,
     client_name: string,
     client_order: string,
@@ -19,49 +19,47 @@ type OrderItem = {
     type: string,
     status: string,
     created_at: string,
-    updated_at: string,
-    viewed: boolean
+    updated_at: string
 }
 
-interface OrderProps {
-    order: OrderItem[]
+interface SalesOrderProps {
+    salesOrder: SalesOrderItem[]
 }
 
-const OrdersCompleted = ({ order } : OrderProps) => {
+const breadcrumb: [{ name: string; link: string }, { name: string; link: string }, {
+    name: string;
+    link: string
+}] = [
+    {
+        name: "Home",
+        link: "/",
+    },
+    {
+        name: "Orders",
+        link: "/sales-order",
+    },
+    {
+        name: "Place P.O.",
+        link: "/sales-order/choice",
+    },
+]
 
-    const breadcrumb: [{ name: string; link: string }, { name: string; link: string }, {
-        name: string;
-        link: string
-    }] = [
-        {
-            name: "Home",
-            link: "/",
-        },
-        {
-            name: "Orders",
-            link: "/order",
-        },
-        {
-            name: "Processing P.O.'s",
-            link: "/order/completed",
-        },
-    ]
-
+const Quotation = ({ salesOrder } : SalesOrderProps) => {
     return (
         <Main>
             <Row>
                 <Breadcrumb list={ breadcrumb } />
-                <Title title="Processing P.O.'s" />
+                <Title title="Sales order" />
             </Row>
 
-            <ListingCompleted order={order} />
+            <Listing salesOrder={salesOrder} />
         </Main>
     )
 }
 
-export default OrdersCompleted;
+export default Quotation;
 
-export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<SalesOrderProps> = async (ctx) => {
     const { ["dealerAuth.token"] : token} = parseCookies(ctx);
     const { ["dealerAuth.id_dealer"] : id_dealer} = parseCookies(ctx);
 
@@ -76,21 +74,21 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
 
     try {
         const api = getApiDealer(ctx);
-        const response= await api.post('/salesOrder/overview', {
+        const response= await api.post('/salesOrder/placed-orders', {
             id_dealer: id_dealer
         });
 
-        console.log(id_dealer);
+        console.log(response);
 
         return {
             props: {
-                order: response?.data?.data || []
+                salesOrder: response?.data?.data
             }
         }
     } catch (error) {
         return {
             props: {
-                order: []
+                salesOrder: []
             }
         };
     }

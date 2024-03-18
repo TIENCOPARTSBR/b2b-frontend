@@ -143,6 +143,8 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                 onUpdateListing()
             })
             .catch((e) => {
+                console.error(e);
+
                 let errorString = ""
 
                 Object.keys(e?.response?.data?.errors).forEach((key) => {
