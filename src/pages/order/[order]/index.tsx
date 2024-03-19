@@ -66,18 +66,19 @@ const Index = ({ order, items, error, resume } : OrderProps) => {
         },
         {
             name: "Orders",
-            link: "/sales-order",
+            link: "/order",
         },
         {
             name: "View P.O.",
-            link: "/sales-order/choice",
+            link: "/order/#",
         },
     ]
 
     let status = '';
+
     switch (order?.status) {
         case "1":
-            status = 'Ready to dispatch'
+            status = 'Draft'
             break;
         case "2":
             status = 'Requested'
@@ -117,7 +118,7 @@ const Index = ({ order, items, error, resume } : OrderProps) => {
 
                     { order?.status <= 1  && <Submit /> }
 
-                    { order?.status >= 2  && <Purchase order={order} orderResume={orderResume} /> }
+                    { order?.status >= 3  && <Purchase order={order} orderResume={orderResume} /> }
                 </>
             ) : (
                 <Title title="This order is not allowed for this dealer."/>

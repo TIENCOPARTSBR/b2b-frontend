@@ -42,7 +42,7 @@ const OrdersCompleted = ({ order } : OrderProps) => {
             link: "/order",
         },
         {
-            name: "Processing P.O.'s",
+            name: "Part Number Overview",
             link: "/order/completed",
         },
     ]
@@ -51,7 +51,7 @@ const OrdersCompleted = ({ order } : OrderProps) => {
         <Main>
             <Row>
                 <Breadcrumb list={ breadcrumb } />
-                <Title title="Processing P.O.'s" />
+                <Title title="Part Number Overview" />
             </Row>
 
             <ListingCompleted order={order} />

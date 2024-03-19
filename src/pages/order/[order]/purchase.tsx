@@ -80,7 +80,7 @@ const Purchase = ({ order, orderResume }: PurchaseInterface) => {
                     <p className="w-full mb-4 text-18px font-regular font-inter text-black">{orderResume?.total_items ?? '---'}</p>
                 </div>
 
-                {order?.status == '2' && (
+                {order?.status == '3' && (
                     <div className="w-full md:w-1/4 flex justify-end">
                         <button onClick={handleRequestPurchase}
                                 className="w-150px h-40px py-1 bg-green_one flex items-center justify-center rounded-60px">

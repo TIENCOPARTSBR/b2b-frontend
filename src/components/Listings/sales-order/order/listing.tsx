@@ -1,9 +1,8 @@
 import Image from "next/image";
-
+import { useState } from "react";
 import DataTable from "@/src/components/Datatable";
-import {useState} from "react";
-import ModalDeleteDatatable from "@/src/components/Dealer/ModalDeleteDatatable";
-import ModalEditItemQuotationDatatable from "@/src/components/Dealer/ModalEditItemQuotationDatatable";
+import ModalDeleteItemOrder from "@/src/components/Dealer/ModalDeleteItemOrder";
+import ModalEditItemOrder from "@/src/components/Dealer/ModalEditItemOrder";
 
 interface OrderInterface {
     itens: {}
@@ -15,6 +14,7 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
     const [displayItemQuotationDeleteModal, setDisplayItemQuotationDeleteModal] = useState<boolean>(false)
     const [displayItemQuotationEditModal, setDisplayItemQuotationEditModal] = useState<boolean>(false)
     const [itemId, setItemId] = useState<number>(0)
+    const [data, setData] = useState<{}>({})
 
     const handleToEditQuotation = (id: number) => {
         setItemId(id)
@@ -22,7 +22,9 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
     }
 
     const handleItemQuotationDelete = (id: number) => {
-        setItemId(id)
+        setData({
+            id: id,
+        })
         setDisplayItemQuotationDeleteModal((prev) => !prev)
     }
 
@@ -136,7 +138,7 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
             accessor: "lead_time",
             width: "5%",
         },
-    ]
+    ];
 
     if (status != '0' && status != '1') {
         columns = columns.filter((item, index) => index !== 0);
@@ -144,22 +146,23 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
 
     return (
         <>
-            {displayItemQuotationDeleteModal && (
-                <ModalDeleteDatatable
-                    deleteTargetId={itemId}
+            { displayItemQuotationDeleteModal && (
+                <ModalDeleteItemOrder
+                    data={data}
                     handleOnVisible={() => setDisplayItemQuotationDeleteModal(false)}
-                    handleApiDelete={`/quotation/item/delete`}
+                    handleApiDelete={`/order/item/delete`}
                     handleUpdateListing={onUpdateListing}
                 />
             )}
 
 
-            {displayItemQuotationEditModal && (
-                <ModalEditItemQuotationDatatable
+            { displayItemQuotationEditModal && (
+                <ModalEditItemOrder
                     editTargetId={itemId}
                     handleOnVisible={() => setDisplayItemQuotationEditModal(false)}
-                    handleApiUpdate={`/quotation/item/update`}
+                    handleApiUpdate={`/order/item/update`}
                     handleUpdateListing={onUpdateListing}
+                    status={status}
                 />
             )}
 

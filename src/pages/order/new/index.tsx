@@ -92,7 +92,7 @@ const Index = ({ id_dealer } : NewOrderProps) => {
             link: "/order",
         },
         {
-            name: "Submit Purchase Order",
+            name: "Create Purchase Order",
             link: "/order/new",
         },
     ];
@@ -101,12 +101,12 @@ const Index = ({ id_dealer } : NewOrderProps) => {
         <Main>
             <Row>
                 <Breadcrumb list={breadcrumb} />
-                <Title title="Submit Purchase Order" />
+                <Title title="Create Purchase Order" />
             </Row>
             
             <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {handleSubmit(e)}}>
-                <div className="flex p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                    <div className="flex-auto w-4/12 pr-5">
+                <div className="flex flex-auto mt-35px rounded-8px mb-35px">
+                    <div className="w-full md:w-4/12 xl:w-1/2 md:pr-5 mb-5 md:mb-0">
                         <Label>Client name</Label>
                         <input type="text"
                                name="client_name"
@@ -118,7 +118,7 @@ const Index = ({ id_dealer } : NewOrderProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12 pr-5">
+                    <div className="flex-auto w-full md:w-3/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
                         <Label>Client order number</Label>
                         <input type="text"
                                name="client_order"
@@ -129,7 +129,7 @@ const Index = ({ id_dealer } : NewOrderProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12 pr-5">
+                    <div className="flex-auto w-full md:w-3/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
                         <Label>Method Payment</Label>
                         <input type="text"
                                name="payment_method"
@@ -141,23 +141,7 @@ const Index = ({ id_dealer } : NewOrderProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-auto pr-5">
-                        <Label>Urgent?</Label>
-                        <div>
-                            <label htmlFor="toggle" className="flex items-center cursor-pointer">
-                                <input type="checkbox"
-                                       id="toggle"
-                                       className="sr-only peer"
-                                       name="urgent"
-                                       value={formData.urgent}
-                                       onChange={handeRadioChange}
-                                />
-                                    <div className="block relative bg-grey_eight w-60px h-32px p-1 rounded-full before:absolute before:bg-white before:w-6 before:h-6 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:before:bg-white peer-checked:bg-red_one"></div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="flex-auto w-auto pr-5">
+                    <div className="flex-auto w-full md:w-4/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
                         <Label>Deadline</Label>
                         <input type="datetime-local"
                                name="deadline"
@@ -169,24 +153,27 @@ const Index = ({ id_dealer } : NewOrderProps) => {
                         />
                     </div>
 
-                    <div className="flex-auto w-2/12">
-                        <Label>Type</Label>
-                        <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px placeholder:text-grey_seven text-black font-inter font-normal outline-yellow_two"
-                            name="type"
-                            value={formData.type}
-                            onChange={handleSelectChange}
-                            required={true}
-                        >
-                            <option value="0">Template</option>
-                            <option value="1">Spot</option>
-                        </select>
+                    <div className="w-full md:w-auto">
+                        <Label>Urgent?</Label>
+                        <div>
+                            <label htmlFor="toggle" className="flex items-center cursor-pointer">
+                                <input type="checkbox"
+                                       id="toggle"
+                                       className="sr-only peer"
+                                       name="urgent"
+                                       value={formData.urgent}
+                                       onChange={handeRadioChange}
+                                />
+                                <div
+                                   className="block relative bg-grey_eight w-60px h-32px p-1 rounded-full before:absolute before:bg-white before:w-6 before:h-6 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:before:bg-white peer-checked:bg-red_one"></div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
                 <ButtonSmall bgColor="bg-grey_seven">
                     Create order
-                    { processing && <Processing/>}
+                    {processing && <Processing/>}
                 </ButtonSmall>
             </form>
         </Main>
@@ -196,9 +183,9 @@ const Index = ({ id_dealer } : NewOrderProps) => {
 export default Index
 
 export const getServerSideProps: GetServerSideProps<NewOrderProps> = async (ctx) => {
-    const { ['dealerAuth.token'] : token} = parseCookies(ctx);
-    const { ["dealerAuth.id_dealer"] : id_dealer} = parseCookies(ctx);
-    
+    const {['dealerAuth.token']: token} = parseCookies(ctx);
+    const {["dealerAuth.id_dealer"]: id_dealer} = parseCookies(ctx);
+
     if (!token) {
         return {
             redirect: {
@@ -207,7 +194,7 @@ export const getServerSideProps: GetServerSideProps<NewOrderProps> = async (ctx)
             }
         }
     }
-    
+
     return {
         props: {
             id_dealer: id_dealer

@@ -185,7 +185,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
 
             <form className="w-screen" onSubmit={handleSubmit}>
                 <div className="w-full flex p-35px rounded-8px border-1 border-grey_six items-end flex-wrap">
-                    <div className="w-full md:w-1/4 md:pr-5 relative mb-5">
+                    <div className="w-full md:w-1/6 md:pr-5 relative mb-5">
                         <Label>Part Number</Label>
 
                         <div className="relative">
@@ -206,26 +206,26 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-40px mb-5">
                         <Label>Location</Label>
                         <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                            name="location"
-                            onChange={handleSelectChange}
+                           className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           name="location"
+                           onChange={handleSelectChange}
                         >
                             {productData.locations != undefined && productData.locations.includes("USA") &&
-                                <option value="USA" selected={productData.location === 'USA'}
-                                        className="bg-usa">USA</option>
+                               <option value="USA" selected={productData.location === 'USA'}
+                                       className="bg-usa">USA</option>
                             }
 
                             {productData.locations != undefined && productData.locations.includes("BR") &&
-                                <option value="BR" selected={productData.location === 'BR'}
-                                        className="bg-usa">BR</option>
+                               <option value="BR" selected={productData.location === 'BR'}
+                                       className="bg-usa">BR</option>
                             }
                         </select>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-auto md:pr-5 mb-5">
                         <Label>Unit Price</Label>
 
                         <input type="text"
@@ -237,7 +237,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Availability</Label>
 
                         <input type="text"
@@ -249,7 +249,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>MOQ</Label>
 
                         <input type="text"
@@ -261,7 +261,7 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Quantity</Label>
 
                         <input type="number"
@@ -274,21 +274,21 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         />
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/12 md:pr-5 mb-5">
                         <Label>Application</Label>
                         <select
-                            className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                            name="application"
-                            required={true}
-                            value={productData.application}
-                            onChange={handleSelectChange}
+                           className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                           name="application"
+                           required={true}
+                           value={productData.application}
+                           onChange={handleSelectChange}
                         >
                             <option value="CAT">CAT</option>
                             <option value="OTHERS">OTHERS</option>
                         </select>
                     </div>
 
-                    <div className="w-full md:w-1/4 md:pr-5 mb-5">
+                    <div className="w-full md:w-1/4 md:flex-auto mb-5">
                         <Label>Observation</Label>
 
                         <div className="relative">
@@ -302,10 +302,12 @@ const InsertProduct = ({ onUpdateListing } : Props) => {
                         </div>
                     </div>
 
-                    <button
-                        className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-13px font-medium font-inter">
-                        Insert Product
-                    </button>
+                    <div className="w-full">
+                        <button
+                           className="px-15px py-12px rounded-60px bg-grey_seven text-white flex-nowrap text-13px font-medium font-inter">
+                            Insert Product
+                        </button>
+                    </div>
                 </div>
             </form>
         </Row>

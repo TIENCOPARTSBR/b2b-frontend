@@ -26,22 +26,15 @@ interface SalesOrderProps {
     salesOrder: SalesOrderItem[]
 }
 
-const breadcrumb: [{ name: string; link: string }, { name: string; link: string }, {
-    name: string;
-    link: string
-}] = [
+const breadcrumb: [{ name: string; link: string }, { name: string; link: string } ] = [
     {
         name: "Home",
         link: "/",
     },
     {
         name: "Orders",
-        link: "/sales-order",
-    },
-    {
-        name: "Place P.O.",
-        link: "/sales-order/choice",
-    },
+        link: "/order",
+    }
 ]
 
 const Quotation = ({ salesOrder } : SalesOrderProps) => {
@@ -49,7 +42,7 @@ const Quotation = ({ salesOrder } : SalesOrderProps) => {
         <Main>
             <Row>
                 <Breadcrumb list={ breadcrumb } />
-                <Title title="Sales order" />
+                <Title title="Orders" />
             </Row>
 
             <Listing salesOrder={salesOrder} />

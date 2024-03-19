@@ -92,7 +92,7 @@ const Cover = ({ order } : OrderInterface) => {
     return (
         <form>
             <div className="flex flex-auto flex-wrap p-35px mt-35px rounded-8px border-1 border-grey_six mb-35px">
-                <div className="w-full md:w-4/12 xl:w-1/4 md:pr-5 mb-5">
+                <div className="w-full md:w-4/12 xl:w-1/2 md:pr-5 mb-5 md:mb-0">
                     <Label>Client name</Label>
                     <input type="text"
                            name="client_name"
@@ -105,7 +105,8 @@ const Cover = ({ order } : OrderInterface) => {
                            readOnly={formData.status > '0'}
                     />
                 </div>
-                <div className="w-full md:w-3/12 xl:w-1/6 md:pr-5 mb-5">
+
+                <div className="flex-auto w-full md:w-3/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
                     <Label>Client order number</Label>
                     <input type="text"
                            name="client_order_number"
@@ -117,7 +118,8 @@ const Cover = ({ order } : OrderInterface) => {
                            readOnly={formData.status > '2'}
                     />
                 </div>
-                <div className="w-full md:w-3/12 xl:w-1/6 md:pr-5 mb-5">
+
+                <div className="flex-auto w-full md:w-3/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
                     <Label>Method Payment</Label>
                     <input type="text"
                            name="payment_method"
@@ -129,7 +131,22 @@ const Cover = ({ order } : OrderInterface) => {
                            readOnly={formData.status > '2'}
                     />
                 </div>
-                <div className="w-full md:w-auto xl:pr-5 mb-5 md:mb-0">
+
+                <div className="flex-auto w-full md:w-4/12 xl:w-auto md:pr-5 mb-5 md:mb-0">
+                    <Label>Deadline</Label>
+                    <input
+                       type="datetime-local"
+                       name="deadline"
+                       className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
+                       value={formData.deadline}
+                       onChange={handleInputChange}
+                       required={true}
+                       disabled={formData.status > '0'}
+                       readOnly={formData.status > '0'}
+                    />
+                </div>
+
+                <div className="w-full md:w-auto">
                     <Label>Urgent?</Label>
                     <div>
                         <label htmlFor="toggle" className="flex items-center cursor-pointer">
@@ -143,36 +160,9 @@ const Cover = ({ order } : OrderInterface) => {
                                    readOnly={formData.status > '0'}
                             />
                             <div
-                                className="block relative bg-grey_eight w-60px h-32px p-1 rounded-full before:absolute before:bg-white before:w-6 before:h-6 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:before:bg-white peer-checked:bg-red_one"></div>
+                               className="block relative bg-grey_eight w-60px h-32px p-1 rounded-full before:absolute before:bg-white before:w-6 before:h-6 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:before:bg-white peer-checked:bg-red_one"></div>
                         </label>
                     </div>
-                </div>
-                <div className="flex-auto w-full md:w-4/12 xl:w-1/6 md:pr-5 mb-5 md:mb-0">
-                    <Label>Deadline</Label>
-                    <input
-                        type="datetime-local"
-                        name="deadline"
-                        className="w-100% border-1 border-grey_six rounded-8px py-8px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                        value={formData.deadline}
-                        onChange={handleInputChange}
-                        required={true}
-                        disabled={formData.status > '0'}
-                        readOnly={formData.status > '0'}
-                    />
-                </div>
-                <div className="flex-auto w-full md:w-4/12 xl:w-1/6 mb-5 md:mb-0">
-                    <Label>Type</Label>
-                    <select
-                        className="w-100% border-1 border-grey_six rounded-8px py-9px px-12px text-13px text-black placeholder:text-grey_seven font-inter font-normal outline-yellow_two"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleSelectChange}
-                        required={true}
-                        disabled={formData.status > '0'}
-                    >
-                        <option value="1">Spot</option>
-                        <option value="0">Template</option>
-                    </select>
                 </div>
             </div>
         </form>

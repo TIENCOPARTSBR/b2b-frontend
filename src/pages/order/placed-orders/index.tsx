@@ -36,11 +36,11 @@ const breadcrumb: [{ name: string; link: string }, { name: string; link: string 
     },
     {
         name: "Orders",
-        link: "/sales-order",
+        link: "/order",
     },
     {
-        name: "Place P.O.",
-        link: "/sales-order/choice",
+        name: "Placed Orders",
+        link: "/order",
     },
 ]
 
@@ -49,7 +49,7 @@ const Quotation = ({ salesOrder } : SalesOrderProps) => {
         <Main>
             <Row>
                 <Breadcrumb list={ breadcrumb } />
-                <Title title="Sales order" />
+                <Title title="Placed Orders" />
             </Row>
 
             <Listing salesOrder={salesOrder} />
