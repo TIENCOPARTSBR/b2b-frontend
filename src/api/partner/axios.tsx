@@ -5,8 +5,8 @@ export const getApiPartner = (ctx: any) => {
     const { 'partnerAuth.token': token } = parseCookies(ctx);
 
     const api = axios.create({
-        baseURL: 'http://127.0.0.1:8000/api/v1/partner',
-        //baseURL: 'https://b2b-qas.azurewebsites.net/api/v1/partner',
+        //baseURL: 'http://127.0.0.1:8000/api/v1/partner',
+        baseURL: 'https://b2b-qas.azurewebsites.net/api/v1/partner',
         headers: {
             Authorization: `Bearer ${token}`,
         },
