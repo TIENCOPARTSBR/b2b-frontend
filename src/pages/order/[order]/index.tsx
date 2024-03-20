@@ -148,9 +148,17 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
         let resume = "";
         let errorString = "";
 
+        let orderId: number;
+
+        if (typeof ctx?.params?.order === 'string') {
+            orderId = parseInt(ctx?.params?.order, 10);
+        } else {
+            orderId = 0; // ou qualquer outro valor padrão desejado
+        }
+
         const api = getApiDealer(ctx)
             await api.post(`/salesOrder/unique`, {
-                id: ctx?.params?.order,
+                id: orderId,
                 id_dealer: id_dealer
             })
             .then((response) => {
@@ -164,8 +172,9 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
                 })
             })
 
+
         await api.post("/order/item/all", {
-            id_sales_order: ctx?.params?.order,
+            id_sales_order: orderId,
             id_dealer: id_dealer,
         })
             .then((response) => {
@@ -174,7 +183,7 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
 
         if (items.length > 1) {
             await api.post("/salesOrder/resume", {
-                id: ctx?.params?.order,
+                id: orderId,
             }).then((response) => {
                 resume = response.data.data;
             })

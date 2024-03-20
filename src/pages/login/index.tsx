@@ -1,80 +1,51 @@
-'use client';
-
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
-import {useAuthDealer} from "@/src/hooks/dealer/auth";
-import AlertError from "@/src/components/AlertError";
-import {GetServerSideProps} from "next";
-import {parseCookies, setCookie} from "nookies";
+import { useAuthDealer } from "@/src/hooks/dealer/auth";
+import { useMessageSuccess } from "@/src/hooks/message/success";
+import { useMessageError } from "@/src/hooks/message/error";
+
 import Processing from "@/src/components/Processing";
 import AlertSuccess from "@/src/components/AlertSuccess";
-import {useMessageSuccess} from "@/src/hooks/message/success";
+import AlertError from "@/src/components/AlertError";
 
 const Login = () => {
     const { signIn } = useAuthDealer();
-    const router = useRouter()
-    const {['dealerAuth.rememberEmail']: rememberEmail} = parseCookies();
-    const {['dealerAuth.rememberPassword']: rememberPassword} = parseCookies();
+    const router = useRouter();
 
-    const [email, setEmail] = useState<string>(rememberEmail || '')
-    const [password, setPassword] = useState<string>(rememberPassword || '')
-    const [processing, setProcessing] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>( '');
+    const [password, setPassword] = useState<string>('');
+    const [processing, setProcessing] = useState<boolean>(false);
 
-    const { message: messageSuccess, showMessage: showMessageSuccess } = useMessageSuccess()
-    const [alertError, setAlertError] = useState<string|null>(null)
+    const { message, showMessage } = useMessageSuccess();
+    const { messageError, setMessageError } = useMessageError();
 
     const handleLogin = async (e: any) => {
-        e.preventDefault()
-        setProcessing(true)
+        e.preventDefault();
+        setProcessing(true);
 
         const response = await signIn({
             email: email,
             password: password
-        })
+        });
 
         if (response) {
-            verifyRememberCheckbox()
-            showMessageSuccess('Logged.')
-            router.push('/')
+            showMessage('Logged.');
+            router.push('/');
         }
 
         if (!response) {
-            setProcessing(false)
-            setAlertError('Access denied. Please review your email and password information and try again.')
+            setProcessing(false);
+            setMessageError('Access denied. Please review your email and password information and try again.');
         }
     }
-
-    const verifyRememberCheckbox = () => {
-        let rememberCheckbox: HTMLInputElement | null = document.getElementById('remember') as HTMLInputElement | null;
-        let rememberChecked = (rememberCheckbox) ? rememberCheckbox.checked : false;
-
-        if (rememberChecked) {
-            setCookie(undefined, 'dealerAuth.rememberEmail', email, {
-                maxAge: 999999,
-                path: '/',
-            });
-
-            setCookie(undefined, 'dealerAuth.rememberPassword', password, {
-                maxAge: 999999,
-                path: '/',
-            });
-        }
-    }
-
-    useEffect(() => {
-        setTimeout(() => {
-            setAlertError(null)
-        }, 3000)
-    }, [alertError]);
 
     return (
         <form onSubmit={handleLogin}
             className="bg-login bg-cover bg-center w-screen h-screen flex items-center justify-center px-25px">
-
-            { alertError && <AlertError text={alertError} />}
-            { messageSuccess && <AlertSuccess text={ messageSuccess } />}
+            { messageError && <AlertError text={messageError} /> }
+            { message && <AlertSuccess text={message} /> }
 
             <div className="w-540px h-auto p-35px md:px-50px md:py-60px bg-white rounded-8px shadow-login">
                 <div className="w-100% flex justify-center">
@@ -105,12 +76,7 @@ const Login = () => {
                     className="w-100% h-50px rounded-8px border-1 px-4 text-13px font-normal text-black mt-4 focus:outline-yellow_one"
                 />
 
-                <div className="flex items-center justify-between my-5 text-black text-13px font-inter font-medium">
-                    <label htmlFor="remember" className="flex items-center">
-                        <input id="remember" type="checkbox" checked={rememberEmail != '' && rememberPassword != ''} className="w-15px h-15px mr-2"/>
-                        Remember me
-                    </label>
-
+                <div className="flex items-center justify-end my-5 text-black text-13px font-inter font-medium">
                     <Link href="#">
                         Forgot Password?
                     </Link>

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { getApiDealer } from '@/src/api/dealer/axios';
 import { useAuthDealer } from '@/src/hooks/dealer/auth';
+import {parseCookies} from "nookies";
 
 export interface NotificationsContextProps {
     notifications: any[] | null; // Você pode ajustar o tipo de notificações conforme necessário
@@ -16,19 +17,20 @@ interface NotificationsProviderProps {
 
 export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
     const { user } = useAuthDealer('');
+    const {['dealerAuth.id_dealer']: id_dealer} = parseCookies();
     const [notifications, setNotifications] = useState<any[] | null>(null); // Você pode ajustar o tipo de notificações conforme necessário
 
     const getNotifications = async () => {
         const api = getApiDealer('');
         const response = await api.post('/notifications/all', {
-            id_dealer: user?.dealer_id
+            id_dealer: id_dealer
         });
         setNotifications(response?.data?.data);
     };
 
     useEffect(() => {
 
-        if (user?.dealer_id) {
+        if (id_dealer) {
             // Busca inicial de notificações ao montar o componente
             getNotifications();
 
@@ -45,7 +47,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
     const setHideNotification = (id: number) => {
         const api = getApiDealer('');
         const response = api.post('/notifications/viewed', {
-            id_dealer: user?.dealer_id,
+            id_dealer: id_dealer,
             id: id
         });
         setTimeout(() => {
@@ -56,7 +58,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
     const setHideAllNotification = (id: number|undefined) => {
         const api = getApiDealer('');
         const response = api.post('/notifications/hideAll', {
-            id_dealer: user?.dealer_id
+            id_dealer: id_dealer
         });
         setTimeout(() => {
             getNotifications();

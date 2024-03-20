@@ -77,7 +77,7 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
                 setCookie(undefined, 'dealerAuth.id_dealer', response?.data?.data?.user?.id_dealer as any, {
                     maxAge: 3600,
                     path: '/',
-                })
+                });
 
                 setUser({
                     id: response?.data?.data?.user?.id,
@@ -85,11 +85,10 @@ export const AuthProviderDealer: React.FC<RecoverPasswordProviderProps> = ({ chi
                     name: response?.data?.data?.user?.name,
                     email: response?.data?.data?.user?.email,
                     type: response?.data?.data?.user?.type,
-                })
+                });
 
                 return true;
             }
-
             return false;
         } catch (error) {
             return false;

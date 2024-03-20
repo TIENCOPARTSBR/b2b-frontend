@@ -61,7 +61,7 @@ const Cover = ({ order } : OrderInterface) => {
 
     const requestData = {
         // Condicionalmente adiciona as chaves e valores ao objeto, dependendo do valor de order?.status
-        ...({ id: router?.query?.order }),
+        ...({ id: order?.id }),
         ...({ client_order_number: formData?.client_order_number }),
         ...({ payment_method: formData?.payment_method }),
         ...(order?.status == '0' && { client_name: formData?.client_name }),
@@ -73,7 +73,7 @@ const Cover = ({ order } : OrderInterface) => {
     };
 
     const handleChange = async () => {
-        if (order?.status <= '3'){
+        if (order?.status <= '1'){
             const api = getApiDealer("")
             api.put('/salesOrder/update/', requestData)
             .catch((e) => {
