@@ -31,7 +31,7 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 
-   /* if (!user) {
+    if (!user) {
         recoverInformationUser().then();
     }
 
@@ -55,7 +55,7 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
         } catch (error) {
             //console.error("Erro ao recuperar informações do usuário:", error);
         }
-    }*/
+    }
 
     async function signIn({ email, password }: SignInData) {
         const data = {
@@ -67,12 +67,12 @@ export const AuthProviderAdmin: React.FC<RecoverPasswordProviderProps> = ({ chil
             const api = getApiAdmin('');
             const response = await api.post('login', data);
 
-            setCookie(undefined, 'adminAuth.token', response?.data?.data?.token, {
-                maxAge: 3600,
-                path: '/',
-            });
-
             if (response?.data?.data?.user) {
+                setCookie(undefined, 'adminAuth.token', response?.data?.data?.token, {
+                    maxAge: 3600,
+                    path: '/',
+                });
+
                 setUser({
                     id: response?.data?.data?.user?.id,
                     name: response?.data?.data?.user?.name,
