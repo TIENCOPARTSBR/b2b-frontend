@@ -7,6 +7,7 @@ import {useMessageSuccess} from "@/src/hooks/message/success";
 import AlertSuccess from "@/src/components/AlertSuccess";
 import Processing from "@/src/components/Processing";
 import Image from "next/image";
+import ErrorProcess from "@/src/utils/function/error";
 
 interface PropsExcel {
     handleOnVisible: () => void;
@@ -60,21 +61,10 @@ const Excel = ({ handleOnVisible, onUpdateListing } : PropsExcel) => {
                 onUpdateListing()
             })
             .catch((e) => {
-                let errorString = ""
-
-                Object.keys(e?.response?.data?.errors).forEach((key) => {
-                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                        errorString += `${errorMessage}<br>`
-                    })
-                })
-
-                setMessageError(errorString)
+                ErrorProcess(e)
             })
             .finally(() => {
                 setProcessing(false);
-                setTimeout(() => {
-                    setMessageError('')
-                }, 10000)
             })
     }
 

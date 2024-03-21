@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {getApiDealer} from "@/src/api/dealer/axios";
 import {useMessageError} from "@/src/hooks/message/error";
 import {useMessageSuccess} from "@/src/hooks/message/success";
+import ErrorProcess from "@/src/utils/function/error";
 
 interface QuotationProps {
     quotation: {}
@@ -39,7 +40,7 @@ const Listing = ({ quotation } : QuotationProps) => {
             id_quotation: id
         })
             .then((response) => {
-                const fileUrl = response?.data?.data?.original?.url;
+                const fileUrl = response?.data?.url;
 
                 if (fileUrl) {
                     // Concatenar a URL base com a URL do arquivo
@@ -53,23 +54,12 @@ const Listing = ({ quotation } : QuotationProps) => {
                     document.body.removeChild(link);
 
                     showMessage('Your Excel file download is ready.')
-
-                    router.reload();
                 } else {
                     setMessageError('Error while fetching file URL.');
                 }
             })
             .catch((e) => {
-                console.log(e);
-                let errorString = ""
-
-                Object.keys(e?.response?.data?.errors).forEach((key) => {
-                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                        errorString += `${errorMessage}<br>`
-                    })
-                })
-
-                setMessageError(errorString)
+                ErrorProcess(e)
             })
     }
 

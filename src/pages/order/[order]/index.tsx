@@ -181,7 +181,7 @@ export const getServerSideProps: GetServerSideProps<OrderProps> = async (ctx) =>
                 items = response.data.data;
             })
 
-        if (items.length > 1) {
+        if (items.length > 0) {
             await api.post("/salesOrder/resume", {
                 id: orderId,
             }).then((response) => {

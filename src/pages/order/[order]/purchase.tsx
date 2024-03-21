@@ -6,6 +6,7 @@ import Processing from "@/src/components/Processing";
 import { useMessageSuccess } from "@/src/hooks/message/success";
 import { useMessageError } from "@/src/hooks/message/error";
 import { getApiDealer } from "@/src/api/dealer/axios";
+import ErrorProcess from "@/src/utils/function/error";
 
 type OrderType = {
     id: number
@@ -44,18 +45,9 @@ const Purchase = ({ order, orderResume }: PurchaseInterface) => {
                 showMessage(response?.data?.message);
                 router?.push('/order');
             }).catch((e) => {
-                console.error(e);
-                let errorString = ""
-
-                Object.keys(e?.response?.data?.errors).forEach((key) => {
-                    e?.response?.data?.errors[key].forEach((errorMessage: any) => {
-                        errorString += `${errorMessage}<br>`
-                    })
-                })
-
-                setMessageError(errorString)
+                ErrorProcess(e);
             }).finally(() => {
-                setLoader(false)
+                setLoader(false);
             })
     }
 
