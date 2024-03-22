@@ -12,7 +12,7 @@ type QuotationItem = {
     client_name: string
     client_order: string
     requested_by: string
-    urgent: boolean
+    urgent: number
     deadline: string
     type: string
     status: string
@@ -143,7 +143,7 @@ const Cover = ({ quotation } : Quotation) => {
                                    id="toggle"
                                    className="sr-only peer"
                                    name="urgent"
-                                   checked={formData.urgent}
+                                   checked={formData.urgent == 1}
                                    onChange={handeRadioChange}
                                    disabled={formData.status > '0'}
                                    readOnly={formData.status > '0'}

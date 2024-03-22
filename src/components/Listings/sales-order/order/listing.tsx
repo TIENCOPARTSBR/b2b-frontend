@@ -87,16 +87,25 @@ const Listing = ({ onUpdateListing, itens, status } : OrderInterface) => {
             Header: "Unit price",
             accessor: "unit_price",
             width: "5%",
+            Cell: ({ row }: any) => (
+               '$ ' + row?.original?.unit_price
+            ),
         },
         {
             Header: "Total price",
             accessor: "total_price",
             width: "5%",
+            Cell: ({ row }: any) => (
+               '$ ' + row?.original?.total_price
+            ),
         },
         {
             Header: "Total weight",
             accessor: "total_weight",
             width: "5%",
+            Cell: ({ row }: any) => (
+               row?.original?.total_weight + ' kg'
+            ),
         },
         {
             Header: "NCM",
